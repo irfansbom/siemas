@@ -20,12 +20,31 @@
                             <div class="card-header">
                                 <h3 class="card-title mb-0">List DS BS</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    <button class="btn btn-primary btn-icon text-white" data-bs-toggle="modal"
-                                        data-bs-target="#modal_tambah" data-kd_kab="{{ $auth->kd_wilayah }}">
-                                        <span>
-                                            <i class="fe fe-plus"></i>
-                                        </span> Tambah
-                                    </button>
+                                    @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
+                                        <div class="btn-group mt-2 mb-2">
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#modal_import_dsbs">Import DSBS</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle "
+                                                data-bs-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li class="dropdown-plus-title">
+                                                    Import
+                                                    <b class="fa fa-angle-up"></b>
+                                                </li>
+                                                <li><a href="{{ url('template/Template DSBS.xlsx') }}">Template Import DSBS</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <button class="btn btn-primary btn-icon text-white" data-bs-toggle="modal"
+                                            data-bs-target="#modal_tambah" data-kd_kab="{{ $auth->kd_wilayah }}">
+                                            <span>
+                                                <i class="fe fe-plus"></i>
+                                            </span> Tambah
+                                        </button>
+                                    @endhasanyrole
                                 </div>
                             </div>
                             <div class="card-body">
@@ -44,6 +63,9 @@
                                                                     {{ $kab->alias }}</option>
                                                             @endforeach
                                                         </select>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -100,7 +122,10 @@
                                                     </td>
 
                                                     <td class="align-middle text-center">
-                                                        {{ $dt->pcl->pengawas }}
+                                                        @if ($dt->pcl->pengawas)
+                                                            {{ $dt->pcl->pengawas }}
+                                                        @endif
+
                                                     </td>
 
                                                     <td class="text-center">
@@ -256,6 +281,39 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" form="form_hapus">Submit</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_import_dsbs">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Import DSBS<span></span></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('dsbs/import') }}" method="post" id="form_import"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="row ">
+                            <input type="text" name="user_id" id="user_id" hidden>
+                            <div class="mb-3 ">
+                                <div class="form-group">
+                                    <label class="form-label mt-0">File Excel (sesuai template)</label>
+                                    <input class="form-control" type="file" name="import_file">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="form_import">Submit</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UsersImport;
 use App\Models\Kabs;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -10,6 +11,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -17,7 +19,7 @@ class UserController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
         Paginator::useBootstrap();
         $auth = Auth::user();
@@ -25,6 +27,9 @@ class UserController extends Controller
         $kab = '';
 
         if ($auth->kd_wilayah == '00') {
+            if ($request->kab_filter) {
+                $kab = $request->kab_filter;
+            }
             $kabs = Kabs::all();
             $data_pengawas = User::role('pengawas')->get();
         } else {
@@ -35,7 +40,7 @@ class UserController extends Controller
 
         $user = User::where('kd_wilayah', 'LIKE', '%' . $kab . '%')->paginate(15);
         $data_roles = Role::all();
-        return view('user.index', compact('user', 'data_roles', 'auth', 'data_pengawas'));
+        return view('user.index', compact('user', 'data_roles', 'auth', 'data_pengawas', 'kabs'));
     }
 
     public function create()
@@ -136,6 +141,17 @@ class UserController extends Controller
         $user = User::find($request->user_id);
         $user->syncRoles([$request->roles]);
         return redirect('users/')->with('success', 'User berhasil diperbaharui.');
+    }
+
+    public function user_import(Request $request)
+    {
+        if ($request->file('import_file')) {
+            Excel::import(new UsersImport, request()->file('import_file'));
+            return redirect()->back()->with('success', 'Berhasil Memasukkan data');
+        } else {
+
+            return redirect()->back()->with('error', 'Kesalahan File');
+        }
     }
 
     public function roles()

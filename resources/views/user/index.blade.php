@@ -20,15 +20,58 @@
                             <div class="card-header">
                                 <h3 class="card-title mb-0">List Users</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    <a class="btn btn-primary btn-icon text-white me-2" href="{{ url('users/create') }}"
-                                        data-bs-target="#modal_tambah">
-                                        <span>
-                                            <i class="fe fe-plus"></i>
-                                        </span> Tambah
-                                    </a>
+                                    @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
+                                        <div class="btn-group mt-2 mb-2">
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#modal_import_user">Import User</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle "
+                                                data-bs-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li class="dropdown-plus-title">
+                                                    Import
+                                                    <b class="fa fa-angle-up"></b>
+                                                </li>
+                                                <li><a href="{{ url('template/Template User.xlsx') }}">Template Import User</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <a class="btn btn-primary btn-icon text-white me-2" href="{{ url('users/create') }}"
+                                            data-bs-target="#modal_tambah">
+                                            <span>
+                                                <i class="fe fe-plus"></i>
+                                            </span> Tambah
+                                        </a>
+                                    @endhasanyrole
                                 </div>
                             </div>
                             <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-10">
+                                        <form action="" id="form_filter">
+                                            <fieldset>
+                                                <div class="mb-1 row">
+                                                    {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
+                                                    <div class="col-sm-4">
+                                                        <select name="kab_filter" id="kab_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Pilih Kab/Kot</option>
+                                                            @foreach ($kabs as $kab)
+                                                                <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}]
+                                                                    {{ $kab->alias }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button type="submit" class="btn btn-primary">Cari</button>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table border table-bordered text-nowrap text-md-nowrap mg-b-0 table-sm">
                                         <thead>
@@ -37,6 +80,7 @@
                                                 <th>Nama</th>
                                                 <th>KD <br> Wilayah</th>
                                                 <th>Email</th>
+                                                <th>Username</th>
                                                 <th colspan="2">Pengawas</th>
                                                 <th colspan="2">Roles</th>
                                                 <th style="width: 8%">Aksi</th>
@@ -53,6 +97,9 @@
                                                     <td class="align-middle"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
                                                         {{ $usr->email }}</td>
+                                                    <td class="align-middle"
+                                                        style="word-break: break-word; overflow-wrap: break-word;">
+                                                        {{ $usr->username }}</td>
                                                     <td class="align-middle"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
                                                         {{ $usr->pengawas }}</td>
@@ -106,8 +153,9 @@
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                         <button class="btn btn-outline-danger  btn_hapus"
-                                                            data-id="{{ $usr->id }}" data-nama="{{ $usr->name }}"
-                                                            data-bs-toggle="modal" data-bs-target="#modal_hapus">
+                                                            data-id="{{ $usr->id }}"
+                                                            data-nama="{{ $usr->name }}" data-bs-toggle="modal"
+                                                            data-bs-target="#modal_hapus">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
                                                     </td>
@@ -199,7 +247,7 @@
                                 <div class="form-group">
                                     <select name="pengawas" id="pengawas"
                                         class="form-control select2-show-search form-select"
-                                        data-placeholder="Pilih Pengawas">
+                                        data-placeholder="Pilih Pengawas" style="width: 100%">
                                         <option label="Pilih Pengawas"></option>
                                         @foreach ($data_pengawas as $pms)
                                             <option value="{{ $pms->username }}">{{ $pms->username }}</option>
@@ -220,7 +268,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="modal_hapus">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -250,6 +297,38 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal_import_user">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Import User<span></span></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('users/import') }}" method="post" id="form_import"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="row ">
+                            <input type="text" name="user_id" id="user_id" hidden>
+                            <div class="mb-3 ">
+                                <div class="form-group">
+                                    <label class="form-label mt-0">File Excel (sesuai template)</label>
+                                    <input class="form-control" type="file" name="import_file">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="form_import">Submit</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('css')
@@ -266,6 +345,12 @@
 
 @section('script')
     <script>
+        $(document).ready(function() {
+            $('#modal_edit_pengawas').find("#pengawas").select2({
+                dropdownParent: $("#modal_edit_pengawas ")
+            });
+        });
+
         $('.btn_roles').click(function() {
             console.log($(this).data("id"))
             $('#modal_edit_roles').find('#user_id').val($(this).data("id"));

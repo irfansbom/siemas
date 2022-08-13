@@ -25,10 +25,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/roles', [UserController::class, 'user_roles']);
     Route::post('/users/pengawas', [UserController::class, 'user_pengawas']);
     Route::post('/users/ubahpassword', [UserController::class, 'ubahpassword']);
+    Route::post('/users/import', [UserController::class, 'user_import']);
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
         Route::resource('dsbs', DsbsController::class);
         Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
+        Route::post('dsbs/import', [DsbsController::class, 'dsbs_import']);
     });
 
     Route::group(['middleware' => ['role:SUPER ADMIN']], function () {
