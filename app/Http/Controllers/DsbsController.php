@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Imports\DsbsImport;
 use App\Models\Dsbs;
-use App\Models\kabs;
+use App\Models\Kabs;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -13,27 +14,59 @@ use Spatie\Permission\Models\Role;
 
 class DsbsController extends Controller
 {
-    //
-
-    public function index()
+    public function index(Request $request)
     {
         $auth = Auth::user();
         $data_pengawas = [];
 
         if ($auth->kd_wilayah == '00') {
             $kab = "";
-            $kabs = kabs::all();
+            if ($request->kab_filter) {
+                $kab = $request->kab_filter;
+            }
+            $kabs = Kabs::all();
         } else {
             $kab = $auth->kd_wilayah;
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
-
         $data = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->paginate(15);
-        // dd($data[0]->pcl->pengawas);
         $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();
         return view('dsbs.index', compact('auth', 'data', 'kabs', 'data_pencacah'));
     }
 
+    public function store(Request $request)
+    {
+        $auth = Auth::user();
+        try {
+            $data = Dsbs::create([
+                'kd_kab' => $request->kd_kab,
+                'kd_kec' => $request->kd_kec,
+                'kd_desa' => $request->kd_desa,
+                'nbs' => $request->nbs,
+                'id_bs' => $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->nbs,
+                'nks' => $request->nks,
+                'status' => $request->status,
+                'jumlah_rt_c1' => $request->jumlah_rt_c1,
+                'sumber' => $request->sumber,
+                'pencacah' => $request->pencacah,
+                'created_by' => $auth->id,
+            ]);
+            return redirect()->back()->with('success', 'Berhasil Disimpan');
+        } catch (QueryException $ex) {
+            return redirect()->back()->with('error', $ex->getMessage());
+        }
+    }
+
+
+    public function destroy(Request $request)
+    {
+        $data = Dsbs::where('id', $request->id)->delete();
+        if ($data > 0) {
+            return redirect()->back()->with('success', 'Berhasil Dihapus');
+        } else {
+            return redirect()->back()->with('error', 'Gagal Dihapus');
+        }
+    }
 
     public function dsbs_pencacah(Request $request)
     {

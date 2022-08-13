@@ -3,6 +3,7 @@
 use App\Http\Controllers\DsbsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MasterWilayahController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('dsbs', DsbsController::class);
         Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
         Route::post('dsbs/import', [DsbsController::class, 'dsbs_import']);
+
+
+        Route::get('kecamatan', [MasterWilayahController::class, 'kecamatan']);
+        Route::get('desa', [MasterWilayahController::class, 'desa']);
     });
 
     Route::group(['middleware' => ['role:SUPER ADMIN']], function () {

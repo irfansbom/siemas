@@ -12,8 +12,8 @@ use Maatwebsite\Excel\Concerns\WithUpserts;
 
 class UserImport_S1 implements
     ToModel,
-    WithStartRow
-// WithUpserts
+    WithStartRow,
+    WithUpserts
 {
     public function startRow(): int
     {
@@ -26,15 +26,6 @@ class UserImport_S1 implements
     public function model(array $row)
     {
         $auth = Auth::user();
-        // try {
-        // $user = new User();
-        // $user->kd_wilayah = $row[0];
-        // $user->name = $row[1];
-        // $user->username = $row[2];
-        // $user->email = $row[3];
-        // $user->password = Hash::make($row[4]);
-        // $user->pengawas = $row[6];
-        // $user->created_by = $auth->id;
         $user =  new User([
             'kd_wilayah' => $row[0],
             'name' =>  $row[1],
@@ -44,27 +35,8 @@ class UserImport_S1 implements
             'pengawas' => $row[6],
             'created_by' => $auth->id
         ]);
-
-        $user->assignRole($row[5]);
-        Log::debug($row);
-        Log::debug($row[5]);
-        Log::debug($user);
-        Log::debug($user->assignRole($row[5]));
-        // $user
-        // dd($row);
-        // } catch (Exception $ex) {
-        //     return redirect('users')->with('error', $ex->getMessage());
-        // }
-        // $user->removeRole($user->roles->first());
-        // $user->save();
-        // $user->fresh();
-        // $user->assignRole($row[5]);
-
-        // try {
-        // } catch (Throwable $e) {
-        //     return redirect('users')->with('error', $e->getMessage());
-        // }
-
+        $assign = User::where('email', $row[3])->first();
+        $assign->syncRoles($row[5]);
         return $user;
     }
 }

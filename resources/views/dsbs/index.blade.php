@@ -134,7 +134,7 @@
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                         <button class="btn btn-outline-danger btn_hapus"
-                                                            data-id="{{ $dt->id }}" data-nama="{{ $dt->name }}"
+                                                            data-id="{{ $dt->id }}" data-id_bs="{{ $dt->id_bs }}"
                                                             data-bs-toggle="modal" data-bs-target="#modal_hapus">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
@@ -262,17 +262,19 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Hapus User<span></span></h4>
+                    <h4 class="modal-title">Hapus DS BS<span></span></h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ url('dsbs/delete') }}" method="post" id="form_hapus">
                         @csrf
+                        @method('delete')
                         <div class="row ">
-                            <input type="text" name="user_id" id="user_id" hidden>
+                            <input type="text" name="id" id="modal_hapus_id" hidden>
                             <div class="mb-3 ">
-                                <label for="nama_user" class="form-label">Nama user</label>
-                                <input type="text" class="form-control" id="user_name" name="nama" readonly>
+                                <label for="modal_hapus_id_bs" class="form-label">ID BS</label>
+                                <input type="text" class="form-control" id="modal_hapus_id_bs" name="id_bs"
+                                    readonly>
                             </div>
                         </div>
                     </form>
@@ -370,8 +372,8 @@
 
         $('.btn_hapus').click(function() {
             // console.log($(this).data("id"))
-            $('#modal_hapus').find('#user_id').val($(this).data("id"));
-            $('#modal_hapus').find('#user_name').val($(this).data("nama"));
+            $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
+            $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
         })
     </script>
 @endsection
