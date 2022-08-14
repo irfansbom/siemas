@@ -58,6 +58,7 @@
                                                         <select name="kab_filter" id="kab_filter"
                                                             class="form-control select2-show-search form-select">
                                                             <option value="">Pilih Kab/Kot</option>
+                                                            <option value=""> [00] PROVINSI SUMSEL</option>
                                                             @foreach ($kabs as $kab)
                                                                 <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}]
                                                                     {{ $kab->alias }}</option>

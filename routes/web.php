@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DsbsController;
+use App\Http\Controllers\DsrtController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterWilayahController;
@@ -29,6 +30,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/import', [UserController::class, 'user_import']);
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
+        Route::resource('dsrt', DsrtController::class);
+        Route::post('dsrt/generate', [DsrtController::class, 'dsrt_generate']);
+
         Route::resource('dsbs', DsbsController::class);
         Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
         Route::post('dsbs/import', [DsbsController::class, 'dsbs_import']);

@@ -43,7 +43,7 @@ class DsbsController extends Controller
                 'kd_kec' => $request->kd_kec,
                 'kd_desa' => $request->kd_desa,
                 'nbs' => $request->nbs,
-                'id_bs' => $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->nbs,
+                'id_bs' => '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->nbs,
                 'nks' => $request->nks,
                 'status' => $request->status,
                 'jumlah_rt_c1' => $request->jumlah_rt_c1,
