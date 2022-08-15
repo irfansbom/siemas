@@ -32,7 +32,7 @@
     @yield('css')
 </head>
 
-<body class="app sidebar-mini ltr light-mode">
+<body class="app sidebar-mini ltr light-mode sidenav-toggled">
 
     <!-- GLOBAL-LOADER -->
     <div id="global-loader">
@@ -252,9 +252,6 @@
     <script src="{{ url('assets/js/jquery.sparkline.min.js') }}"></script>
     <!-- CHART-CIRCLE JS-->
     <script src="{{ url('assets/js/circle-progress.min.js') }}"></script>
-    <!-- CHARTJS CHART JS-->
-    <script src="{{ url('assets/plugins/chart/Chart.bundle.js') }}"></script>
-    <script src="{{ url('assets/plugins/chart/utils.js') }}"></script>
     <!-- PIETY CHART JS-->
     <script src="{{ url('assets/plugins/peitychart/jquery.peity.min.js') }}"></script>
     <script src="{{ url('assets/plugins/peitychart/peitychart.init.js') }}"></script>
@@ -293,6 +290,14 @@
     <!-- BOOTSTRAP JS -->
     <script src="{{ url('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ url('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- SPARKLINE JS-->
+    <script src="{{ url('assets/js/jquery.sparkline.min.js') }}"></script>
+    <!-- CHARTJS CHART JS-->
+    <script src="{{ url('assets/plugins/chart/Chart.bundle.js') }}"></script>
+    <script src="{{ url('assets/plugins/chart/utils.js') }}"></script>
+    <!-- PIETY CHART JS-->
+    <script src="{{ url('assets/plugins/peitychart/jquery.peity.min.js') }}"></script>
+    <script src="{{ url('assets/plugins/peitychart/peitychart.init.js') }}"></script>
 
     <!-- INPUT MASK JS-->
     <script src="{{ url('assets/plugins/input-mask/jquery.mask.min.js') }}"></script>
@@ -327,6 +332,14 @@
 
     <!-- SELECT2 JS -->
     <script src="{{ url('assets/plugins/select2/select2.full.min.js') }}"></script>
+
+    <!-- INTERNAL Data tables js-->
+    <script src="{{ url('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('assets/plugins/datatable/js/dataTables.bootstrap5.js') }}"></script>
+    <script src="{{ url('assets/plugins/datatable/dataTables.responsive.min.js') }}"></script>
+
+    <!-- ECHART JS-->
+    <script src="{{ url('assets/plugins/echarts/echarts.js') }}"></script>
 
     <!-- BOOTSTRAP-DATERANGEPICKER JS -->
     <script src="{{ url('assets/plugins/bootstrap-daterangepicker/moment.min.js') }}"></script>
@@ -365,6 +378,23 @@
     <!-- FORMELEMENTS JS -->
     <script src="{{ url('assets/js/formelementadvnced.js') }}"></script>
     <script src="{{ url('assets/js/form-elements.js') }}"></script>
+
+    <!-- GALLERY JS -->
+    <script src="{{ url('assets/plugins/gallery/picturefill.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lightgallery.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lightgallery-1.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lg-pager.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lg-autoplay.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lg-fullscreen.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lg-zoom.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lg-hash.js') }}"></script>
+    <script src="{{ url('assets/plugins/gallery/lg-share.js') }}"></script>
+
+    <!-- INDEX JS -->
+    {{-- <script src="{{ url('assets/js/index1.js') }}"></script> --}}
+
+    <!-- APEXCHART JS -->
+    <script src="{{ url('assets/js/apexcharts.js') }}"></script>
 
     <!-- Color Theme js -->
     <script src="{{ url('assets/js/themeColors.js') }}"></script>

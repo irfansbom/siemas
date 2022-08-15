@@ -10,10 +10,10 @@
                 <!-- PAGE-HEADER -->
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">Dashboard 01</h1>
+                        <h1 class="page-title">Home</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Dashboard 01</li>
+                            {{-- <li class="breadcrumb-item active" aria-current="page">Dashboard 01</li> --}}
                         </ol>
                     </div>
                     <div class="ms-auto pageheader-btn">
@@ -22,11 +22,7 @@
                                 <i class="fe fe-plus"></i>
                             </span> Add Account
                         </a>
-                        <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
-                            <span>
-                                <i class="fe fe-log-in"></i>
-                            </span> Export
-                        </a>
+
                     </div>
                 </div>
                 <!-- PAGE-HEADER END -->
@@ -130,313 +126,128 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-9">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Total Transactions</h3>
-                            </div>
-                            <div class="card-body pb-0">
-                                <div id="chartArea" class="chart-donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- COL END -->
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-3">
-                        <div class="card custom-card ">
-                            <div class="card-header">
-                                <h3 class="card-title">Recent Orders</h3>
-                            </div>
-                            <div class="card-body pt-0 ps-0 pe-0">
-                                <div id="recentorders" class="apex-charts ht-150"></div>
-                                <div class="row sales-product-infomation pb-0 mb-0 mx-auto wd-100p mt-6">
-                                    <div class="col-md-6 col justify-content-center text-center">
-                                        <p class="mb-0 d-flex justify-content-center"><span
-                                                class="legend bg-primary"></span>Delivered</p>
-                                        <h3 class="mb-1 fw-bold">5238</h3>
-                                        <div class="d-flex justify-content-center ">
-                                            <p class="text-muted mb-0">Last 6 months</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col text-center float-end">
-                                        <p class="mb-0 d-flex justify-content-center "><span
-                                                class="legend bg-background2"></span>Cancelled</p>
-                                        <h3 class="mb-1 fw-bold">3467</h3>
-                                        <div class="d-flex justify-content-center ">
-                                            <p class="text-muted mb-0">Last 6 months</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- COL END -->
-                </div>
-                <!-- ROW-1 END -->
 
-                <!-- ROW-3 -->
                 <div class="row">
-                    <div class="col-xl-4 col-md-12">
-                        <div class="card overflow-hidden">
-                            <div class="card-header">
-                                <div>
-                                    <h3 class="card-title">Timeline</h3>
-                                </div>
-                            </div>
-                            <div class="card-body pb-0 pt-4">
-                                <div class="activity1">
-                                    <div class="activity-blog">
-                                        <div class="activity-img brround bg-primary-transparent text-primary">
-                                            <i class="fa fa-user-plus fs-20"></i>
-                                        </div>
-                                        <div class="activity-details d-flex">
-                                            <div><b><span class="text-dark"> Mr John </span> </b> Started
-                                                following you <span class="d-flex text-muted fs-11">01 June
-                                                    2020</span></div>
-                                            <div class="ms-auto fs-13 text-dark fw-semibold"><span
-                                                    class="badge bg-primary text-white">1m</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="activity-blog">
-                                        <div class="activity-img brround bg-secondary-transparent text-secondary">
-                                            <i class="fa fa-comment fs-20"></i>
-                                        </div>
-                                        <div class="activity-details d-flex">
-                                            <div><b><span class="text-dark"> Lily </span> </b> 1 Commented
-                                                applied <span class="d-flex text-muted fs-11">01 July
-                                                    2020</span> </div>
-                                            <div class="ms-auto fs-13 text-dark fw-semibold"><span
-                                                    class="badge bg-danger text-white">3m</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="activity-blog">
-                                        <div class="activity-img brround bg-success-transparent text-success">
-                                            <i class="fa fa-thumbs-up fs-20"></i>
-                                        </div>
-                                        <div class="activity-details d-flex">
-                                            <div><b><span class="text-dark"> Kevin </span> </b> liked your site
-                                                <span class="d-flex text-muted fs-11">05 July 2020</span>
-                                            </div>
-                                            <div class="ms-auto fs-13 text-dark fw-semibold"><span
-                                                    class="badge bg-warning text-white">5m</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="activity-blog">
-                                        <div class="activity-img brround bg-info-transparent text-info">
-                                            <i class="fa fa-envelope fs-20"></i>
-                                        </div>
-                                        <div class="activity-details d-flex">
-                                            <div><b><span class="text-dark"> Andrena </span> </b> posted a new
-                                                article <span class="d-flex text-muted fs-11">09 October
-                                                    2020</span></div>
-                                            <div class="ms-auto fs-13 text-dark fw-semibold"><span
-                                                    class="badge bg-info text-white">5m</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="activity-blog">
-                                        <div class="activity-img brround bg-danger-transparent text-danger">
-                                            <i class="fa fa-shopping-bag fs-20"></i>
-                                        </div>
-                                        <div class="activity-details d-flex">
-                                            <div><b><span class="text-dark"> Sonia </span> </b> Delivery in
-                                                progress <span class="d-flex text-muted fs-11">12 October
-                                                    2020</span></div>
-                                            <div class="ms-auto fs-13 text-dark fw-semibold"><span
-                                                    class="badge bg-warning text-white">5m</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title fw-semibold ">Browser Usage</h4>
-                            </div>
-                            <div class="card-body pt-2 pb-2">
-                                <div class="d-md-flex align-items-center browser-stats">
-                                    <div class="d-flex">
-                                        <i class="fa fa-chrome bg-secondary-gradient text-white me-2"></i>
-                                        <p class="fs-16 my-auto mb-0">Chrome</p>
-                                    </div>
-                                    <div class="ms-auto my-auto">
-                                        <div class="d-flex">
-                                            <span class="my-auto fs-16">35,502</span>
-                                            <span class="text-success fs-15"><i class="fe fe-arrow-up"></i>12.75%</span>
-                                        </div>
-                                    </div>
+                                <h3 class="card-title">Data Per Ruta</h3>
+                                <div class="ms-auto pageheader-btn">
+                                    <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
+                                        <span>
+                                            <i class="fe fe-log-in"></i>
+                                        </span> Export
+                                    </a>
                                 </div>
-                                <div class="d-md-flex align-items-center browser-stats">
-                                    <div class="d-flex">
-                                        <i class="fa fa-opera text-white bg-danger-gradient me-2"></i>
-                                        <p class="fs-16 my-auto mb-0">Opera</p>
-                                    </div>
-                                    <div class="ms-auto my-auto">
-                                        <div class="d-flex">
-                                            <span class="my-auto fs-16">12,563</span>
-                                            <span class="text-danger fs-15"><i class="fe fe-arrow-down"></i>15.12%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-md-flex align-items-center browser-stats">
-                                    <div class="d-flex">
-                                        <i class="fa fa-firefox text-white bg-purple-gradient me-2"></i>
-                                        <p class="fs-16 my-auto mb-0">IE</p>
-                                    </div>
-                                    <div class="ms-auto my-auto">
-                                        <div class="d-flex">
-                                            <span class="my-auto fs-16">25,364</span>
-                                            <span class="text-success fs-15"><i class="fe fe-arrow-up"></i>24.37%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-md-flex align-items-center browser-stats">
-                                    <div class="d-flex">
-                                        <i class="fa fa-edge text-white bg-info-gradient me-2"></i>
-                                        <p class="fs-16 my-auto mb-0">Firefox</p>
-                                    </div>
-                                    <div class="ms-auto my-auto">
-                                        <div class="d-flex">
-                                            <span class="my-auto fs-16">14,635</span>
-                                            <span class="text-success fs-15"><i class="fe fe-arrow-up"></i>15,63%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-md-flex align-items-center browser-stats">
-                                    <div class="d-flex">
-                                        <i class="fa fa-android text-white bg-success-gradient me-2"></i>
-                                        <p class="fs-16 my-auto mb-0">Android</p>
-                                    </div>
-                                    <div class="ms-auto my-auto">
-                                        <div class="d-flex">
-                                            <span class="my-auto fs-16">15,453</span>
-                                            <span class="text-danger fs-15"><i class="fe fe-arrow-down"></i>23.70%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title fw-semibold ">Daily Activity</h4>
-                            </div>
-                            <div class="card-body pb-0">
-                                <ul class="task-list">
-                                    <li>
-                                        <i class="task-icon bg-primary"></i>
-                                        <h6>Task Finished<span class="text-muted fs-11 mx-2">29 Oct 2020</span>
-                                        </h6>
-                                        <p class="text-muted fs-12">Adam Berry finished task on<a
-                                                href="javascript:void(0);" class="fw-semibold"> Project
-                                                Management</a></p>
-                                    </li>
-                                    <li>
-                                        <i class="task-icon bg-secondary"></i>
-                                        <h6>New Comment<span class="text-muted fs-11 mx-2">25 Oct 2020</span>
-                                        </h6>
-                                        <p class="text-muted fs-12">Victoria commented on Project <a
-                                                href="javascript:void(0);" class="fw-semibold"> AngularJS
-                                                Template</a></p>
-                                    </li>
-                                    <li>
-                                        <i class="task-icon bg-primary"></i>
-                                        <h6>New Comment<span class="text-muted fs-11 mx-2">25 Oct 2020</span>
-                                        </h6>
-                                        <p class="text-muted fs-12">Victoria commented on Project <a
-                                                href="javascript:void(0);" class="fw-semibold"> AngularJS
-                                                Template</a></p>
-                                    </li>
-                                    <li>
-                                        <i class="task-icon bg-secondary"></i>
-                                        <h6>Task Overdue<span class="text-muted fs-11 mx-2">14 Oct 2020</span>
-                                        </h6>
-                                        <p class="text-muted mb-0 fs-12">Petey Cruiser finished task <a
-                                                href="javascript:void(0);" class="fw-semibold"> Integrated
-                                                management</a></p>
-                                    </li>
-                                    <li>
-                                        <i class="task-icon bg-primary"></i>
-                                        <h6>Task Overdue<span class="text-muted fs-11 mx-2">29 Oct 2020</span>
-                                        </h6>
-                                        <p class="text-muted mb-0 fs-12">Petey Cruiser finished task <a
-                                                href="javascript:void(0);" class="fw-semibold"> Integrated
-                                                management</a></p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- COL END -->
-                <!-- ROW-3 END -->
 
-                <!-- ROW-5 -->
-                <div class="row">
-                    <div class="col-12 col-sm-12">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h3 class="card-title mb-0">Product Sales</h3>
                             </div>
                             <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-10">
+                                        <form action="" id="form_filter">
+                                            <fieldset>
+                                                <div class="mb-1 row">
+                                                    {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
+                                                    <div class="col-sm-3">
+                                                        <select name="kab_filter" id="kab_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Pilih Kab/Kot</option>
+                                                            <option value=""> [00] PROVINSI SUMSEL</option>
+                                                            @foreach ($kabs as $kab)
+                                                                <option value="{{ $kab->id_kab }}"
+                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
+                                                                    [{{ $kab->id_kab }}]
+                                                                    {{ $kab->alias }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="number" class="form-control" placeholder="ID BS"
+                                                            name="bs_filter"
+                                                            @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="status_filter" id="status_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih Status Pencacahan</option>
+                                                            <option value="selesai"
+                                                                @if ($request->status_filter == 'selesai') selected @endif>selesai
+                                                            </option>
+                                                            <option value="belum"
+                                                                @if ($request->status_filter == 'belum') selected @endif>belum
+                                                            </option>
+                                                        </select>
 
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button type="submit" class="btn btn-primary">Cari</button>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
                                 <div class="table-responsive">
-                                    <table class="table  border text-nowrap text-md-nowrap mg-b-0">
+                                    <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
                                         <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Salary</th>
+                                            <tr class="text-center">
+                                                <th>No</th>
+                                                <th>ID BS</th>
+                                                <th>NU RT</th>
+                                                <th>KRT</th>
+                                                <th>ART</th>
+                                                <th>Status Rumah</th>
+                                                <th>FOTO</th>
+                                                <th>status <br> Pencacahan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Joan Powell</td>
-                                                <td>Associate Developer</td>
-                                                <td>$450,870</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Gavin Gibson</td>
-                                                <td>Account manager</td>
-                                                <td>$230,540</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Julian Kerr</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td>$55,300</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Cedric Kelly</td>
-                                                <td>Accountant</td>
-                                                <td>$234,100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Samantha May</td>
-                                                <td>Junior Technical Author</td>
-                                                <td>$43,198</td>
-                                            </tr>
+                                            @foreach ($data as $key => $dt)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{ ++$key }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $dt->id_bs }}
+                                                    </td>
+                                                    <td class="text-center">{{ $dt->nu_rt }}</td>
+                                                    <td class="text-center">{{ $dt->nama_krt }}</td>
+                                                    <td class="text-center">{{ $dt->jml_art }}</td>
+                                                    <td class="text-center">{{ $dt->status_rumah }}</td>
+                                                    <td>
+                                                        <ul id="lightgallery" class="list-unstyled row">
+                                                            <li class=" border-bottom-0" style="max-height:300px"
+                                                                data-responsive=".{{ url('foto') . '/' . $dt->foto }}"
+                                                                data-src="{{ url('foto') . '/' . $dt->foto }}"
+                                                                data-sub-html="<h4>Foto Rumah</h4><p>  {{ $dt->id_bs . ', NU RT : ' . $dt->nu_rt }} </p>">
+                                                                <a href="">
+                                                                    <img class="img-responsive br-5"
+                                                                        src="{{ url('foto') . '/' . $dt->foto }}"
+                                                                        alt="Belum Ada Foto" style="max-height:300px">
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </td>
+                                                    <td class="text-center">{{ $dt->status_pencacahan }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
+                                    {{ $data->links() }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- COL END -->
             </div>
-            <!-- ROW-5 END -->
         </div>
-        <!-- CONTAINER END -->
-    </div>
-@endsection
+    @endsection
 
-@section('script')
-@endsection
+    @section('script')
+        <script>
+            $(document).ready(function() {
+
+            });
+        </script>
+    @endsection

@@ -19,8 +19,8 @@ class CreateDsbsTable extends Migration
             $table->char('kd_kec', 4);
             $table->char('kd_desa', 4);
             $table->char('nbs', 5);
-            $table->char('id_bs', 15);
-            $table->char('nks', 6);
+            $table->char('id_bs', 15)->unique();
+            $table->char('nks', 6)->unique();
             $table->string('status')->nullable();
             $table->integer('jumlah_rt_c1')->nullable();
             $table->integer('sumber')->nullable();
@@ -30,6 +30,7 @@ class CreateDsbsTable extends Migration
             $table->char('updated_by', 5)->nullable();
             $table->timestamps();
         });
+
 
         Schema::create('dsrt', function (Blueprint $table) {
             $table->id();
@@ -73,6 +74,8 @@ class CreateDsbsTable extends Migration
             $table->char('created_by', 5)->nullable();
             $table->char('updated_by', 5)->nullable();
             $table->timestamps();
+
+            $table->unique(["id_bs", "nu_rt", 'semester'], 'dsrt');
         });
     }
 

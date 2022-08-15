@@ -89,6 +89,7 @@
                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th>No</th>
+                                                <th>SEMESTER</th>
                                                 <th>ID BS</th>
                                                 <th>NU RT</th>
                                                 <th>Nama KRT</th>
@@ -101,13 +102,14 @@
                                             @foreach ($data as $key => $dt)
                                                 <tr class="align-middle">
                                                     <td class="text-center align-middle">{{ ++$key }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->semester }}</td>
                                                     <td class="align-middle text-center">{{ $dt->id_bs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nama_krt }}</td>
                                                     <td class="align-middle text-center">{{ $dt->jumlah_art }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{ $dt->pencacah }}
+                                                        {{ $dt->dsbs->pencacah }}
                                                     </td>
                                                     {{-- <td class="align-middle text-center">
                                                         @isset($dt->iss->pengawas)
@@ -130,7 +132,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                                 {{ $data->links() }}
                             </div>
                         </div>
@@ -269,8 +270,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="modal_generate_semester">Semester</label>
-                                    <input type="number" name="semester" id="modal_generate_semester"
-                                        class="form-control">
+                                    <input type="number" name="semester" id="modal_generate_semester" value="1"
+                                        readonly class="form-control">
                                 </div>
                             </div>
                         </div>

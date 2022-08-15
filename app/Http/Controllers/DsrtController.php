@@ -27,7 +27,7 @@ class DsrtController extends Controller
             $kab = $auth->kd_wilayah;
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
-        $data = Dsrt::where('kd_kab', "LIKE", "%" . $kab . "%")->paginate(15);
+        $data = Dsrt::where('kd_kab', "LIKE", "%" . $kab . "%")->paginate(10);
         $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
         // $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();
         return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs'));
@@ -40,16 +40,19 @@ class DsrtController extends Controller
         try {
             foreach ($id_bs as $bs) {
                 for ($i = 1; $i <= 10; $i++) {
-                    $dsrt = Dsrt::create([
-                        'kd_kab' => substr($bs, 0, 2),
-                        'id_bs' => $bs,
-                        // 'nks' => ,
-                        'nu_rt' => $i,
-                        'semester' => $request->semester,
-                    ]);
+                    $dsrt = Dsrt::updateOrCreate(
+                        [
+                            'id_bs' => $bs, 'nu_rt' => $i,  'semester' => $request->semester,
+                        ],
+                        [
+                            'kd_kab' => substr($bs, 2, 2),
+                            'nama_krt' => "",
+                            'jml_art' => "",
+                        ]
+                    );
                 }
             }
-            return redirect()->back()->withInput()->with('succes', 'Berhasil Digenerate');
+            return redirect()->back()->withInput()->with('success', 'Berhasil Digenerate');
         } catch (QueryException $ex) {
             return redirect()->back()->withInput()->with('error', $ex->getMessage());
         }

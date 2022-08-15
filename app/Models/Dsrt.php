@@ -10,4 +10,9 @@ class Dsrt extends Model
     use HasFactory;
     protected $table = 'dsrt';
     protected $guarded = [];
+
+    public function dsbs()
+    {
+        return $this->belongsTo(Dsbs::class, 'id_bs', 'id_bs');
+    }
 }
