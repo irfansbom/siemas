@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
         Route::resource('dsrt', DsrtController::class);
         Route::post('dsrt/generate', [DsrtController::class, 'dsrt_generate']);
+        Route::post('dsrt/import', [DsrtController::class, 'dsrt_import']);
 
         Route::resource('dsbs', DsbsController::class);
         Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);

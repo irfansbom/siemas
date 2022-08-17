@@ -106,10 +106,12 @@
                                                     <td class="align-middle text-center">{{ $dt->id_bs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nama_krt }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->jumlah_art }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->jml_art }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{ $dt->dsbs->pencacah }}
+                                                        @isset($dt->dsbs)
+                                                            {{ $dt->dsbs->pencacah }}
+                                                        @endisset
                                                     </td>
                                                     {{-- <td class="align-middle text-center">
                                                         @isset($dt->iss->pengawas)
@@ -321,11 +323,11 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Import DSBS<span></span></h4>
+                    <h4 class="modal-title">Import DSRT<span></span></h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('dsbs/import') }}" method="post" id="form_import"
+                    <form action="{{ url('dsrt/import') }}" method="post" id="form_import"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row ">

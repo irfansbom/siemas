@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DsrtImport;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Kabs;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DsrtController extends Controller
 {
@@ -55,6 +57,16 @@ class DsrtController extends Controller
             return redirect()->back()->withInput()->with('success', 'Berhasil Digenerate');
         } catch (QueryException $ex) {
             return redirect()->back()->withInput()->with('error', $ex->getMessage());
+        }
+    }
+    public function dsrt_import(Request $request)
+    {
+        if ($request->file('import_file')) {
+            Excel::import(new DsrtImport, request()->file('import_file'));
+            return redirect()->back()->with('success', 'Berhasil Memasukkan data');
+        } else {
+
+            return redirect()->back()->with('error', 'Kesalahan File');
         }
     }
 }

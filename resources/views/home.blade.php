@@ -190,15 +190,15 @@
                                 <div class="table-responsive">
                                     <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
                                         <thead>
-                                            <tr class="text-center">
-                                                <th>No</th>
-                                                <th>ID BS</th>
-                                                <th>NU RT</th>
-                                                <th>KRT</th>
-                                                <th>ART</th>
-                                                <th>Status Rumah</th>
-                                                <th>FOTO</th>
-                                                <th>status <br> Pencacahan</th>
+                                            <tr class="text-center align-middle">
+                                                <th class="text-center align-middle">No</th>
+                                                <th class="text-center align-middle">ID BS</th>
+                                                <th class="text-center align-middle">NU RT</th>
+                                                <th class="text-center align-middle">KRT</th>
+                                                <th class="text-center align-middle">Jumlah <br> ART</th>
+                                                <th class="text-center align-middle">Status <br> Rumah</th>
+                                                <th class="text-center align-middle">FOTO</th>
+                                                <th class="text-center align-middle">status <br> Pencacahan</th>
                                             </tr>
                                         </thead>
                                         <tbody>

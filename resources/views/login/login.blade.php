@@ -79,8 +79,8 @@
                                     </span>
                                 </div>
                                 <div class="text-end pt-1">
-                                    <p class="mb-0"><a href="forgot-password.html" class="text-primary ms-1">Forgot
-                                            Password?</a></p>
+                                    {{-- <p class="mb-0"><a href="forgot-password.html" class="text-primary ms-1">Forgot
+                                            Password?</a></p> --}}
                                 </div>
                                 <div class="container-login100-form-btn">
                                     <button type="submit" class="login100-form-btn btn-primary">
@@ -88,12 +88,12 @@
                                     </button>
                                 </div>
                                 <div class="text-center pt-3">
-                                    <p class="text-dark mb-0">Not a member?<a href="register.html"
-                                            class="text-primary ms-1">Create an Account</a></p>
+                                    {{-- <p class="text-dark mb-0">Not a member?<a href="register.html"
+                                            class="text-primary ms-1">Create an Account</a></p> --}}
                                 </div>
                             </form>
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <div class="d-flex justify-content-center my-3">
                                 <a href="" class="social-login  text-center me-4">
                                     <i class="fa fa-instagram"></i>
@@ -105,7 +105,7 @@
                                     <i class="fa fa-twitter"></i>
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <!-- CONTAINER CLOSED -->
