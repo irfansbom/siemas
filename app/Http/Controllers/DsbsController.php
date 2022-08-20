@@ -29,9 +29,12 @@ class DsbsController extends Controller
             $kab = $auth->kd_wilayah;
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
-        $data = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->paginate(15);
+        $data = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")
+            ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
+            ->paginate(15);
+        $data->appends($request->all());
         $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();
-        return view('dsbs.index', compact('auth', 'data', 'kabs', 'data_pencacah'));
+        return view('dsbs.index', compact('auth', 'data', 'kabs', 'data_pencacah', 'request'));
     }
 
     public function store(Request $request)

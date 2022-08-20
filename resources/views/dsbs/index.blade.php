@@ -17,10 +17,10 @@
                 <div class="row">
                     <div class="col-12 col-sm-12">
                         <div class="card ">
-                            <div class="card-header">
+                            <div class="card-header border-0 pb-0">
                                 <h3 class="card-title mb-0">List DS BS</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
+                                    @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI'])
                                         <div class="btn-group mt-2 mb-2">
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                 data-bs-target="#modal_import_dsbs">Import DSBS</button>
@@ -47,6 +47,14 @@
                                     @endhasanyrole
                                 </div>
                             </div>
+                            <div class="card-header pt-0 d-flex justify-content-center">
+                                <div class="row col">
+                                    <div class="alert alert-info" role="alert">
+                                        Import DSBS dapat dilakukan sebelum Kegiatan Pencacahan, <br>
+                                        Import DSBS hanya mengisi pencacah, untuk pengawas diisi di menu user
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row mb-2">
                                     <div class="col-10">
@@ -54,18 +62,25 @@
                                             <fieldset>
                                                 <div class="mb-1 row">
                                                     {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-3">
                                                         <select name="kab_filter" id="kab_filter"
-                                                            class="form-control select2-show-search form-select" required>
+                                                            class="form-control select2-show-search form-select">
                                                             <option value="">Pilih Kab/Kot</option>
                                                             <option value=""> [00] PROVINSI SUMSEL</option>
                                                             @foreach ($kabs as $kab)
-                                                                <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}]
+                                                                <option value="{{ $kab->id_kab }}"
+                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
+                                                                    [{{ $kab->id_kab }}]
                                                                     {{ $kab->alias }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-2">
+                                                        <input type="text" name="bs_filter" id="bs_filter"
+                                                            placeholder="cari ID BS" class="form-control"
+                                                            @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                    </div>
+                                                    <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>
                                                 </div>

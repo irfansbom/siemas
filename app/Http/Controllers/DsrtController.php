@@ -29,10 +29,12 @@ class DsrtController extends Controller
             $kab = $auth->kd_wilayah;
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
-        $data = Dsrt::where('kd_kab', "LIKE", "%" . $kab . "%")->paginate(10);
+        $data = Dsrt::where('kd_kab', "LIKE", "%" . $kab . "%")
+            ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
+            ->paginate(10);
         $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
-        // $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();
-        return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs'));
+        $data->appends($request->all());
+        return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs', 'request'));
     }
 
     public function dsrt_generate(Request $request)
