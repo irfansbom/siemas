@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login_android', [AuthController::class, 'login_android']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('logout_android', [AuthController::class, 'logout_android']);
     Route::POST('/get_alokasi_dsbs_pcl', [DsbsApiController::class, 'get_alokasi_dsbs_pcl']);
     Route::POST('/get_alokasi_dsbs_pml', [DsbsApiController::class, 'get_alokasi_dsbs_pml']);
     Route::POST('/get_alokasi_dsrt_pcl', [DsrtApiController::class, 'get_alokasi_dsrt_pcl']);

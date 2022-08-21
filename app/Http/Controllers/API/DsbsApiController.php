@@ -14,6 +14,15 @@ class DsbsApiController extends Controller
 
 
         $data_dsbs = Dsbs::where('pencacah', $request->pencacah)
+            ->join('kabs', function ($join) {
+                $join->on('dsbs.kd_kab', 'kabs.id_kab');
+            })
+            ->join('kecs', function ($join) {
+                $join->on('dsbs.kd_kab', 'kecs.id_kab')->on('dsbs.kd_kec', 'kecs.id_kec');
+            })
+            ->join('desas', function ($join) {
+                $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
+            })
             ->get()->toArray();
 
         if (!$data_dsbs) {
@@ -37,6 +46,15 @@ class DsbsApiController extends Controller
 
 
         $data_dsbs = Dsbs::where('pencacah', $request->pencacah)
+            ->join('kabs', function ($join) {
+                $join->on('dsbs.kd_kab', 'kabs.id_kab');
+            })
+            ->join('kecs', function ($join) {
+                $join->on('dsbs.kd_kab', 'kecs.id_kab')->on('dsbs.kd_kec', 'kecs.id_kec');
+            })
+            ->join('desas', function ($join) {
+                $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
+            })
             ->get()->toArray();
 
         if (!$data_dsbs) {

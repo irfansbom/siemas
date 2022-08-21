@@ -18,7 +18,9 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->join('kabs', function ($join) {
+            $join->on('users.kd_wilayah', 'kabs.id_kab');
+        })->first();
 
         if (!$user) {
             $json = [
