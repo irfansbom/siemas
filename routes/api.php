@@ -28,6 +28,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::POST('/get_alokasi_dsbs_pml', [DsbsApiController::class, 'get_alokasi_dsbs_pml']);
     Route::POST('/get_alokasi_dsrt_pcl', [DsrtApiController::class, 'get_alokasi_dsrt_pcl']);
     Route::POST('/get_alokasi_dsrt_pml', [DsrtApiController::class, 'get_alokasi_dsrt_pml']);
-    
-
 });

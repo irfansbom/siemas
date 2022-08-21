@@ -25,7 +25,6 @@ class UserController extends Controller
         $auth = Auth::user();
         $data_pengawas = [];
         $kab = '';
-
         if ($auth->kd_wilayah == '00') {
             if ($request->kab_filter) {
                 $kab = $request->kab_filter;
@@ -38,16 +37,30 @@ class UserController extends Controller
             $data_pengawas = User::where('kd_wilayah', $auth->kd_wilayah)->role('pengawas')->get();
         }
 
-        $user = User::where('kd_wilayah', 'LIKE', '%' . $kab . '%')->paginate(15);
-        $data_roles = Role::all();
-        return view('user.index', compact('user', 'data_roles', 'auth', 'data_pengawas', 'kabs'));
+        if ($auth->hasRole('SUPER ADMIN')) {
+            $data_roles = Role::all();
+        } else {
+            $data_roles = Role::where('name', '!=', 'SUPER ADMIN')->where('name', '!=', 'ADMIN PROVINSI')->get();
+        }
+
+        if ($request->role_filter) {
+            $user = User::where('kd_wilayah', 'LIKE', '%' . $kab . '%')
+                ->where('name', 'LIKE', '%' . $request->nama_filter  . '%')
+                ->role($request->role_filter)
+                ->paginate(15);
+        } else {
+            $user = User::where('kd_wilayah', 'LIKE', '%' . $kab . '%')
+                ->where('name', 'LIKE', '%' . $request->nama_filter  . '%')
+                ->paginate(15);
+        }
+        $user->appends($request->all());
+        return view('user.index', compact('user', 'data_roles', 'auth', 'data_pengawas', 'kabs', 'request'));
     }
 
     public function create()
     {
         $auth = Auth::user();
         $user = new User();
-        $data_roles = [];
         $data_pengawas = [];
 
         if ($auth->kd_wilayah == '00') {
@@ -57,14 +70,7 @@ class UserController extends Controller
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
             $data_pengawas = User::role('penawas')->get();
         }
-
-        if ($auth->hasRole('SUPER ADMIN')) {
-            $data_roles = Role::all();
-        } else {
-            $data_roles = Role::where('name', '!=', 'SUPER ADMIN')->where('name', '!=', 'ADMIN PROVINSI')->get();
-        }
-
-        return view('user.create', compact('data_roles', 'user', 'auth', 'kabs', 'data_pengawas'));
+        return view('user.create', compact('user', 'auth', 'kabs', 'data_pengawas'));
     }
 
 

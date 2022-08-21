@@ -35,8 +35,11 @@ class UserImport_S1 implements
             'pengawas' => $row[6],
             'created_by' => $auth->id
         ]);
-        $assign = User::where('email', $row[3])->first();
-        $assign->syncRoles($row[5]);
+
+        if (in_array($row[5], ['PENCACAH', 'PENGAWAS', 'ADMIN KABKOT', 'SUPERVISOR'])) {
+            $assign = User::where('email', $row[3])->first();
+            $assign->syncRoles($row[5]);
+        }
         return $user;
     }
 }

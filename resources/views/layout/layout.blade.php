@@ -147,7 +147,7 @@
                                     </ul>
                                 </li>
                             @endrole
-                            @hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT')
+                            @hasanyrole('SUPER ADMIN|ADMIN PROVINSI')
                                 <li class="slide">
                                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
                                         <i class="side-menu__icon fe fe-map"></i>

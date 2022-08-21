@@ -28,7 +28,7 @@
                 <!-- PAGE-HEADER END -->
                 @include('alert')
                 <!-- ROW-1 -->
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
@@ -125,13 +125,75 @@
                             </div>
                         </div>
                     </div>
+                </div> --}}
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Tabulasi Foto Per Kabupaten Kota</h3>
+                                <div class="ms-auto pageheader-btn">
+                                    <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
+                                        <span>
+                                            <i class="fe fe-log-in"></i>
+                                        </span> Export
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="table-responsive">
+                                            <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
+                                                <thead>
+                                                    <tr class="text-center align-middle">
+                                                        <th class="text-center align-middle">No</th>
+                                                        <th class="text-center align-middle">KAB</th>
+                                                        <th class="text-center align-middle">Jml <br> DSRT</th>
+                                                        <th class="text-center align-middle">Jml <br> ART</th>
+                                                        <th class="text-center align-middle">Foto <br> Masuk </th>
+                                                        <th class="text-center align-middle">Persentase <br> Foto Masuk
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($tab_tab1 as $key => $tab1)
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                {{ ++$key }}
+                                                            </td>
+                                                            <td class="">
+                                                                [{{ $tab1->kd_kab }}] {{ $tab1->alias }}
+                                                            </td>
+                                                            <td class="text-center">{{ $tab1->jml_dsrt }}</td>
+                                                            <td class="text-center">{{ $tab1->jml_art }}</td>
+                                                            <td class="text-center">{{ $tab1->jml_foto }}</td>
+                                                            <td class="text-center">
+                                                                {{ ($tab1->jml_foto / $tab1->jml_dsrt) * 100 }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="chart-container">
+                                            <canvas id="chartBar1" class="h-275"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Data Per Ruta</h3>
+                                <h3 class="card-title">Ruta 3 Desil Terbawah Berdasarkan Rata-Rata Perkapita
+                                </h3>
                                 <div class="ms-auto pageheader-btn">
                                     <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
                                         <span>
@@ -187,7 +249,49 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="table-responsive">
+                                @if (count($dsrt) > 0)
+                                    <div class="table-responsive">
+                                        <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
+                                            <thead>
+                                                <tr class="text-center align-middle">
+                                                    <th class="text-center align-middle">No</th>
+                                                    <th class="text-center align-middle">ID BS</th>
+                                                    <th class="text-center align-middle">NU RT</th>
+                                                    <th class="text-center align-middle">KRT</th>
+                                                    <th class="text-center align-middle">Jumlah <br> ART</th>
+                                                    <th class="text-center align-middle">Status <br> Rumah</th>
+                                                    <th class="text-center align-middle">Rata2 <br>Perkapita</th>
+                                                    <th class="text-center align-middle">FOTO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($dsrt as $key => $dt)
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            {{ ++$key }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $dt->id_bs }}
+                                                        </td>
+                                                        <td class="text-center">{{ $dt->nu_rt }}</td>
+                                                        <td class="text-center">{{ $dt->nama_krt }}</td>
+                                                        <td class="text-center">{{ $dt->jml_art }}</td>
+                                                        <td class="text-center">{{ $dt->status_rumah }}</td>
+                                                        <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
+                                                        <td>
+                                                            <img class="br-5" src="{{ url('foto') . '/' . $dt->foto }}"
+                                                                alt="Belum Ada Foto" style="max-height:150px">
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        {{ $dsrt->links() }}
+                                    </div>
+                                @else
+                                    Data Kurang Dari 10
+                                @endif
+                                {{-- <div class="table-responsive">
                                     <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
                                         <thead>
                                             <tr class="text-center align-middle">
@@ -235,7 +339,7 @@
                                         </tbody>
                                     </table>
                                     {{ $data->links() }}
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -248,6 +352,68 @@
         <script>
             $(document).ready(function() {
 
+            });
+
+            /* Bar-Chart1 */
+            var label_tab1 = {!! json_encode($label_tab1) !!};
+            var data_tab1 = {!! json_encode($data_tab1) !!};
+            $(function() {
+                console.log(label_tab1)
+                var ctx = document.getElementById("chartBar1").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: label_tab1,
+                        datasets: [{
+                            label: 'Persentase',
+                            data: data_tab1,
+                            borderWidth: 2,
+                            backgroundColor: '#6259ca',
+                            borderColor: '#6259ca',
+                            borderWidth: 2.0,
+                            pointBackgroundColor: '#ffffff',
+
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Persentase Petugas Kab/Kota Telah Upload Foto'
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: true
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    stepSize: 100,
+                                    fontColor: "#77778e",
+                                },
+                                gridLines: {
+                                    color: 'rgba(119, 119, 142, 0.2)'
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    display: true,
+                                    fontColor: "#77778e",
+                                },
+                                gridLines: {
+                                    display: false,
+                                    color: 'rgba(119, 119, 142, 0.2)'
+                                }
+                            }]
+                        },
+                        legend: {
+                            labels: {
+                                fontColor: "#77778e"
+                            },
+                        },
+                    }
+                });
             });
         </script>
     @endsection

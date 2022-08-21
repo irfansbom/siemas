@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-12">
                         <div class="card ">
-                            <div class="card-header">
+                            <div class="card-header border-0 pb-0">
                                 <h3 class="card-title mb-0">List Users</h3>
                                 <div class="ms-auto pageheader-btn">
                                     @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
@@ -47,6 +47,17 @@
                                     @endhasanyrole
                                 </div>
                             </div>
+                            <div class="card-header pt-0 d-flex justify-content-center">
+                                <div class="row col">
+                                    <div class="alert alert-info" role="alert">
+                                        Username berguna untuk melakukan login di aplikasi android sehingga pastikan
+                                        username telah benar,<br>
+                                        Import dengan excel memberikan akses pengimport untuk melakukan update apabila ada
+                                        email yang duplikat, pastikan email tidak terduplikat di baris lain <br>
+                                        Level user yang diimport dapat dilihat pada template import user di sheet ke-2
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row mb-2">
                                     <div class="col-10">
@@ -54,18 +65,39 @@
                                             <fieldset>
                                                 <div class="mb-1 row">
                                                     {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-3">
                                                         <select name="kab_filter" id="kab_filter"
                                                             class="form-control select2-show-search form-select">
                                                             <option value="">Pilih Kab/Kot</option>
-                                                            <option value=""> [00] PROVINSI SUMSEL</option>
+                                                            <option value=""> [00]
+                                                                PROVINSI SUMSEL</option>
                                                             @foreach ($kabs as $kab)
-                                                                <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}]
+                                                                <option value="{{ $kab->id_kab }}"
+                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
+                                                                    [{{ $kab->id_kab }}]
                                                                     {{ $kab->alias }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-2">
+                                                        <select name="role_filter" id="role_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Pilih Roles</option>
+                                                            <option value="">Pilih Semua</option>
+                                                            @foreach ($data_roles as $roles)
+                                                                <option value="{{ $roles->name }}"
+                                                                    @if ($roles->name == $request->role_filter) selected @endif>
+                                                                    {{ $roles->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" name="nama_filter" id="nama_filter"
+                                                            placeholder="cari nama user" class="form-control"
+                                                            @if ($request->nama_filter) value="{{ $request->nama_filter }}" @endif>
+                                                    </div>
+                                                    <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>
                                                 </div>

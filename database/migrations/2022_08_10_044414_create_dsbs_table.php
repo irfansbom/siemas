@@ -60,6 +60,7 @@ class CreateDsbsTable extends Migration
             $table->integer('luas_lantai')->nullable();
 
             $table->string('status_pencacahan')->nullable();
+            $table->string('lama_pencacahan', 10)->nullable();
 
             $table->integer('gsmp')->nullable();
             $table->text('foto')->nullable();

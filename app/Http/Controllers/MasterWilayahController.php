@@ -27,6 +27,7 @@ class MasterWilayahController extends Controller
         }
 
         $data = Kecs::where('id_kab', 'LIKE', '%' . $kab . '%')->paginate(15);
+        $data->appends($request->all());
         return view('master_wil.kecamatan', compact('kabs', 'data', 'auth'));
     }
     public function desa(Request $request)
