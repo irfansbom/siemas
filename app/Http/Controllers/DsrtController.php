@@ -9,6 +9,7 @@ use App\Models\Kabs;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DsrtController extends Controller
@@ -35,6 +36,14 @@ class DsrtController extends Controller
         $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
         $data->appends($request->all());
         return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs', 'request'));
+    }
+
+    public function show($id)
+    {
+        $auth = Auth::user();
+        $real_id = Crypt::decryptString($id);
+        $data = Dsrt::find($real_id);
+        return view('dsrt.show', compact('auth', 'id', 'data'));
     }
 
     public function dsrt_generate(Request $request)

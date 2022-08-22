@@ -139,7 +139,7 @@
                                                     </td> --}}
                                                     <td class="text-center">
                                                         <a class="btn btn-outline-primary"
-                                                            href="{{ url('dsbs/' . \Crypt::encryptString($dt->id)) }}">
+                                                            href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                         <button class="btn btn-outline-danger btn_hapus"
