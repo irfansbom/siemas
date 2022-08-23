@@ -13,6 +13,6 @@ class Dsbs extends Model
 
     public function pcl()
     {
-        return $this->belongsTo(User::class, 'pencacah', 'username');
+        return $this->belongsTo(User::class, 'pencacah', 'email');
     }
 }

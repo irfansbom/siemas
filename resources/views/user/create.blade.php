@@ -55,6 +55,7 @@
                                         <label for="kd_wilayah" class="col-sm-4 col-form-label">Kabupaten/Kota</label>
                                         <div class="col-sm-6">
                                             <select name="kd_wilayah" id="kd_wilayah" class="form-select">
+                                                <option value="00">Provinsi Sumatera Selatan</option>
                                                 @foreach ($kabs as $kab)
                                                     <option value="{{ $kab->id_kab }}">{{ $kab->nama_kab }}</option>
                                                 @endforeach

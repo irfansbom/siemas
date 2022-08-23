@@ -133,6 +133,18 @@
                                         class="side-menu__icon fe fe-home"></i><span
                                         class="side-menu__label">Home</span></a>
                             </li>
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+                                    <i class="side-menu__icon fa fa-television"></i>
+                                    <span class="side-menu__label">Monitoring</span><i
+                                        class="angle fa fa-angle-right"></i></a>
+                                <ul class="slide-menu">
+                                    <li class="side-menu-label1"><a href="javascript:void(0)">Submenus</a></li>
+                                    <li><a href="{{ url('mon_users') }}" class="slide-item">User</a>
+                                    </li>
+
+                                </ul>
+                            </li>
                             @hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT')
                                 <li class="slide">
                                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">

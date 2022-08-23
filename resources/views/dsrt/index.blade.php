@@ -22,7 +22,7 @@
                                 <div class="ms-auto pageheader-btn">
                                     @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
                                         <div class="btn-group mt-2 mb-2">
-                                            @hasanyrole(['SUPER ADMIN'])
+                                            @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
                                                 <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                     data-bs-target="#modal_import_dsbs">Import DSRT</button>
                                             @endrole
@@ -291,8 +291,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="modal_generate_semester">Semester</label>
-                                    <input type="number" name="semester" id="modal_generate_semester" value="1"
-                                        readonly class="form-control">
+                                    {{-- <input type="number" name="semester" id="modal_generate_semester" value="1"
+                                        readonly class="form-control"> --}}
+                                    <select name="semester" id="modal_generate_semester" class="select2">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -314,7 +320,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('dsbs/delete') }}" method="post" id="form_hapus">
+                    <form action="{{ url('dsrt/delete') }}" method="post" id="form_hapus">
                         @csrf
                         @method('delete')
                         <div class="row ">

@@ -80,4 +80,14 @@ class DsrtController extends Controller
             return redirect()->back()->with('error', 'Kesalahan File');
         }
     }
+
+    public function destroy(Request $request)
+    {
+        $data = Dsrt::where('id', $request->id)->delete();
+        if ($data > 0) {
+            return redirect()->back()->with('success', 'Berhasil Dihapus');
+        } else {
+            return redirect()->back()->with('error', 'Gagal Dihapus');
+        }
+    }
 }

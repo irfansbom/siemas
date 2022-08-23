@@ -37,7 +37,7 @@ class DsbsImport implements
             'pencacah' => $row[6],
             'jumlah_rt_c1' => $row[7],
             'sumber' => $row[8],
-            'status' => "belum",
+            'status' => 0,
             'created_by' => $auth->id,
         ]);
         return $data;
