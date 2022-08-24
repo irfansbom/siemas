@@ -52,6 +52,7 @@ class DsbsController extends Controller
                 'jumlah_rt_c1' => $request->jumlah_rt_c1,
                 'sumber' => $request->sumber,
                 'pencacah' => $request->pencacah,
+                'pengawas' => User::where('email', $request->pencacah)->get()->first()->pengawas,
                 'created_by' => $auth->id,
             ]);
             return redirect()->back()->with('success', 'Berhasil Disimpan');
@@ -75,6 +76,12 @@ class DsbsController extends Controller
     {
         $data = Dsbs::find($request->id);
         $data->pencacah = $request->pencacah;
+        $user = User::where('email', $request->pencacah)->get()->first();
+        $pengawas = "";
+        if ($user) {
+            $pengawas = $user->pengawas;
+        }
+        $data->pengawas = $pengawas;
         $data->save();
         return redirect()->back()->with('success', 'berhasil disimpan');
     }

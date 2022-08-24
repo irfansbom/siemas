@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Imports\UsersImport;
+use App\Models\Dsbs;
+use App\Models\Dsrt;
 use App\Models\Kabs;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -139,6 +141,8 @@ class UserController extends Controller
         $user = User::find($request->user_id);
         $user->pengawas = $request->pengawas;
         $user->save();
+        $dsbs = Dsbs::where('pengawas', $request->pengawas)->update(['pengawas' => $request->pengawas]);
+        $dsrt = Dsrt::where('pengawas', $request->pengawas)->update(['pengawas' => $request->pengawas]);
         return redirect('users/')->with('success', 'User berhasil diperbaharui.');
     }
 

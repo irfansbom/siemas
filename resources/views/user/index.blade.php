@@ -280,10 +280,10 @@
                                 <div class="form-group">
                                     <select name="pengawas" id="pengawas"
                                         class="form-control select2-show-search form-select"
-                                        data-placeholder="Pilih Pengawas" style="width: 100%">
-                                        <option label="Pilih Pengawas"></option>
+                                        data-placeholder="Pilih Pengawas" style="width:100%">
+                                        <option value=" ">Pilih Pengawas</option>
                                         @foreach ($data_pengawas as $pms)
-                                            <option value="{{ $pms->username }}">{{ $pms->username }}</option>
+                                            <option value="{{ $pms->email }}">{{ $pms->email }}</option>
                                         @endforeach
                                     </select>
                                 </div>

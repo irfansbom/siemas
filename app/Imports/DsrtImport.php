@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Dsbs;
 use App\Models\Dsrt;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class DsrtImport implements
     public function model(array $row)
     {
         $auth = Auth::user();
+        $dsbs = Dsbs::where('id_bs', $row[1])->get()->first();
         $data =  new Dsrt([
             'kd_kab' => $row[0],
             'id_bs' => $row[1],
@@ -36,6 +38,8 @@ class DsrtImport implements
             'semester' => '1',
             'nama_krt' => $row[3],
             'jml_art' => $row[4],
+            'pencacah' => $dsbs->pcl->email,
+            'pengawas' => $dsbs->pcl->pengawas,
         ]);
         return $data;
     }

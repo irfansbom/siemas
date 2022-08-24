@@ -6,6 +6,7 @@ use App\Imports\DsrtImport;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Kabs;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,7 @@ class DsrtController extends Controller
         }
         $data = Dsrt::where('kd_kab', "LIKE", "%" . $kab . "%")
             ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
-            ->paginate(10);
+            ->paginate(15);
         $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
         $data->appends($request->all());
         return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs', 'request'));
@@ -52,6 +53,11 @@ class DsrtController extends Controller
         $id_bs = $request->id_bs;
         try {
             foreach ($id_bs as $bs) {
+                $bss = Dsbs::where('id_bs', $id_bs)->get()->first();
+                $pengawas = User::where('email', $bss->pencacah)->get()->first();
+                if (!$pengawas) {
+                    $pengawas = new User();
+                }
                 for ($i = 1; $i <= 10; $i++) {
                     $dsrt = Dsrt::updateOrCreate(
                         [
@@ -59,8 +65,8 @@ class DsrtController extends Controller
                         ],
                         [
                             'kd_kab' => substr($bs, 2, 2),
-                            'nama_krt' => "",
-                            'jml_art' => "",
+                            'pencacah' => $bss->pencacah,
+                            'pengawas' => $pengawas->pengawas,
                         ]
                     );
                 }

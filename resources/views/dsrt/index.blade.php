@@ -128,9 +128,9 @@
                                                     <td class="align-middle text-center">{{ $dt->jml_art }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
-                                                        @isset($dt->dsbs)
-                                                            {{ $dt->dsbs->pencacah }}
-                                                        @endisset
+                                                        {{-- @isset($dt->dsbs) --}}
+                                                        {{ $dt->pencacah }}
+                                                        {{-- @endisset --}}
                                                     </td>
                                                     {{-- <td class="align-middle text-center">
                                                         @isset($dt->iss->pengawas)

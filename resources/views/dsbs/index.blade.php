@@ -215,7 +215,7 @@
                                     data-placeholder="Pilih Pencacah">
                                     <option label="Pilih Pencacah"></option>
                                     @foreach ($data_pencacah as $pcl)
-                                        <option value="{{ $pcl->username }}">{{ $pcl->name }}</option>
+                                        <option value="{{ $pcl->email }}">{{ $pcl->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -257,7 +257,7 @@
                                         data-placeholder="Pilih Pencacah" style="width: 100%">
                                         <option label="Pilih Pencacah"></option>
                                         @foreach ($data_pencacah as $pcl)
-                                            <option value="{{ $pcl->username }}">{{ $pcl->name }}</option>
+                                            <option value="{{ $pcl->email }}">{{ $pcl->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
