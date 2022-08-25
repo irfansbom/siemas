@@ -32,7 +32,7 @@
     @yield('css')
 </head>
 
-<body class="app sidebar-mini ltr light-mode sidenav-toggled">
+<body class="app sidebar-mini ltr light-mode sidenav-toggled color-header color-menu sidebar-gone">
 
     <!-- GLOBAL-LOADER -->
     <div id="global-loader">
@@ -239,7 +239,7 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer" style="background: var(--background)">
         <div class="container">
             <div class="row align-items-center flex-row-reverse">
                 <div class="col-md-12 col-sm-12 text-center">
@@ -255,58 +255,21 @@
 
     <!-- BACK-TO-TOP -->
     <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
-    {{-- <!-- JQUERY JS -->
+    <!-- JQUERY JS -->
     <script src="{{ url('assets/js/jquery.min.js') }}"></script>
     <!-- BOOTSTRAP JS -->
     <script src="{{ url('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ url('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- SPARKLINE JS-->
+
     <script src="{{ url('assets/js/jquery.sparkline.min.js') }}"></script>
+
     <!-- CHART-CIRCLE JS-->
     <script src="{{ url('assets/js/circle-progress.min.js') }}"></script>
-    <!-- PIETY CHART JS-->
-    <script src="{{ url('assets/plugins/peitychart/jquery.peity.min.js') }}"></script>
-    <script src="{{ url('assets/plugins/peitychart/peitychart.init.js') }}"></script>
-    <!-- INTERNAL SELECT2 JS -->
-    <script src="{{ url('assets/plugins/select2/select2.full.min.js') }}"></script>
-    <!-- INTERNAL Data tables js-->
-    <script src="{{ url('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ url('assets/plugins/datatable/js/dataTables.bootstrap5.js') }}"></script>
-    <script src="{{ url('assets/plugins/datatable/dataTables.responsive.min.js') }}"></script>
-    <!-- ECHART JS-->
-    <script src="{{ url('assets/plugins/echarts/echarts.js') }}"></script>
-    <!-- SIDE-MENU JS-->
-    <script src="{{ url('assets/plugins/sidemenu/sidemenu.js') }}"></script>
-    <!-- Sticky js -->
-    <script src="{{ url('assets/js/sticky.js') }}"></script>
-    <!-- SIDEBAR JS -->
-    <script src="{{ url('assets/plugins/sidebar/sidebar.js') }}"></script>
-    <!-- Perfect SCROLLBAR JS-->
-    <script src="{{ url('assets/plugins/p-scroll/perfect-scrollbar.js') }}"></script>
-    <script src="{{ url('assets/plugins/p-scroll/pscroll.js') }}"></script>
-    <script src="{{ url('assets/plugins/p-scroll/pscroll-1.js') }}"></script>
-    <!-- APEXCHART JS -->
-    <script src="{{ url('assets/js/apexcharts.js') }}"></script>
-    <!-- INDEX JS -->
-    <script src="{{ url('assets/js/index1.js') }}"></script>
-    <!-- FORMELEMENTS JS -->
-    <script src="{{ url('assets/js/form-elements.js') }}"></script>
-    <!-- Color Theme js -->
-    <script src="{{ url('assets/js/themeColors.js') }}"></script>
-    <!-- CUSTOM JS -->
-    <script src="{{ url('assets/js/custom.js') }}"></script> --}}
 
-
-
-    <script src="{{ url('assets/js/jquery.min.js') }}"></script>
-    <!-- BOOTSTRAP JS -->
-    <script src="{{ url('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- SPARKLINE JS-->
-    <script src="{{ url('assets/js/jquery.sparkline.min.js') }}"></script>
     <!-- CHARTJS CHART JS-->
-    <script src="{{ url('assets/plugins/chart/Chart.bundle.js') }}"></script>
+    <script src="{{ url('/assets/plugins/chart/Chart.bundle.js') }}"></script>
     <script src="{{ url('assets/plugins/chart/utils.js') }}"></script>
+
     <!-- PIETY CHART JS-->
     <script src="{{ url('assets/plugins/peitychart/jquery.peity.min.js') }}"></script>
     <script src="{{ url('assets/plugins/peitychart/peitychart.init.js') }}"></script>
@@ -346,7 +309,7 @@
     <script src="{{ url('assets/plugins/select2/select2.full.min.js') }}"></script>
 
     <!-- INTERNAL Data tables js-->
-    <script src="{{ url('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('assets/plugins/datatable/js/jquery.dataTables.min.j') }}s"></script>
     <script src="{{ url('assets/plugins/datatable/js/dataTables.bootstrap5.js') }}"></script>
     <script src="{{ url('assets/plugins/datatable/dataTables.responsive.min.js') }}"></script>
 
@@ -375,8 +338,7 @@
     <!-- INTERNAL jquery transfer js-->
     <script src="{{ url('assets/plugins/jQuerytransfer/jquery.transfer.js') }}"></script>
 
-    <!-- INTERNAL multi js-->
-    <script src="{{ url('assets/plugins/multi/multi.min.js') }}"></script>
+
 
     <!-- DATEPICKER JS -->
     <script src="{{ url('assets/plugins/date-picker/date-picker.js') }}"></script>
@@ -386,33 +348,25 @@
     <!-- MULTI SELECT JS-->
     <script src="{{ url('assets/plugins/multipleselect/multiple-select.js') }}"></script>
     <script src="{{ url('assets/plugins/multipleselect/multi-select.js') }}"></script>
+    <!-- INTERNAL multi js-->
+    <script src="{{ url('assets/plugins/multi/multi.min.js') }}"></script>
 
     <!-- FORMELEMENTS JS -->
     <script src="{{ url('assets/js/formelementadvnced.js') }}"></script>
     <script src="{{ url('assets/js/form-elements.js') }}"></script>
 
-    <!-- GALLERY JS -->
-    <script src="{{ url('assets/plugins/gallery/picturefill.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lightgallery.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lightgallery-1.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lg-pager.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lg-autoplay.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lg-fullscreen.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lg-zoom.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lg-hash.js') }}"></script>
-    <script src="{{ url('assets/plugins/gallery/lg-share.js') }}"></script>
+    <!-- APEXCHART JS -->
+    <script src="{{ url('assets/js/apexcharts.js') }}"></script>
 
     <!-- INDEX JS -->
     {{-- <script src="{{ url('assets/js/index1.js') }}"></script> --}}
-
-    <!-- APEXCHART JS -->
-    <script src="{{ url('assets/js/apexcharts.js') }}"></script>
 
     <!-- Color Theme js -->
     <script src="{{ url('assets/js/themeColors.js') }}"></script>
 
     <!-- CUSTOM JS -->
     <script src="{{ url('assets/js/custom.js') }}"></script>
+
 
     @yield('script')
 </body>

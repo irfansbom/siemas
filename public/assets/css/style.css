@@ -5,7 +5,7 @@
 Project        :   Zanex – Bootstrap  Admin & Dashboard Template
 Version        :   V.6
 Create Date    :   25-Feb-2022
-Copyright      :   Spruko Technologies Private Limited 
+Copyright      :   Spruko Technologies Private Limited
 Author         :   Spruko
 Author URL     :   https://themeforest.net/user/spruko
 Support	       :   support@spruko.com
@@ -155,19 +155,21 @@ License        :   Licensed under ThemeForest License
 /*shadow variables*/
 /* ###### Bootstrap ###### */
 :root {
-    --primary-bg-color: #6259ca;
-    --primary-bg-hover: #233ac5;
-    --primary-bg-border: #5161c1;
+    --background: #fff6dd;
+    --side-menu-color: #fae8b8;
+    --primary-bg-color: #ffc965;
+    --primary-bg-hover: rgb(192, 190, 186);
+    --primary-bg-border: #925800;
     --dark-body: #292e4a;
     --dark-border: #30314e;
     --dark-primary: #6259ca;
-    --transparent-primary: #6259ca;
-    --transparent-body: #452293;
-    --transparent-theme: rgba(0, 0, 0, 0.2);
+    --transparent-primary: #000000;
+    --transparent-body: #fcac00;
+    --transparent-theme: rgba(255, 255, 255, 0.2);
     --transparent-border: rgba(255, 255, 255, 0.1);
     --blue: #1a1a3c;
     --dark-primary-hover: #233ac5;
-    --primary-transparentcolor: #eaedf7;
+    --primary-transparentcolor: #000000;
     --darkprimary-transparentcolor: #2b356e;
     --transparentprimary-transparentcolor: rgba(255, 255, 255, 0.05);
     --indigo: #4b0082;
@@ -181,7 +183,7 @@ License        :   Licensed under ThemeForest License
     --white: #ffffff;
     --gray: #6c757d;
     --gray-dark: #343a40;
-    --primary: #6259ca;
+    --primary: #e49504;
     --secondary: #6c757d;
     --success: #28a745;
     --info: #17a2b8;
@@ -241,7 +243,7 @@ body {
     line-height: 1.5;
     color: #0d0c22;
     text-align: left;
-    background-color: #f2f3f9;
+    background-color: var(--background);
 }
 
 .number-font {
@@ -1742,7 +1744,7 @@ button.btn-close:focus {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border: 1px solid transparent;
+    border: 1px solid;
     padding: 0.375rem 0.75rem;
     font-size: 0.9375rem;
     line-height: 1.84615385;
@@ -48041,7 +48043,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 }
 
 /*
-    Common 
+    Common
 */
 .wizard,
 .tabcontrol {

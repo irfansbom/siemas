@@ -29,6 +29,7 @@ class DsbsController extends Controller
             $kab = $auth->kd_wilayah;
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
+        // dd($kabs);
         $data = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")
             ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
             ->paginate(15);
@@ -89,7 +90,7 @@ class DsbsController extends Controller
     public function dsbs_import(Request $request)
     {
         if ($request->file('import_file')) {
-            Excel::import(new DsbsImport, request()->file('import_file'));
+            Excel::import(new DsbsImport($request), request()->file('import_file'));
             return redirect()->back()->with('success', 'Berhasil Memasukkan data');
         } else {
 

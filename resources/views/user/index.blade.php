@@ -181,7 +181,7 @@
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <a class="btn btn-outline-primary "
+                                                        <a class="btn-outline-primary btn"
                                                             href="{{ url('users/' . \Crypt::encryptString($usr->id)) }}">
                                                             <i class="fa fa-eye"></i>
                                                         </a>

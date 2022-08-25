@@ -319,6 +319,18 @@
                     <form action="{{ url('dsbs/import') }}" method="post" id="form_import"
                         enctype="multipart/form-data">
                         @csrf
+                        <div class="row mb-3">
+                            <select name="kab" id="kab_import" class="form-control select2-show-search form-select"
+                                required>
+                                <option value="">Pilih Kab/Kot</option>
+                                @foreach ($kabs as $kab)
+                                    <option value="{{ $kab->id_kab }}">
+                                        [{{ $kab->id_kab }}] {{ $kab->nama_kab }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                        </div>
                         <div class="row ">
                             <input type="text" name="user_id" id="user_id" hidden>
                             <div class="mb-3 ">
