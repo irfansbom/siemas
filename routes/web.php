@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlokasiController;
 use App\Http\Controllers\DsbsController;
 use App\Http\Controllers\DsrtController;
 use App\Http\Controllers\HomeController;
@@ -19,26 +20,31 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('mon_users', [MonitoringController::class, 'users']);
 
-    Route::get('users', [UserController::class, 'index']);
-    Route::get('users/create', [UserController::class, 'create']);
-    Route::post('users/store', [UserController::class, 'store']);
-    Route::get('users/{id}', [UserController::class, 'show']);
-    Route::post('users/update', [UserController::class, 'update']);
-    Route::post('users/delete', [UserController::class, 'delete']);
-    Route::post('/users/roles', [UserController::class, 'user_roles']);
-    Route::post('/users/pengawas', [UserController::class, 'user_pengawas']);
-    Route::post('/users/ubahpassword', [UserController::class, 'ubahpassword']);
-    Route::post('/users/import', [UserController::class, 'user_import']);
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
+        Route::resource('alokasi', AlokasiController::class);
+        Route::get('export_alokasi_dsbs_user', [AlokasiController::class, 'export']);
+        Route::post('import_alokasi_dsbs_user', [AlokasiController::class, 'import']);
         Route::resource('dsrt', DsrtController::class);
+
         Route::post('dsrt/generate', [DsrtController::class, 'dsrt_generate']);
         Route::post('dsrt/import', [DsrtController::class, 'dsrt_import']);
+        Route::get('users', [UserController::class, 'index']);
+        Route::get('users/create', [UserController::class, 'create']);
+        Route::post('users/store', [UserController::class, 'store']);
+        Route::get('users/{id}', [UserController::class, 'show']);
+        Route::post('users/update', [UserController::class, 'update']);
+        Route::post('users/delete', [UserController::class, 'delete']);
+        Route::post('users/roles', [UserController::class, 'user_roles']);
+        Route::post('users/pengawas', [UserController::class, 'user_pengawas']);
+        Route::post('users/ubahpassword', [UserController::class, 'ubahpassword']);
+        Route::post('users/import', [UserController::class, 'user_import']);
+    });
 
+    Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI']], function () {
         Route::resource('dsbs', DsbsController::class);
         Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
         Route::post('dsbs/import', [DsbsController::class, 'dsbs_import']);
-
 
         Route::get('kecamatan', [MasterWilayahController::class, 'kecamatan']);
         Route::get('desa', [MasterWilayahController::class, 'desa']);

@@ -153,9 +153,10 @@
                                             class="angle fa fa-angle-right"></i></a>
                                     <ul class="slide-menu">
                                         <li class="side-menu-label1"><a href="javascript:void(0)">Submenus</a></li>
+                                        <li><a href="{{ url('alokasi') }}" class="slide-item">Alokasi DSBS-USER</a>
+                                        </li>
                                         <li><a href="{{ url('dsrt') }}" class="slide-item">DS RT</a>
                                         </li>
-
                                     </ul>
                                 </li>
                             @endrole
