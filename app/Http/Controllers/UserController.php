@@ -70,7 +70,7 @@ class UserController extends Controller
             $data_pengawas = Role::all();
         } else {
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
-            $data_pengawas = User::role('penawas')->get();
+            $data_pengawas = User::role('pengawas')->get();
         }
         return view('user.create', compact('user', 'auth', 'kabs', 'data_pengawas'));
     }
@@ -110,8 +110,6 @@ class UserController extends Controller
             ->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'instansi' => $request->instansi,
-                'bagian' => $request->bagian,
                 'no_hp' => $request->no_hp,
                 'kd_wilayah' => $request->kd_wilayah,
                 'password' => Hash::make($request->password),

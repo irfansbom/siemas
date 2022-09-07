@@ -120,7 +120,9 @@
                                                     <td class="align-middle text-center">{{ $dt->nks }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{ $dt->pencacah }}
+                                                        @isset($dt->pcl->name)
+                                                            {{ $dt->pcl->name }}
+                                                        @endisset
                                                     </td>
                                                     <td class="text-center">
                                                         @if ($auth->hasanyrole('SUPER ADMIN|ADMIN KABKOT'))
@@ -209,7 +211,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group">
-                                <label for="id_bs" class="form-label">Pencacah</label>
+                                <label for="modal_tambah_pencacah" class="form-label">Pencacah</label>
                                 <select name="pencacah" id="modal_tambah_pencacah"
                                     class="form-control select2-show-search form-select"
                                     data-placeholder="Pilih Pencacah">

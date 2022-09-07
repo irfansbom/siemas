@@ -31,9 +31,10 @@ class DsrtController extends Controller
             $kab = $auth->kd_wilayah;
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
+        // dd($kabs);
         $data = Dsrt::where('kd_kab', "LIKE", "%" . $kab . "%")
             ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
-            ->paginate(15);
+            ->paginate(10);
         $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
         $data->appends($request->all());
         return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs', 'request'));
@@ -53,7 +54,7 @@ class DsrtController extends Controller
         $id_bs = $request->id_bs;
         try {
             foreach ($id_bs as $bs) {
-                $bss = Dsbs::where('id_bs', $id_bs)->get()->first();
+                $bss = Dsbs::where('id_bs', $bs)->get()->first();
                 $pengawas = User::where('email', $bss->pencacah)->get()->first();
                 if (!$pengawas) {
                     $pengawas = new User();
@@ -79,7 +80,7 @@ class DsrtController extends Controller
     public function dsrt_import(Request $request)
     {
         if ($request->file('import_file')) {
-            Excel::import(new DsrtImport, request()->file('import_file'));
+            Excel::import(new DsrtImport($request), request()->file('import_file'));
             return redirect()->back()->with('success', 'Berhasil Memasukkan data');
         } else {
 

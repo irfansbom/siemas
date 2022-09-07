@@ -56,27 +56,13 @@
                                                 value="{{ old('no_hp', $user->no_hp) }}" autocomplete="off">
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label for="instansi" class="col-sm-4 col-form-label">Instansi/Organisasi</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="instansi" name="instansi"
-                                                value="{{ old('instansi', $user->instansi) }}" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="bagian"
-                                            class="col-sm-4 col-form-label">Bagian/Bidang/Seksi/Fungsi</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="bagian" name="bagian"
-                                                value="{{ old('bagian', $user->bagian) }}" autocomplete="off">
-                                        </div>
-                                    </div>
+
                                     <div class="mb-3 row">
                                         <label for="kd_wilayah" class="col-sm-4 col-form-label">Kabupaten/Kota</label>
                                         <div class="col-sm-6">
-                                            {{-- <input type="text" class="form-control" id="instansi" name="instansi"
-                                                value="{{ old('instansi', $user->instansi) }}" autocomplete="off"> --}}
-                                            <select name="kd_wilayah" id="kd_wilayah" class="form-select">
+                                            <select name="kd_wilayah" id="kd_wilayah" class="form-select"
+                                                @if ($auth->hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT')) disabled @endif>
+                                                <option value="00">Provinsi Sumatera Selatan</option>
                                                 @foreach ($kabs as $kab)
                                                     <option value="{{ $kab->id_kab }}">{{ $kab->nama_kab }}</option>
                                                 @endforeach

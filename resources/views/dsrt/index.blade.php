@@ -24,7 +24,7 @@
                                         <div class="btn-group mt-2 mb-2">
                                             @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
                                                 <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                    data-bs-target="#modal_import_dsbs">Import DSRT</button>
+                                                    data-bs-target="#modal_import_dsrt">Import DSRT</button>
                                             @endrole
                                             <button type="button" class="btn btn-default dropdown-toggle "
                                                 data-bs-toggle="dropdown">
@@ -296,8 +296,6 @@
                                     <select name="semester" id="modal_generate_semester" class="select2">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
                                     </select>
                                 </div>
                             </div>
@@ -344,7 +342,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal_import_dsbs">
+    <div class="modal fade" id="modal_import_dsrt">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -363,6 +361,15 @@
                                     <input class="form-control" type="file" name="import_file">
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modal_generate_semester">Semester</label>
+                            {{-- <input type="number" name="semester" id="modal_generate_semester" value="1"
+                                        readonly class="form-control"> --}}
+                            <select name="semester" id="modal_import_semester" class="select2">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
                         </div>
                     </form>
                 </div>

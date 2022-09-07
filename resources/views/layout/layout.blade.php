@@ -30,6 +30,15 @@
     <!--- FONT-ICONS CSS -->
     <link href="{{ url('assets/css/icons.css') }}" rel="stylesheet" />
     @yield('css')
+    <style>
+        .select2-container--open {
+            z-index: 9000;
+        }
+
+        .select2-dropdown {
+            z-index: 9001;
+        }
+    </style>
 </head>
 
 <body class="app sidebar-mini ltr light-mode sidenav-toggled color-header color-menu sidebar-gone">

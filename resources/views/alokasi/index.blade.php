@@ -117,7 +117,9 @@
                                                     <td class="align-middle text-center">{{ $dt->nks }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{ $dt->pencacah }}
+                                                        @isset($dt->pcl->name)
+                                                            {{ $dt->pcl->name }}
+                                                        @endisset
                                                     </td>
                                                     <td class="text-center">
                                                         @if ($auth->hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'))

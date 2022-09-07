@@ -23,6 +23,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
         Route::resource('alokasi', AlokasiController::class);
+
+        Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
         Route::get('export_alokasi_dsbs_user', [AlokasiController::class, 'export']);
         Route::post('import_alokasi_dsbs_user', [AlokasiController::class, 'import']);
         Route::resource('dsrt', DsrtController::class);
@@ -43,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI']], function () {
         Route::resource('dsbs', DsbsController::class);
-        Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
+
         Route::post('dsbs/import', [DsbsController::class, 'dsbs_import']);
 
         Route::get('kecamatan', [MasterWilayahController::class, 'kecamatan']);
