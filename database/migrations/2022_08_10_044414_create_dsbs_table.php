@@ -26,6 +26,7 @@ class CreateDsbsTable extends Migration
             $table->integer('sumber')->nullable();
             $table->string('pencacah')->nullable();
             $table->string('pengawas')->nullable();
+            $table->integer('dummy')->default('0');
             $table->char('created_by', 5)->nullable();
             $table->char('updated_by', 5)->nullable();
             $table->timestamps();
@@ -69,6 +70,7 @@ class CreateDsbsTable extends Migration
             $table->string('pencacah')->nullable();
             $table->string('pengawas')->nullable();
 
+            $table->integer('dummy_dsrt')->default('0');
             $table->integer('jumlah_rt_c1')->nullable();
             $table->integer('sumber')->nullable();
 

@@ -135,7 +135,10 @@
                                                         {{ $usr->username }}</td>
                                                     <td class="align-middle"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{ $usr->pengawas }}</td>
+                                                        @isset($usr->pml)
+                                                            {{ $usr->pml->name }}
+                                                        @endisset
+                                                    </td>
                                                     <td class="text-center">
                                                         @if ($auth->hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'))
                                                             <button class="btn btn-outline-secondary btn_pengawas"
@@ -283,7 +286,7 @@
                                         data-placeholder="Pilih Pengawas" style="width:100%">
                                         <option value=" ">Pilih Pengawas</option>
                                         @foreach ($data_pengawas as $pms)
-                                            <option value="{{ $pms->email }}">{{ $pms->email }}</option>
+                                            <option value="{{ $pms->email }}">{{ $pms->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

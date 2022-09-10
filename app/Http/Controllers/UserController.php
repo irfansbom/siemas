@@ -112,7 +112,6 @@ class UserController extends Controller
                 'email' => $request->email,
                 'no_hp' => $request->no_hp,
                 'kd_wilayah' => $request->kd_wilayah,
-                'password' => Hash::make($request->password),
                 'updated_by' =>  $auth->id,
             ]);
         return redirect()->back()->with('success', 'Berhasil Disimpan');

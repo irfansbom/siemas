@@ -88,10 +88,24 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-3">
                                                         <input type="text" name="bs_filter" id="bs_filter"
                                                             placeholder="cari ID BS" class="form-control"
                                                             @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                    </div>
+
+                                                    <div class="col-sm-3">
+                                                        <select name="dummy_filter" id="dummy_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Pilih Dummy</option>
+                                                            <option value="">Dummy&Asli</option>
+                                                            <option value="1"
+                                                                @if ($request->dummy_filter == '1') selected @endif>Dummy
+                                                            </option>
+                                                            <option value="0"
+                                                                @if ($request->dummy_filter == '0') selected @endif>Asli
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
@@ -128,9 +142,9 @@
                                                     <td class="align-middle text-center">{{ $dt->jml_art }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{-- @isset($dt->dsbs) --}}
-                                                        {{ $dt->pencacah }}
-                                                        {{-- @endisset --}}
+                                                        @isset($dt->pencacah)
+                                                            {{ $dt->pcl->name }}
+                                                        @endisset
                                                     </td>
                                                     {{-- <td class="align-middle text-center">
                                                         @isset($dt->iss->pengawas)
@@ -143,7 +157,7 @@
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                         <button class="btn btn-outline-danger btn_hapus"
-                                                            data-id="{{ $dt->id }}" data-id_bs="{{ $dt->id_bs }}"
+                                                            data-id="{{ $dt }}" data-id_bs="{{ $dt->id_bs }}"
                                                             data-bs-toggle="modal" data-bs-target="#modal_hapus">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
@@ -294,7 +308,7 @@
                                     {{-- <input type="number" name="semester" id="modal_generate_semester" value="1"
                                         readonly class="form-control"> --}}
                                     <select name="semester" id="modal_generate_semester" class="select2">
-                                        <option value="1">1</option>
+                                        <option value="1" disabled>1</option>
                                         <option value="2">2</option>
                                     </select>
                                 </div>
@@ -367,7 +381,7 @@
                             {{-- <input type="number" name="semester" id="modal_generate_semester" value="1"
                                         readonly class="form-control"> --}}
                             <select name="semester" id="modal_import_semester" class="select2">
-                                <option value="1">1</option>
+                                <option value="1" disabled>1</option>
                                 <option value="2">2</option>
                             </select>
                         </div>
@@ -413,7 +427,7 @@
         })
 
         $('.btn_hapus').click(function() {
-            // console.log($(this).data("id"))
+            console.log($(this).data("id"))
             $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
             $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
         })

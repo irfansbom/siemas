@@ -201,7 +201,6 @@
                                         </span> Export
                                     </a>
                                 </div>
-
                             </div>
                             <div class="card-body">
                                 <div class="row mb-2">
@@ -223,6 +222,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+
                                                     <div class="col-sm-3">
                                                         <input type="number" class="form-control" placeholder="ID BS"
                                                             name="bs_filter"
@@ -232,11 +232,21 @@
                                                         <select name="status_filter" id="status_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih Status Pencacahan</option>
-                                                            <option value="selesai"
-                                                                @if ($request->status_filter == 'selesai') selected @endif>selesai
+                                                            <option value="1"
+                                                                @if ($request->status_filter == '1') selected @endif>Sudah
+                                                                Cacah
                                                             </option>
-                                                            <option value="belum"
-                                                                @if ($request->status_filter == 'belum') selected @endif>belum
+                                                            <option value="4"
+                                                                @if ($request->status_filter == '4') selected @endif>Sudah
+                                                                Upload Pemeriksaan Pencacah
+                                                            </option>
+                                                            <option value="5"
+                                                                @if ($request->status_filter == '5') selected @endif>Sudah
+                                                                Pemeriksaan Pengawas
+                                                            </option>
+                                                            <option value="6"
+                                                                @if ($request->status_filter == '6') selected @endif>Sudah
+                                                                Upload Pemeriksaan Pengawas
                                                             </option>
                                                         </select>
 

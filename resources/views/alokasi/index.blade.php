@@ -69,10 +69,23 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-3">
                                                         <input type="text" name="bs_filter" id="bs_filter"
                                                             placeholder="cari ID BS" class="form-control"
                                                             @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="dummy_filter" id="dummy_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Pilih Dummy</option>
+                                                            <option value="">Dummy&Asli</option>
+                                                            <option value="1"
+                                                                @if ($request->dummy_filter == '1') selected @endif>Dummy
+                                                            </option>
+                                                            <option value="0"
+                                                                @if ($request->dummy_filter == '0') selected @endif>Asli
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
@@ -138,8 +151,8 @@
                                                     </td>
 
                                                     <td class="align-middle text-center">
-                                                        @isset($dt->pcl->pengawas)
-                                                            {{ $dt->pcl->pengawas }}
+                                                        @isset($dt->pcl->pml)
+                                                            {{ $dt->pcl->pml->name }}
                                                         @endisset
 
                                                     </td>

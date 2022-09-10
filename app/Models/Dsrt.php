@@ -15,4 +15,9 @@ class Dsrt extends Model
     {
         return $this->belongsTo(Dsbs::class, 'id_bs', 'id_bs');
     }
+
+    public function pcl()
+    {
+        return $this->belongsTo(User::class, 'pencacah', 'email');
+    }
 }

@@ -162,9 +162,10 @@
                                             class="angle fa fa-angle-right"></i></a>
                                     <ul class="slide-menu">
                                         <li class="side-menu-label1"><a href="javascript:void(0)">Submenus</a></li>
-                                        <li><a href="{{ url('alokasi') }}" class="slide-item">Alokasi DSBS-USER</a>
+                                        <li><a href="{{ url('alokasi?dummy_filter=0') }}" class="slide-item">Alokasi
+                                                DSBS-USER</a>
                                         </li>
-                                        <li><a href="{{ url('dsrt') }}" class="slide-item">DS RT</a>
+                                        <li><a href="{{ url('dsrt?dummy_filter=0') }}" class="slide-item">DS RT</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -181,7 +182,7 @@
                                         </li>
                                         <li><a href="{{ url('desa') }}" class="slide-item">Desa</a>
                                         </li>
-                                        <li><a href="{{ url('dsbs') }}" class="slide-item">DS BS</a>
+                                        <li><a href="{{ url('dsbs?dummy_filter=0') }}" class="slide-item">DS BS</a>
                                         </li>
                                     </ul>
                                 </li>

@@ -39,19 +39,26 @@ class DsrtImport implements
     public function model(array $row)
     {
         $auth = Auth::user();
-        $dsbs = Dsbs::where('id_bs', $row[8])->get()->first();
-        $data =  new Dsrt([
-            'kd_kab' => $row[3],
-            'id_bs' => $row[8],
-            'nks' => $row[13],
-            'nu_rt' => $row[52],
-            'semester' => $this->semester,
-            'nama_krt' => $row[29],
-            'jml_art' => '0',
-            'pencacah' => $dsbs->pcl->email,
-            'pengawas' => $dsbs->pcl->pengawas,
-        ]);
-        return $data;
+        if ($row['51'] == 1) {
+            $dsbs = Dsbs::where('id_bs', $row[8])->get()->first();
+            if ($dsbs) {
+                $data =  new Dsrt([
+                    'kd_kab' => $row[3],
+                    'id_bs' => $row[8],
+                    'nks' => $row[13],
+                    'nu_rt' => $row[52],
+                    'semester' => $this->semester,
+                    'nama_krt' => $row[29],
+                    'jml_art' => '0',
+                    'pencacah' => $dsbs->pcl->email,
+                    'pengawas' => $dsbs->pcl->pengawas,
+                    'dummy_dsrt' => $dsbs->dummy,
+                ]);
+                return $data;
+            }
+            return null;
+        }
+        return null;
     }
     public function onError(\Throwable $e)
     {

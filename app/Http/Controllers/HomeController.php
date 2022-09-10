@@ -16,16 +16,17 @@ class HomeController extends Controller
         $kabs = Kabs::all();
         $tab_tab1 =
             Dsrt::join('kabs', 'kabs.id_kab', 'dsrt.kd_kab')
+            ->where('dummy_dsrt', '0')
             ->select(
                 [
-                    'kd_kab',
+                    'dsrt.kd_kab',
                     'alias',
                     DB::raw('COUNT(*) as jml_dsrt'),
                     DB::raw('SUM(jml_art) as jml_art'),
                     DB::raw("SUM(CASE WHEN foto IS NOT NULL THEN 1 ELSE 0 END) AS jml_foto"),
                 ]
             )
-            ->groupBy('kd_kab', 'alias')
+            ->groupBy('dsrt.kd_kab', 'alias')
             ->get();
         $label_tab1 = [];
         $data_tab1 = [];
@@ -37,17 +38,18 @@ class HomeController extends Controller
         $tab_tab1->push(new Dsrt([
             'kd_kab' => '00',
             'alias' => 'SUMSEL',
-            'jml_dsrt' => Dsrt::count("*"),
-            'jml_art' => Dsrt::sum('jml_art'),
-            'jml_foto' => DB::table('dsrt')->select(DB::raw("SUM(CASE WHEN foto IS NOT NULL THEN 1 ELSE 0 END) AS jml_foto"))->get()->first()->jml_foto
+            'jml_dsrt' => Dsrt::where('dummy_dsrt', '0')->count("*"),
+            'jml_art' => Dsrt::where('dummy_dsrt', '0')->sum('jml_art'),
+            'jml_foto' => DB::table('dsrt')->where('dummy_dsrt', '0')->select(DB::raw("SUM(CASE WHEN foto IS NOT NULL THEN 1 ELSE 0 END) AS jml_foto"))->get()->first()->jml_foto
         ]));
-        $n = Dsrt::whereNotNull('makanan_sebulan')->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')->count('*');
+
+        $n = Dsrt::whereNotNull('makanan_sebulan')->where('dummy_dsrt', '0')->where('dsrt.kd_kab', 'LIKE', '%' . $request->kab_filter . '%')->count('*');
         if ($n >= 10) {
             $x = 3 / 10 * $n;
-            $d3 = Dsrt::whereNotNull('makanan_sebulan')->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+            $d3 = Dsrt::whereNotNull('makanan_sebulan')->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')->where('dummy_dsrt', '0')
                 ->select(['id', 'kd_kab', 'id_bs', 'nu_rt', 'nama_krt', 'jml_art', 'status_rumah', 'foto', DB::raw('(makanan_sebulan + nonmakanan_sebulan) / jml_art AS avg_perkapita')])
                 ->orderBy('avg_perkapita')->get()[$x];
-            $dsrt = DB::table('dsrt')
+            $dsrt = DB::table('dsrt')->join('dsbs', 'dsrt.id_bs', 'dsbs.id_bs')
                 ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
                 ->whereNotNull('makanan_sebulan')
                 ->select(['id', 'kd_kab', 'id_bs', 'nu_rt', 'nama_krt', 'jml_art', 'status_rumah', 'foto', DB::raw('(makanan_sebulan + nonmakanan_sebulan) / jml_art AS avg_perkapita')])
@@ -55,7 +57,7 @@ class HomeController extends Controller
                 ->orderBy('avg_perkapita')
                 ->paginate(15);
         } else {
-            $dsrt =  Dsrt::where('status_pencacahan', 'salah')->paginate();
+            $dsrt =  Dsrt::where('status_pencacahan', 'salah')->where('dummy_dsrt', '0')->select(['dsrt.*'])->paginate();
         }
         $dsrt->appends($request->all());
         $data = [];

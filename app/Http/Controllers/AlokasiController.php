@@ -31,6 +31,7 @@ class AlokasiController extends Controller
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
         $data = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")
+            ->where('dummy', "LIKE", "%" . $request->dummy_filter . "%")
             ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
             ->paginate(15);
         $data->appends($request->all());

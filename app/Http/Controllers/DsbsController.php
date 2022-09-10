@@ -32,6 +32,7 @@ class DsbsController extends Controller
         // dd($kabs);
         $data = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")
             ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
+            ->where('dummy', "LIKE", "%" . $request->dummy_filter . "%")
             ->paginate(15);
         $data->appends($request->all());
         $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();

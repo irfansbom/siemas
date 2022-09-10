@@ -33,7 +33,7 @@
                                         <label for="username" class="col-sm-4 col-form-label">Username</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" id="username" name="username"
-                                                value="{{ old('username', $user->username) }}" autocomplete="off" required>
+                                                value="{{ old('username', $user->username) }}" autocomplete="off" required >
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
