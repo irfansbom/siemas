@@ -42,4 +42,18 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'pengawas', 'email');
     }
+
+    public function dsbs()
+    {
+        return $this->hasMany(Dsbs::class, 'pencacah', 'email');
+    }
+    public function dsrt()
+    {
+        return $this->hasMany(Dsrt::class, 'pencacah', 'email');
+    }
+
+    public function dsrt_sdh_cacah()
+    {
+        return $this->hasMany(Dsrt::class, 'pencacah', 'email')->where('status_pencacahan', ">=", 1);
+    }
 }

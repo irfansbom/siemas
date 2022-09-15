@@ -46,23 +46,38 @@
                                             <fieldset>
                                                 <div class="mb-1 row">
                                                     {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-                                                    <div class="col-sm-3">
-                                                        <select name="kab_filter" id="kab_filter"
-                                                            class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Kab/Kot</option>
-                                                            <option value=""> [00] PROVINSI SUMSEL</option>
-                                                            @foreach ($kabs as $kab)
-                                                                <option value="{{ $kab->id_kab }}"
-                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
-                                                                    [{{ $kab->id_kab }}]
-                                                                    {{ $kab->alias }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+
                                                     <div class="col-sm-2">
-                                                        <input type="text" name="nama_filter" id="nama_filter"
-                                                            placeholder="cari user" class="form-control"
-                                                            @if ($request->nama_filter) value="{{ $request->nama_filter }}" @endif>
+                                                        <input type="text" name="bs_filter" id="bs_filter"
+                                                            placeholder="cari ID BS" class="form-control"
+                                                            @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="status_filter" id="status_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih Status Pencacahan</option>
+                                                            <option value="0"
+                                                                @if ($request->status_filter == '0') selected @endif>Belum
+                                                                Cacah
+                                                            </option>
+                                                            <option value="1"
+                                                                @if ($request->status_filter == '1') selected @endif>Sudah
+                                                                Cacah
+                                                            </option>
+                                                            <option value="4"
+                                                                @if ($request->status_filter == '4') selected @endif>Sudah
+                                                                Upload Pemeriksaan Pencacah
+                                                            </option>
+                                                            <option value="5"
+                                                                @if ($request->status_filter == '5') selected @endif>Sudah
+                                                                Pemeriksaan Pengawas
+                                                            </option>
+                                                            <option value="6"
+                                                                @if ($request->status_filter == '6') selected @endif>Sudah
+                                                                Upload Pemeriksaan Pengawas
+                                                            </option>
+                                                        </select>
+
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
@@ -79,35 +94,55 @@
                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th>No</th>
-                                                <th>Kab</th>
-                                                <th>Nama</th>
-                                                <th>BS</th>
-                                                <th>Dsrt</th>
-                                                <th>Jumlah Selesai</th>
-                                                <th>Persentase</th>
+                                                <th>DSBS</th>
+                                                <th>NKS</th>
+                                                <th>NU RT</th>
+                                                <th>KRT</th>
+                                                <th>KRT Isian</th>
+                                                <th>Status</th>
+                                                <th>Foto</th>
                                             </tr>
                                         </thead>
                                         <tbody class="align-middle">
                                             @foreach ($data as $key => $dt)
                                                 <tr class="align-middle">
                                                     <td class="text-center align-middle">{{ ++$key }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->kd_wilayah }}</td>
-                                                    <td class="align-middle "><a
-                                                            href="{{ url('mon_users/') . '/' . $dt->id }}">{{ $dt->name }}</a>
+                                                    <td class="align-middle text-center">{{ $dt->id_bs }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->nks }} </td>
+                                                    <td class="align-middle text-center">{{ $dt->nu_rt }} </td>
+                                                    <td class="align-middle ">{{ $dt->nama_krt }} </td>
+                                                    <td class="align-middle ">{{ $dt->nama_krt2 }} </td>
+                                                    <td class="align-middle ">
+                                                        @switch($dt->status_pencacahan)
+                                                            @case(0)
+                                                                <span>Belum Cacah</span>
+                                                            @break
+
+                                                            @case(1)
+                                                                <span>Sudah Cacah</span>
+                                                            @break
+
+                                                            @case(4)
+                                                                <span>Sudah Upload <br> Pemeriksaan Pencacah</span>
+                                                            @break
+
+                                                            @case(5)
+                                                                <span>Sudah Pemeriksaan <br> Pengawas</span>
+                                                            @break
+
+                                                            @case(6)
+                                                                <span>Sudah Upload <br> Pemeriksaan Pengawas</span>
+                                                            @break
+                                                        @endswitch
                                                     </td>
-                                                    <td class="align-middle text-center">{{ count($dt->dsbs) }}</td>
-                                                    <td class="align-middle text-center">{{ count($dt->dsrt) }}</td>
-                                                    <td class="align-middle text-center">{{ count($dt->dsrt_sdh_cacah) }}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {{ round((count($dt->dsrt_sdh_cacah) / count($dt->dsrt)) * 100, 2) }}
-                                                    </td>
+                                                    <td class="align-middle "><img class="br-5"
+                                                            src="{{ url('foto') . '/' . $dt->foto }}" alt="Belum Ada Foto"
+                                                            style="max-height:150px"> </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                                {{ $data->links() }}
                             </div>
                         </div>
                     </div>

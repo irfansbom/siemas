@@ -20,4 +20,9 @@ class Dsrt extends Model
     {
         return $this->belongsTo(User::class, 'pencacah', 'email');
     }
+
+    public function pms()
+    {
+        return $this->belongsTo(User::class, 'pengawas', 'email');
+    }
 }

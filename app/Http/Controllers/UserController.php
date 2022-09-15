@@ -138,8 +138,8 @@ class UserController extends Controller
         $user = User::find($request->user_id);
         $user->pengawas = $request->pengawas;
         $user->save();
-        $dsbs = Dsbs::where('pengawas', $request->pengawas)->update(['pengawas' => $request->pengawas]);
-        $dsrt = Dsrt::where('pengawas', $request->pengawas)->update(['pengawas' => $request->pengawas]);
+        $dsbs = Dsbs::where('pencacah', $user->email)->update(['pengawas' => $request->pengawas]);
+        $dsrt = Dsrt::where('pencacah', $user->email)->update(['pengawas' => $request->pengawas]);
         return redirect('users/')->with('success', 'User berhasil diperbaharui.');
     }
 

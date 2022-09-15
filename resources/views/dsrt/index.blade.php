@@ -128,6 +128,7 @@
                                                 <th>Nama KRT</th>
                                                 <th>Jumlah art</th>
                                                 <th>Pencacah</th>
+                                                <th>Pengawas</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -146,11 +147,11 @@
                                                             {{ $dt->pcl->name }}
                                                         @endisset
                                                     </td>
-                                                    {{-- <td class="align-middle text-center">
-                                                        @isset($dt->iss->pengawas)
-                                                            {{ $dt->pcl->pengawas }}
+                                                    <td class="align-middle text-center">
+                                                        @isset($dt->pengawas)
+                                                            {{ $dt->pms->name }}
                                                         @endisset
-                                                    </td> --}}
+                                                    </td>
                                                     <td class="text-center">
                                                         <a class="btn btn-outline-primary"
                                                             href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">

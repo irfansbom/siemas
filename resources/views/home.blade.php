@@ -144,7 +144,8 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="table-responsive">
-                                            <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
+                                            <table
+                                                class="table border text-nowrap text-md-nowrap table-bordered mg-b-0 table-sm">
                                                 <thead>
                                                     <tr class="text-center align-middle">
                                                         <th class="text-center align-middle">No</th>
@@ -166,10 +167,11 @@
                                                                 [{{ $tab1->kd_kab }}] {{ $tab1->alias }}
                                                             </td>
                                                             <td class="text-center">{{ $tab1->jml_dsrt }}</td>
-                                                            <td class="text-center">{{ $tab1->jml_art }}</td>
+                                                            <td class="text-center">{{ $tab1->jml_art2 }}</td>
                                                             <td class="text-center">{{ $tab1->jml_foto }}</td>
                                                             <td class="text-center">
-                                                                {{ ($tab1->jml_foto / $tab1->jml_dsrt) * 100 }}</td>
+                                                                {{ round(($tab1->jml_foto / $tab1->jml_dsrt) * 100, 2) }}
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -232,6 +234,10 @@
                                                         <select name="status_filter" id="status_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih Status Pencacahan</option>
+                                                            <option value="0"
+                                                                @if ($request->status_filter == '0') selected @endif>Belum
+                                                                Cacah
+                                                            </option>
                                                             <option value="1"
                                                                 @if ($request->status_filter == '1') selected @endif>Sudah
                                                                 Cacah
@@ -261,7 +267,8 @@
                                 </div>
                                 @if (count($dsrt) > 0)
                                     <div class="table-responsive">
-                                        <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
+                                        <table
+                                            class="table border text-nowrap text-md-nowrap table-bordered mg-b-0 table-sm">
                                             <thead>
                                                 <tr class="text-center align-middle">
                                                     <th class="text-center align-middle">No</th>
@@ -284,13 +291,18 @@
                                                             {{ $dt->id_bs }}
                                                         </td>
                                                         <td class="text-center">{{ $dt->nu_rt }}</td>
-                                                        <td class="text-center">{{ $dt->nama_krt }}</td>
-                                                        <td class="text-center">{{ $dt->jml_art }}</td>
+                                                        <td class="">{{ $dt->nama_krt }}</td>
+                                                        <td class="text-center">{{ $dt->jml_art2 }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
-                                                        <td>
-                                                            <img class="br-5" src="{{ url('foto') . '/' . $dt->foto }}"
-                                                                alt="Belum Ada Foto" style="max-height:150px">
+                                                        <td class="text-center">
+                                                            <a href="javascript:void(0);">
+                                                                <img class="br-5 img_btn" data-foto="{{ $dt->foto }}"
+                                                                    src="{{ url('foto') . '/' . $dt->foto }}"
+                                                                    alt="Belum Ada Foto" style="max-height:150px"
+                                                                    data-bs-toggle="modal" data-bs-target="#modal_gambar">
+                                                            </a>
+
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -301,58 +313,25 @@
                                 @else
                                     Data Kurang Dari 10
                                 @endif
-                                {{-- <div class="table-responsive">
-                                    <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
-                                        <thead>
-                                            <tr class="text-center align-middle">
-                                                <th class="text-center align-middle">No</th>
-                                                <th class="text-center align-middle">ID BS</th>
-                                                <th class="text-center align-middle">NU RT</th>
-                                                <th class="text-center align-middle">KRT</th>
-                                                <th class="text-center align-middle">Jumlah <br> ART</th>
-                                                <th class="text-center align-middle">Status <br> Rumah</th>
-                                                <th class="text-center align-middle">FOTO</th>
-                                                <th class="text-center align-middle">status <br> Pencacahan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($data as $key => $dt)
-                                                <tr>
-                                                    <td class="text-center">
-                                                        {{ ++$key }}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {{ $dt->id_bs }}
-                                                    </td>
-                                                    <td class="text-center">{{ $dt->nu_rt }}</td>
-                                                    <td class="text-center">{{ $dt->nama_krt }}</td>
-                                                    <td class="text-center">{{ $dt->jml_art }}</td>
-                                                    <td class="text-center">{{ $dt->status_rumah }}</td>
-                                                    <td>
-                                                        <ul id="lightgallery" class="list-unstyled row">
-                                                            <li class=" border-bottom-0" style="max-height:300px"
-                                                                data-responsive=".{{ url('foto') . '/' . $dt->foto }}"
-                                                                data-src="{{ url('foto') . '/' . $dt->foto }}"
-                                                                data-sub-html="<h4>Foto Rumah</h4><p>  {{ $dt->id_bs . ', NU RT : ' . $dt->nu_rt }} </p>">
-                                                                <a href="">
-                                                                    <img class="img-responsive br-5"
-                                                                        src="{{ url('foto') . '/' . $dt->foto }}"
-                                                                        alt="Belum Ada Foto" style="max-height:300px">
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-
-                                                    </td>
-                                                    <td class="text-center">{{ $dt->status_pencacahan }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    {{ $data->links() }}
-                                </div> --}}
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="modal_gambar">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img alt="Foto modal" id="modal_gambar_foto">
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -363,6 +342,12 @@
             $(document).ready(function() {
 
             });
+
+            $('.img_btn').click(function() {
+                console.log(window.location.href + "foto/" + $(this).data('foto'))
+                $('#modal_gambar').find('#modal_gambar_foto').attr("src", window.location.href + "foto/" + $(this).data(
+                    'foto'))
+            })
 
             /* Bar-Chart1 */
             var label_tab1 = {!! json_encode($label_tab1) !!};
