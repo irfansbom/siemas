@@ -27,17 +27,7 @@
                                     </a>
                                 </div>
                             </div>
-                            {{-- <div class="card-header pt-0 d-flex justify-content-center">
-                                <div class="row col">
-                                    <div class="alert alert-info" role="alert">
-                                        Generate DSRT untuk membuat list daftar DSRT kosongan setelah dilakukan import DS
-                                        BS, <br>
-                                        Apabila telah memiliki list DSRT (nama KRT, dan Jumlah ART), dapat dilakukan IMPORT
-                                        langsung DSRT dengan excel
 
-                                    </div>
-                                </div>
-                            </div> --}}
 
                             <div class="card-body">
                                 <div class="row mb-2">
@@ -45,8 +35,6 @@
                                         <form action="" id="form_filter">
                                             <fieldset>
                                                 <div class="mb-1 row">
-                                                    {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-
                                                     <div class="col-sm-2">
                                                         <input type="text" name="bs_filter" id="bs_filter"
                                                             placeholder="cari ID BS" class="form-control"
@@ -111,7 +99,10 @@
                                                     <td class="align-middle text-center">{{ $dt->nks }} </td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }} </td>
                                                     <td class="align-middle ">{{ $dt->nama_krt }} </td>
-                                                    <td class="align-middle ">{{ $dt->nama_krt2 }} </td>
+                                                    <td class="align-middle "><a
+                                                            href="{{ url('mon_dsrt') . '/' . $dt->id }}">{{ $dt->nama_krt2 }}
+                                                        </a>
+                                                    </td>
                                                     <td class="align-middle ">
                                                         @switch($dt->status_pencacahan)
                                                             @case(0)
@@ -135,9 +126,16 @@
                                                             @break
                                                         @endswitch
                                                     </td>
-                                                    <td class="align-middle "><img class="br-5"
-                                                            src="{{ url('foto') . '/' . $dt->foto }}" alt="Belum Ada Foto"
-                                                            style="max-height:150px"> </td>
+                                                    <td class="align-middle ">
+                                                        {{-- <img class="br-5" src="{{ url('foto') . '/' . $dt->foto }}"
+                                                            alt="Belum Ada Foto" style="max-height:150px"> --}}
+                                                        <a href="javascript:void(0);">
+                                                            <img class="br-5 img_btn" data-foto="{{ $dt->foto }}"
+                                                                src="{{ url('foto') . '/' . $dt->foto }}"
+                                                                alt="Belum Ada Foto" style="max-height:150px"
+                                                                data-bs-toggle="modal" data-bs-target="#modal_gambar">
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -146,6 +144,19 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_gambar">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img alt="Foto modal" id="modal_gambar_foto">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -166,11 +177,21 @@
 
 @section('script')
     <script>
+        var APP_URL = {!! json_encode(url('/')) !!}
         $(document).ready(function() {
             $('#modal_edit_pencacah').find("#pencacah").select2({
                 dropdownParent: $("#modal_edit_pencacah")
             });
         });
+
+        $('.img_btn').click(function() {
+            console.log(window.location.origin + "/foto/" + $(this).data('foto'))
+            console.log(APP_URL)
+            $('#modal_gambar').find('#modal_gambar_foto').attr("src", APP_URL + "/foto/" + $(this)
+                .data(
+                    'foto'))
+        })
+
         $('.btn_pencacah').click(function() {
             // console.log($(this).data("id"))
             $('#modal_edit_pencacah').find('#id').val($(this).data("id"));

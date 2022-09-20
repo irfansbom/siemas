@@ -20,6 +20,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('mon_users', [MonitoringController::class, 'users']);
     Route::get('mon_users/{id}', [MonitoringController::class, 'users_show']);
+    Route::get('mon_dsrt', [MonitoringController::class, 'dsrt']);
+    Route::get('mon_dsrt/{id}', [MonitoringController::class, 'dsrt_show']);
 
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {

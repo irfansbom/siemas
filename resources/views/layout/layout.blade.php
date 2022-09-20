@@ -151,6 +151,8 @@
                                     <li class="side-menu-label1"><a href="javascript:void(0)">Submenus</a></li>
                                     <li><a href="{{ url('mon_users') }}" class="slide-item">User</a>
                                     </li>
+                                    <li><a href="{{ url('mon_dsrt') }}" class="slide-item">DSRT</a>
+                                    </li>
 
                                 </ul>
                             </li>

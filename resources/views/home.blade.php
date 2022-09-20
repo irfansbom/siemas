@@ -170,7 +170,8 @@
                                                             <td class="text-center">{{ $tab1->jml_art2 }}</td>
                                                             <td class="text-center">{{ $tab1->jml_foto }}</td>
                                                             <td class="text-center">
-                                                                {{ round(($tab1->jml_foto / $tab1->jml_dsrt) * 100, 2) }}
+                                                                {{ number_format(round(($tab1->jml_foto / $tab1->jml_dsrt) * 100, 2), 2, '.', ',') }}
+                                                                %
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -193,15 +194,30 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Ruta 3 Desil Terbawah Berdasarkan Rata-Rata Perkapita
-                                </h3>
+                            <div class="card-header border-0 pb-0 mb-3">
+                                <h3 class="card-title ">List DSRT</h3>
                                 <div class="ms-auto pageheader-btn">
                                     <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
                                         <span>
                                             <i class="fe fe-log-in"></i>
                                         </span> Export
                                     </a>
+                                </div>
+                            </div>
+                            <div class="card-header pt-0 d-flex justify-content-center">
+                                <div class="row col">
+                                    <div class="alert alert-info" role="alert">
+                                        <ul>
+                                            <li>Data berikut merupakan highlight dari 3 desil terbawah dari rata-rata
+                                                perkapita(makanan+nonmakanan/jumlah_art) yang sudah diisi dan upload petugas
+                                            </li>
+                                            <li>
+                                                Desil ke-3 dari data rata-rata perkapita adalah sebesar Rp
+                                                {{ $d3->avg_perkapita }}
+                                            </li>
+                                        </ul>
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -291,7 +307,9 @@
                                                             {{ $dt->id_bs }}
                                                         </td>
                                                         <td class="text-center">{{ $dt->nu_rt }}</td>
-                                                        <td class="">{{ $dt->nama_krt }}</td>
+                                                        <td class=""><a
+                                                                href="{{ url('mon_dsrt') . '/' . $dt->id }}">{{ $dt->nama_krt2 }}
+                                                        </td>
                                                         <td class="text-center">{{ $dt->jml_art2 }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
@@ -320,18 +338,15 @@
             </div>
         </div>
 
-
         <div class="modal fade" id="modal_gambar">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-body">
                         <img alt="Foto modal" id="modal_gambar_foto">
                     </div>
-                    <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -344,9 +359,10 @@
             });
 
             $('.img_btn').click(function() {
-                console.log(window.location.href + "foto/" + $(this).data('foto'))
-                $('#modal_gambar').find('#modal_gambar_foto').attr("src", window.location.href + "foto/" + $(this).data(
-                    'foto'))
+                // console.log(window.location.origin + window.location.pathname + "foto/" + $(this).data('foto'))
+                $('#modal_gambar').find('#modal_gambar_foto').attr("src", window.location.origin + window.location
+                    .pathname + "foto/" + $(this).data(
+                        'foto'))
             })
 
             /* Bar-Chart1 */
