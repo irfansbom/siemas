@@ -45,7 +45,7 @@ class DsbsApiController extends Controller
     {
 
 
-        $data_dsbs = Dsbs::where('pencacah', $request->pencacah)
+        $data_dsbs = Dsbs::where('pengawas', $request->pengawas)
             ->join('kabs', function ($join) {
                 $join->on('dsbs.kd_kab', 'kabs.id_kab');
             })
