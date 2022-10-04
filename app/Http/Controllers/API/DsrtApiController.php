@@ -270,6 +270,87 @@ class DsrtApiController extends Controller
         }
     }
 
+    public function upload_data_form(Request $request)
+    {
+        $file = $request->file('file_foto');
+        $data_dsrt = json_decode($request->dsrt);
+
+        $nama_foto = "foto_rumah_" . $data_dsrt->id_bs . "_" . $data_dsrt->nks . "_" . $data_dsrt->nu_rt . "_" . $file->getClientOriginalName();
+        $file->move('foto', $nama_foto);
+
+        $status_pencacahan = $data_dsrt->status_pencacahan;
+
+        if ($status_pencacahan == 4) {
+            $status_pencacahan = $status_pencacahan;
+        } elseif ($status_pencacahan == 6) {
+            $status_pencacahan = $status_pencacahan;
+        } else {
+            $status_pencacahan = $status_pencacahan + 1;
+        }
+
+        $latitude_selesai = null;
+        $longitude_selesai = null;
+        $jam_mulai = null;
+        $jam_selesai = null;
+
+
+        if ($data_dsrt->latitude_selesai) {
+            $latitude_selesai = $data_dsrt->latitude_selesai;
+        }
+
+        if ($data_dsrt->longitude_selesai) {
+            $longitude_selesai = $data_dsrt->longitude_selesai;
+        }
+
+        if ($data_dsrt->jam_mulai) {
+            $jam_mulai = $data_dsrt->jam_mulai;
+        }
+
+        if ($data_dsrt->jam_selesai) {
+            $jam_selesai = $data_dsrt->jam_selesai;
+        }
+
+
+        $affectedDsrt = Dsrt::updateOrCreate(
+            [
+                'nks' => $data_dsrt->nks,
+                'nu_rt' => $data_dsrt->nu_rt
+            ],
+            [
+                'nama_krt2' => $data_dsrt->nama_krt2,
+                'jml_art2' => $data_dsrt->jml_art2,
+                'status_rumah' => $data_dsrt->status_rumah,
+                'makanan_sebulan' => $data_dsrt->makanan_sebulan,
+                'nonmakanan_sebulan' => $data_dsrt->nonmakanan_sebulan,
+                'gsmp' => $data_dsrt->gsmp,
+                'latitude' => $data_dsrt->latitude,
+                'longitude' => $data_dsrt->longitude,
+                'latitude_selesai' => $data_dsrt->latitude,
+                'longitude_selesai' => $data_dsrt->latitude,
+                'transportasi' => $data_dsrt->transportasi,
+                'peliharaan' => $data_dsrt->peliharaan,
+                'art_sekolah' => $data_dsrt->art_sekolah,
+                'art_bpjs' => $data_dsrt->art_bpjs,
+                'ijazah_krt' => $data_dsrt->ijazah_krt,
+                'kegiatan_seminggu' => $data_dsrt->kegiatan_seminggu,
+                'deskripsi_kegiatan' => $data_dsrt->deskripsi_kegiatan,
+                'luas_lantai' => $data_dsrt->luas_lantai,
+                'jam_mulai' => $data_dsrt->jam_mulai,
+                'jam_selesai' => $data_dsrt->jam_selesai,
+                'durasi_pencacahan' => $data_dsrt->durasi_pencacahan,
+                'status_pencacahan' => $status_pencacahan,
+                'foto' => $nama_foto,
+            ]
+        );
+        if (($affectedDsrt)) {
+            $json = [
+                'message' => 'success',
+                'status' => '1'
+            ];
+            return response()->json($json, 200);
+        }
+    }
+
     public function get_jadwal()
     {
 
