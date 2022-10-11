@@ -20,11 +20,11 @@
                             <div class="card-header border-0 pb-0 mb-3">
                                 <h3 class="card-title ">List DSRT</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
+                                    <button id="export-btn" class="btn btn-success btn-icon text-white">
                                         <span>
                                             <i class="fe fe-log-in"></i>
                                         </span> Export
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-header pt-0 d-flex justify-content-center">
@@ -116,7 +116,9 @@
                                                     </td>
                                                     <td class="text-center">{{ $dt->nu_rt }}</td>
                                                     <td class="">{{ $dt->nama_krt }}</td>
-                                                    <td class=""><a href="{{ url('mon_dsrt').'/'.$dt->id }}">{{ $dt->nama_krt2 }}</a></td>
+                                                    <td class=""><a
+                                                            href="{{ url('mon_dsrt') . '/' . $dt->id }}">{{ $dt->nama_krt2 }}</a>
+                                                    </td>
                                                     <td class="text-center">{{ $dt->jml_art2 }}</td>
                                                     <td class="text-center">{{ $dt->status_rumah }}</td>
                                                     <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
@@ -144,6 +146,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_gambar">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img alt="Foto modal" id="modal_gambar_foto">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -181,6 +195,15 @@
             // console.log($(this).data("id"))
             $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
             $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
+        })
+        $('#export-btn').on('click', function() {
+            var form = $('#form_filter');
+            window.open("{{ url('mon_dsrt_export') }}" + "?" + form.serialize(), "_blank")
+        });
+        var APP_URL = {!! json_encode(url('/')) !!}
+        $('.img_btn').click(function() {
+            console.log(APP_URL + "/foto/" + $(this).data('foto'))
+            $('#modal_gambar').find('#modal_gambar_foto').attr("src", APP_URL + "/foto/" + $(this).data('foto'))
         })
     </script>
 @endsection

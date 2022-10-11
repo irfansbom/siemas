@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DsrtExport;
 use App\Models\Dsrt;
 use App\Models\Kabs;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MonitoringController extends Controller
 {
@@ -84,5 +86,20 @@ class MonitoringController extends Controller
         $user = user::find($id);
         $data = Dsrt::find($id);
         return view('monitoring.dsrt_show', compact('auth', 'request', 'data'));
+    }
+
+    public function dsrt_export(Request $request)
+    {
+        $auth = Auth::user();
+        if ($auth->kd_wilayah == '00') {
+            $kab = "";
+            if ($request->kab_filter) {
+                $kab = $request->kab_filter;
+            }
+        } else {
+            $kab = $auth->kd_wilayah;
+        }
+        $data = new DsrtExport($request, $kab);
+        return Excel::download($data, 'dsrt.xlsx');
     }
 }
