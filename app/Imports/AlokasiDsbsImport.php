@@ -23,16 +23,16 @@ class AlokasiDsbsImport implements
     }
     public function uniqueBy()
     {
-        return 'id_bs';
+        return ['id_bs', 'tahun', 'semester'];
     }
     public function model(array $row)
     {
         $auth = Auth::user();
-        $user = User::where('email', $row[9])->get()->first();
+        $user = User::where('email', $row[11])->get()->first();
         if (!$user) {
             $user = new User();
         }
-        $dsbs = Dsbs::where('id_bs', $row[6])->first();
+        $dsbs = Dsbs::where('id_bs', $row[6])->where('tahun',$row[8])->where('semester', $row[9])->first();
         if ($dsbs) {
             $dsbs->pencacah = $user->email;
             $dsbs->pengawas = $user->pengawas;

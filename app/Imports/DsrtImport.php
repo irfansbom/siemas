@@ -22,9 +22,11 @@ class DsrtImport implements
     /**
      * @param Collection $collection
      */
+    private $tahun;
     private $semester;
     public function __construct(Request $request)
     {
+        $this->tahun = $request->tahun;
         $this->semester = $request->semester;
         // dd($this->kab);
     }
@@ -34,7 +36,7 @@ class DsrtImport implements
     }
     public function uniqueBy()
     {
-        return ['id_bs', 'nu_rt', 'semester'];
+        return ['id_bs','tahun', 'semester', 'nu_rt' ];
     }
     public function model(array $row)
     {
@@ -46,10 +48,11 @@ class DsrtImport implements
                     'kd_kab' => $row[3],
                     'id_bs' => $row[8],
                     'nks' => $row[13],
-                    'nu_rt' => $row[52],
+                    'tahun' => $this->tahun,
                     'semester' => $this->semester,
+                    'nu_rt' => $row[52],
                     'nama_krt' => $row[29],
-                    'jml_art' => '0',
+                    'jml_art' => '1',
                     'pencacah' => $dsbs->pcl->email,
                     'pengawas' => $dsbs->pcl->pengawas,
                     'dummy_dsrt' => $dsbs->dummy,

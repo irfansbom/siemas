@@ -21,6 +21,8 @@ class CreateDsbsTable extends Migration
             $table->char('nbs', 5);
             $table->char('id_bs', 15)->unique();
             $table->char('nks', 6)->unique();
+            $table->char('tahun',5);
+            $table->integer('semester');
             $table->string('status')->nullable();
             $table->integer('jumlah_rt_c1')->nullable();
             $table->integer('sumber')->nullable();
@@ -30,6 +32,7 @@ class CreateDsbsTable extends Migration
             $table->char('created_by', 5)->nullable();
             $table->char('updated_by', 5)->nullable();
             $table->timestamps();
+            $table->unique(["id_bs",'tahun', 'semester'], 'dsrt');
         });
 
 
@@ -39,6 +42,7 @@ class CreateDsbsTable extends Migration
             $table->char('kd_kab', 3);
             $table->char('nks', 6);
             $table->integer('nu_rt');
+            $table->char('tahun',5);
             $table->integer('semester');
             $table->string('alamat', 100)->nullable();
             $table->string('nuc1')->nullable();
@@ -49,8 +53,13 @@ class CreateDsbsTable extends Migration
             $table->string('jml_art2', 4)->nullable();
 
             $table->string('status_rumah', 2)->nullable();
+            $table->integer('jml_komoditas_makanan')->nullable();
+            $table->integer('jml_komoditas_nonmakanan')->nullable();
             $table->string('makanan_sebulan', 15)->nullable();
             $table->string('nonmakanan_sebulan', 15)->nullable();
+            $table->string('makanan_sebulan_bypml', 15)->nullable();
+            $table->string('nonmakanan_sebulan_bypml', 15)->nullable();
+
             $table->string('transportasi', 15)->nullable();
             $table->string('peliharaan', 15)->nullable();
             $table->integer('art_sekolah')->nullable();
@@ -77,8 +86,7 @@ class CreateDsbsTable extends Migration
             $table->char('created_by', 5)->nullable();
             $table->char('updated_by', 5)->nullable();
             $table->timestamps();
-
-            $table->unique(["id_bs", "nu_rt", 'semester'], 'dsrt');
+            $table->unique(["id_bs", "nu_rt",'tahun', 'semester'], 'dsrt');
         });
     }
 

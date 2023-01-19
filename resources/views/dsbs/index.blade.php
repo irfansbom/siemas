@@ -62,10 +62,10 @@
                                             <fieldset>
                                                 <div class="mb-1 row">
                                                     {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <select name="kab_filter" id="kab_filter"
                                                             class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Kab/Kot</option>
+                                                            <option value="">Pilih Kab/Kota</option>
                                                             <option value=""> [00] PROVINSI SUMSEL</option>
                                                             @foreach ($kabs as $kab)
                                                                 <option value="{{ $kab->id_kab }}"
@@ -75,22 +75,47 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+                                                    <div class="col-sm-2">
+                                                        <select name="tahun_filter" id="tahun_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih tahun</option>
+                                                            <option value="2022"
+                                                                @if ($request->tahun_filter == '2022') selected @endif>2022
+                                                            </option>
+                                                            <option value="2023"
+                                                                @if ($request->tahun_filter == '2023') selected @endif>2023
+                                                            </option>
 
-                                                    <div class="col-sm-3">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <select name="semester_filter" id="semester_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih Semester</option>
+                                                            <option value="1"
+                                                                @if ($request->semester_filter == '1') selected @endif>1</option>
+                                                            <option value="2"
+                                                                @if ($request->semester_filter == '2') selected @endif>2</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-sm-2">
                                                         <input type="text" name="bs_filter" id="bs_filter"
                                                             placeholder="cari ID BS" class="form-control"
                                                             @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
                                                     </div>
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <select name="dummy_filter" id="dummy_filter"
                                                             class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Dummy</option>
-                                                            <option value="">Dummy&Asli</option>
+                                                            <option value="">Sampel filter</option>
+                                                            <option value="">Semua</option>
                                                             <option value="1"
-                                                                @if ($request->dummy_filter == '1') selected @endif>Dummy
+                                                                @if ($request->dummy_filter == '1') selected @endif>Sample
+                                                                Latihan
                                                             </option>
                                                             <option value="0"
-                                                                @if ($request->dummy_filter == '0') selected @endif>Asli
+                                                                @if ($request->dummy_filter == '0') selected @endif>Sampel
+                                                                Lapangan
                                                             </option>
                                                         </select>
                                                     </div>
@@ -98,7 +123,7 @@
                                                         <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </fieldset>`
                                         </form>
                                     </div>
                                 </div>
@@ -117,6 +142,8 @@
                                                 <th>NBS</th>
                                                 <th>ID BS</th>
                                                 <th>NKS</th>
+                                                <th>Tahun</th>
+                                                <th>SMT</th>
                                                 <th colspan="2">Pencacah</th>
                                                 <th>Pengawas</th>
                                                 <th>Aksi</th>
@@ -132,6 +159,8 @@
                                                     <td class="align-middle text-center">{{ $dt->nbs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->id_bs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nks }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->tahun }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->semester }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
                                                         @isset($dt->pcl->name)
@@ -141,7 +170,8 @@
                                                     <td class="text-center">
                                                         @if ($auth->hasanyrole('SUPER ADMIN|ADMIN KABKOT'))
                                                             <button class="btn btn-outline-secondary btn_pencacah"
-                                                                data-bs-toggle="modal" data-bs-target="#modal_edit_pencacah"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modal_edit_pencacah"
                                                                 data-id="{{ $dt->id }}"
                                                                 data-id_bs="{{ $dt->id_bs }}">
                                                                 <i class="fa fa-pencil"></i>
@@ -163,10 +193,10 @@
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <a class="btn btn-outline-primary"
+                                                        {{-- <a class="btn btn-outline-primary"
                                                             href="{{ url('dsbs/' . \Crypt::encryptString($dt->id)) }}">
                                                             <i class="fa fa-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         <button class="btn btn-outline-danger btn_hapus"
                                                             data-id="{{ $dt->id }}"
                                                             data-id_bs="{{ $dt->id_bs }}" data-bs-toggle="modal"
@@ -222,6 +252,26 @@
                             <div class="col-md-2">
                                 <label for="modal_tambah_nks" class="form-label">NKS</label>
                                 <input type="text" class="form-control" id="modal_tambah_nks" name="nks">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="modal_tambah_tahun" class="form-label">Tahun</label>
+                                <select name="tahun" id="modal_tambah_tahun" class="form-control select2 form-select"
+                                    required>
+                                    <option value="">Pilih tahun</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modal_tambah_semester" class="form-label">Semester</label>
+                                <select name="semester" id="modal_tambah_semester"
+                                    class="form-control select2 form-select" required>
+                                    <option value="">Pilih semester</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
@@ -347,6 +397,24 @@
                             </select>
 
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <select name="tahun" id="tahun_import"
+                                    class="form-control select2-show-search form-select" required>
+                                    <option value="">Pilih tahun</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select name="semester" id="semester_import"
+                                    class="form-control select2-show-search form-select" required>
+                                    <option value="">pilih semester</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row ">
                             <input type="text" name="user_id" id="user_id" hidden>
                             <div class="mb-3 ">
@@ -389,24 +457,7 @@
                 dropdownParent: $("#modal_edit_pencacah")
             });
         });
-        // $('#modal_edit_pencacah').find("#pencacah").select2({
-        //     dropdownParent: $("#modal_edit_pencacah")
-        // });
-        // $('.btn_roles').click(function() {
-        //     $('#modal_edit_roles').find('#id').val($(this).data("id"));
-        //     $('#modal_edit_roles').find('#id_bs').val($(this).data("id_bs"));
-        //     var roles = [];
-        //     $(this).data("roles").forEach(element => {
-        //         roles.push(element['name']);
-        //     });
-        //     $('#modal_edit_roles').find('input[name="roles[]"]').each(function() {
-        //         if (roles.includes(this.value)) {
-        //             $(this).prop('checked', true);
-        //         } else {
-        //             $(this).prop('checked', false);
-        //         }
-        //     });
-        // })
+
         $('.btn_pencacah').click(function() {
             // console.log($(this).data("id"))
             $('#modal_edit_pencacah').find('#id').val($(this).data("id"));

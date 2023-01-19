@@ -380,7 +380,6 @@
     <!-- CUSTOM JS -->
     <script src="{{ url('assets/js/custom.js') }}"></script>
 
-
     @yield('script')
 </body>
 

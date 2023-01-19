@@ -32,10 +32,13 @@ class DsbsController extends Controller
         // dd($kabs);
         $data = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")
             ->where('id_bs', "LIKE", "%" . $request->bs_filter . "%")
+            ->where('tahun', "LIKE", "%" . $request->tahun_filter . "%")
+            ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
             ->where('dummy', "LIKE", "%" . $request->dummy_filter . "%")
             ->paginate(15);
         $data->appends($request->all());
         $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();
+
         return view('dsbs.index', compact('auth', 'data', 'kabs', 'data_pencacah', 'request'));
     }
 
@@ -50,8 +53,10 @@ class DsbsController extends Controller
                 'nbs' => $request->nbs,
                 'id_bs' => '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->nbs,
                 'nks' => $request->nks,
+                'tahun' => $request->tahun,
+                'semester' => $request->semester,
                 'status' => $request->status,
-                'jumlah_rt_c1' => $request->jumlah_rt_c1,
+                'jml_rt' => $request->jml_rt,
                 'sumber' => $request->sumber,
                 'pencacah' => $request->pencacah,
                 'pengawas' => User::where('email', $request->pencacah)->get()->first()->pengawas,
@@ -90,11 +95,11 @@ class DsbsController extends Controller
 
     public function dsbs_import(Request $request)
     {
+        // dd($request->all());
         if ($request->file('import_file')) {
             Excel::import(new DsbsImport($request), request()->file('import_file'));
             return redirect()->back()->with('success', 'Berhasil Memasukkan data');
         } else {
-
             return redirect()->back()->with('error', 'Kesalahan File');
         }
     }

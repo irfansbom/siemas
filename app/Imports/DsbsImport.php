@@ -19,11 +19,15 @@ class DsbsImport implements
     WithUpserts
 {
     private $kab;
+    private $tahun;
+    private $semester;
     public function __construct(Request $request)
     {
         $this->kab = $request->kab;
-        // dd($this->kab);
+        $this->tahun = $request->tahun;
+        $this->semester = $request->semester;
     }
+
 
     public function startRow(): int
     {
@@ -31,7 +35,7 @@ class DsbsImport implements
     }
     public function uniqueBy()
     {
-        return 'id_bs';
+        return ['id_bs','tahun','semester'];
     }
     public function model(array $row)
     {
@@ -41,6 +45,11 @@ class DsbsImport implements
         if (!$user) {
             $user = new User();
         }
+
+        if ($row[4] == null) {
+            return null;
+        }
+
         $data =  new Dsbs([
             'kd_kab' => $this->kab,
             'kd_kec' => $row[1],
@@ -51,9 +60,11 @@ class DsbsImport implements
             'nbs' => $row[6],
             'id_bs' => '16' . $this->kab . $row[1] . $row[3] . $row[6],
             'nks' => $row[7],
-            'jumlah_rt_c1' => $row[8],
-            'sls_2020' => $row[9],
-            'sls_wilkerstat' => $row[10],
+            'tahun' => $this->tahun,
+            'semester' => $this->semester,
+            'jml_rt' => $row[8],
+            'sls' => trim($row[9],'  '),
+            'sls_wilkerstat' => '[' .trim( $row[11],' ') . '] ' . trim($row[12],'  '),
             'status' => 0,
             'pencacah' => $user->email,
             'pengawas' => $user->pengawas,
@@ -64,6 +75,9 @@ class DsbsImport implements
 
     public function onError(\Throwable $e)
     {
+        // dd($e);
+        return redirect()->back()->with('error',  $e->getMessage());
+        // print_r($e);
         // Handle the exception how you'd like.
     }
 }

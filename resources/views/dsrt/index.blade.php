@@ -61,9 +61,9 @@
                                     <div class="alert alert-info" role="alert">
                                         Generate DSRT untuk membuat list daftar DSRT kosongan setelah dilakukan import DS
                                         BS, <br>
-                                        Apabila telah memiliki list DSRT (nama KRT, dan Jumlah ART), dapat dilakukan IMPORT
+                                        Apabila telah memiliki list DSRT (nama KRT, dan Jumlah ART dari aplikasi
+                                        pemutakhiran), dapat dilakukan IMPORT
                                         langsung DSRT dengan excel
-
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                                             <fieldset>
                                                 <div class="mb-1 row">
                                                     {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <select name="kab_filter" id="kab_filter"
                                                             class="form-control select2-show-search form-select">
                                                             <option value="">Pilih Kab/Kot</option>
@@ -88,22 +88,47 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+                                                    <div class="col-sm-2">
+                                                        <select name="tahun_filter" id="tahun_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih tahun</option>
+                                                            <option value="2022"
+                                                                @if ($request->tahun_filter == '2022') selected @endif>2022
+                                                            </option>
+                                                            <option value="2023"
+                                                                @if ($request->tahun_filter == '2023') selected @endif>2023
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <select name="semester_filter" id="semester_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih Semester</option>
+                                                            <option value="1"
+                                                                @if ($request->semester_filter == '1') selected @endif>1</option>
+                                                            <option value="2"
+                                                                @if ($request->semester_filter == '2') selected @endif>2</option>
+                                                        </select>
+                                                    </div>
+
                                                     <div class="col-sm-3">
                                                         <input type="text" name="bs_filter" id="bs_filter"
                                                             placeholder="cari ID BS" class="form-control"
                                                             @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
                                                     </div>
 
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <select name="dummy_filter" id="dummy_filter"
-                                                            class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Dummy</option>
-                                                            <option value="">Dummy&Asli</option>
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Semua Sampel</option>
                                                             <option value="1"
-                                                                @if ($request->dummy_filter == '1') selected @endif>Dummy
+                                                                @if ($request->dummy_filter == '1') selected @endif>Sample
+                                                                Latihan
                                                             </option>
                                                             <option value="0"
-                                                                @if ($request->dummy_filter == '0') selected @endif>Asli
+                                                                @if ($request->dummy_filter == '0') selected @endif>Sampel
+                                                                Lapangan
                                                             </option>
                                                         </select>
                                                     </div>
@@ -122,8 +147,9 @@
                                         <thead>
                                             <tr class="text-center align-middle">
                                                 <th>No</th>
-                                                <th>SEMESTER</th>
                                                 <th>ID BS</th>
+                                                <th>TAHUN</th>
+                                                <th>SMT</th>
                                                 <th>NU RT</th>
                                                 <th>Nama KRT</th>
                                                 <th>Jumlah art</th>
@@ -136,10 +162,11 @@
                                             @foreach ($data as $key => $dt)
                                                 <tr class="align-middle">
                                                     <td class="text-center align-middle">{{ ++$key }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->semester }}</td>
                                                     <td class="align-middle text-center">{{ $dt->id_bs }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->tahun }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->semester }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->nama_krt }}</td>
+                                                    <td class="align-middle ">{{ $dt->nama_krt }}</td>
                                                     <td class="align-middle text-center">{{ $dt->jml_art }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
@@ -158,8 +185,9 @@
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                         <button class="btn btn-outline-danger btn_hapus"
-                                                            data-id="{{ $dt }}" data-id_bs="{{ $dt->id_bs }}"
-                                                            data-bs-toggle="modal" data-bs-target="#modal_hapus">
+                                                            data-id="{{ $dt }}"
+                                                            data-id_bs="{{ $dt->id_bs }}" data-bs-toggle="modal"
+                                                            data-bs-target="#modal_hapus">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
                                                     </td>
@@ -291,28 +319,47 @@
                 <div class="modal-body">
                     <form action="{{ url('dsrt/generate') }}" method="post" id="form_generate">
                         @csrf
-                        <div class="row">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="id_bs" class="form-label"> Piih BS untuk digenrate DSRT</label>
-                                    <select name="id_bs[]" id="modal_generate_id_bs" multiple="multiple"
-                                        class="multi-select">
-                                        {{-- <option label="Pilih ID BS"></option> --}}
-                                        @foreach ($dsbs as $bs)
-                                            <option value="{{ $bs->id_bs }}">{{ $bs->id_bs }} /
-                                                {{ $bs->nks }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="modal_generate_semester">Semester</label>
-                                    {{-- <input type="number" name="semester" id="modal_generate_semester" value="1"
-                                        readonly class="form-control"> --}}
-                                    <select name="semester" id="modal_generate_semester" class="select2">
-                                        <option value="1" disabled>1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </div>
+                        {{-- <div class="row">
+                            <div class="form-group">
+                                <label for="id_bs" class="form-label"> Piih BS untuk digenrate DSRT</label>
+                                <select name="id_bs[]" id="modal_generate_id_bs" multiple="multiple"
+                                    class="multi-select">
+                                    @foreach ($dsbs as $bs)
+                                        <option value="{{ $bs->id_bs }}">{{ $bs->id_bs }} /
+                                            {{ $bs->nks }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="modal_generate_kabkot" class="form-label">Pilih Kab/kot</label>
+                                <select name="kab" id="modal_generate_kabkot"
+                                    class="form-control select2 form-select" required>
+                                    <option value="">Pilih tahun</option>
+                                    @foreach ($kabs as $kab)
+                                        <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}] {{ $kab->alias }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="modal_generate_tahun" class="form-label">Tahun</label>
+                                <select name="tahun" id="modal_generate_tahun" class="form-control select2 form-select"
+                                    required>
+                                    <option value="">Pilih tahun</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="modal_generate_semester" class="form-label">Semester</label>
+                                <select name="semester" id="modal_generate_semester"
+                                    class="form-control select2 form-select" required>
+                                    <option value="">Pilih semester</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -377,15 +424,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="modal_generate_semester">Semester</label>
-                            {{-- <input type="number" name="semester" id="modal_generate_semester" value="1"
-                                        readonly class="form-control"> --}}
-                            <select name="semester" id="modal_import_semester" class="select2">
-                                <option value="1" disabled>1</option>
-                                <option value="2">2</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="modal_generate_tahun">Tahun</label>
+                                    <select name="tahun" id="modal_generate_tahun" class="select2">
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="modal_generate_semester">Semester</label>
+                                <select name="semester" id="modal_import_semester" class="select2">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
                         </div>
+
                     </form>
                 </div>
 

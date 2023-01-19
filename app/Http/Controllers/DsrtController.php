@@ -33,6 +33,8 @@ class DsrtController extends Controller
         }
         // dd($kabs);
         $data = Dsrt::where('dsrt.kd_kab', "LIKE", "%" . $kab . "%")
+            ->where('tahun', "LIKE", "%" . $request->tahun_filter . "%")
+            ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
             ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
             ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
             ->select(['dsrt.*'])
@@ -54,22 +56,27 @@ class DsrtController extends Controller
 
     public function dsrt_generate(Request $request)
     {
-        $id_bs = $request->id_bs;
+        // $id_bs = $request->id_bs;
+        // dd($request->all());
         try {
+
+            $id_bs = Dsbs::where('kd_kab', $request->kab)->where('tahun', $request->tahun)
+            ->where('semester', $request->semester)->get();
+            // dd($id_bs);
             foreach ($id_bs as $bs) {
-                $bss = Dsbs::where('id_bs', $bs)->get()->first();
-                // dd($bss->pcl);
+                $bss = Dsbs::where('id_bs', $bs->id_bs)->get()->first();
                 $pengawas = $bss->pcl;
+
                 if (!$pengawas) {
                     $pengawas = new User();
                 }
                 for ($i = 1; $i <= 10; $i++) {
                     $dsrt = Dsrt::updateOrCreate(
                         [
-                            'id_bs' => $bs, 'nu_rt' => $i, 'semester' => $request->semester,
+                            'id_bs' => $bs->id_bs, 'nu_rt' => $i, 'tahun'=>$request->tahun, 'semester' => $request->semester,
                         ],
                         [
-                            'kd_kab' => substr($bs, 2, 2),
+                            'kd_kab' => substr($bs->id_bs, 2, 2),
                             'pencacah' => $bss->pencacah,
                             'pengawas' => $pengawas->pengawas,
                             'dummy_dsrt' => $bss->dummy,
@@ -82,6 +89,7 @@ class DsrtController extends Controller
             return redirect()->back()->withInput()->with('error', $ex->getMessage());
         }
     }
+
     public function dsrt_import(Request $request)
     {
         if ($request->file('import_file')) {

@@ -36,13 +36,14 @@
                                                 pada list
                                                 dibawah secara satu persatu atau sekaligus dengan import excel.</li>
                                             <li> Import alokasi dengan excel dapat dilalukan dengan cara mengexport terlebih
-                                                dahulu
-                                                DSBS di list berikut, kemudian melakukan pengisian email pencacah pada kolom
-                                                pencacah dan Import kembali excel yang sudah diisikan.</li>
-                                            <li> Apabila ada user tidak ada pada list atau tidak muncul setelah di import,
-                                                pastikan
-                                                user dan email telah terdaftar pada menu user. Pengawas terisi secara
-                                                otomatis dari
+                                                dahulu DSBS di list berikut(export sesuai filter yang dipilih), kemudian
+                                                melakukan pengisian email pencacah pada kolom pencacah dan Import kembali
+                                                excel yang sudah diisikan.</li>
+                                            <li> Apabila email user tidak terdaftar pada menu user
+                                                maka dsbs tidak akan teralokasi ke siapapun, pastikan
+                                                user dan email telah terdaftar pada menu user.
+                                            </li>
+                                            <li>Pengawas terisi secara otomatis dari
                                                 pengisian pengawas pada menu user.</li>
                                             <li> Apabila ada DSBS yang tidak sesuai lapor ke admin provinsi.</li>
                                         </ul>
@@ -51,12 +52,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="row mb-2">
-                                    <div class="col-10">
+                                    <div class="col-12">
                                         <form action="" id="form_filter">
                                             <fieldset>
                                                 <div class="mb-1 row">
                                                     {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <select name="kab_filter" id="kab_filter"
                                                             class="form-control select2-show-search form-select">
                                                             <option value="">Pilih Kab/Kot</option>
@@ -69,12 +70,35 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
+                                                        <select name="tahun_filter" id="tahun_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih tahun</option>
+                                                            <option value="2022"
+                                                                @if ($request->tahun_filter == '2022') selected @endif>2022
+                                                            </option>
+                                                            <option value="2023"
+                                                                @if ($request->tahun_filter == '2023') selected @endif>2023
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <select name="semester_filter" id="semester_filter"
+                                                            class="form-control select2 form-select">
+                                                            <option value="">Pilih Semester</option>
+                                                            <option value="1"
+                                                                @if ($request->semester_filter == '1') selected @endif>1</option>
+                                                            <option value="2"
+                                                                @if ($request->semester_filter == '2') selected @endif>2</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-2">
                                                         <input type="text" name="bs_filter" id="bs_filter"
                                                             placeholder="cari ID BS" class="form-control"
                                                             @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
                                                     </div>
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <select name="dummy_filter" id="dummy_filter"
                                                             class="form-control select2-show-search form-select">
                                                             <option value="">Pilih Dummy</option>
@@ -87,11 +111,17 @@
                                                             </option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button type="submit" class="btn btn-primary">Cari</button>
-                                                    </div>
-                                                    <div class="col">
-                                                        <button class="btn btn-success" id="export-btn">export</button>
+                                                    <div class="col-sm-2">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    style="width: 100%">Cari</button>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <button class="btn btn-success" id="export-btn"
+                                                                    style="width: 100%">export</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -113,6 +143,8 @@
                                                 <th>NBS</th>
                                                 <th>ID BS</th>
                                                 <th>NKS</th>
+                                                <th>Tahun</th>
+                                                <th>Semester</th>
                                                 <th colspan="2">Pencacah</th>
                                                 <th>Pengawas</th>
                                                 {{-- <th>Aksi</th> --}}
@@ -128,6 +160,8 @@
                                                     <td class="align-middle text-center">{{ $dt->nbs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->id_bs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nks }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->tahun }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->semester }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
                                                         @isset($dt->pcl->name)
