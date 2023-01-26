@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Jadwal212;
 use App\Models\Laporan212;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 
 class DsrtApiController extends Controller
@@ -14,8 +16,13 @@ class DsrtApiController extends Controller
     public function get_alokasi_dsrt_pcl(Request $request)
     {
 
+        $periode = Periode::get()->first();
+        $dsbs = Dsbs::select('id_bs')->where('pencacah', $request->pencacah)
+        ->where('tahun', $periode->tahun)
+        ->where('semester', $periode->semester)
+        ->get()->toArray();
 
-        $data_dsrt = Dsrt::where('dsrt.pencacah', $request->pencacah)
+        $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
             ->join('dsbs', function ($join) {
                 $join->on('dsrt.id_bs', 'dsbs.id_bs');
             })
@@ -28,7 +35,17 @@ class DsrtApiController extends Controller
             ->join('desas', function ($join) {
                 $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
             })
-            ->select("dsrt.id", "dsrt.kd_kab", "kabs.nama_kab", "kecs.id_kec", "kecs.nama_kec", "desas.id_desa", "desas.nama_desa", "dsrt.id_bs", "dsrt.nks", "dsrt.nu_rt", "dsrt.semester", "dsrt.alamat", "dsrt.nuc1", "dsrt.nama_krt", "dsrt.jml_art", "dsrt.nama_krt2", "dsrt.jml_art2", "dsrt.status_rumah", "dsrt.makanan_sebulan", "dsrt.nonmakanan_sebulan", "dsrt.transportasi", "dsrt.peliharaan", "dsrt.art_sekolah", "dsrt.art_bpjs", "dsrt.ijazah_krt", "dsrt.kegiatan_seminggu", "dsrt.deskripsi_kegiatan", "dsrt.luas_lantai", "dsrt.status_pencacahan", "dsrt.gsmp", "dsrt.foto", "dsrt.latitude", "dsrt.longitude", "dsrt.durasi_pencacahan", "dsrt.pencacah", "dsrt.pengawas", "dsrt.jumlah_rt_c1", "dsrt.sumber", "dsrt.latitude_selesai", "dsrt.longitude_selesai", "dsrt.jam_mulai", "dsrt.jam_selesai")
+            ->select("dsrt.id", "dsrt.kd_kab", "kabs.nama_kab", "kecs.id_kec", "kecs.nama_kec",
+            "desas.id_desa", "desas.nama_desa", "dsrt.id_bs", "dsrt.nks","dsrt.tahun",
+            "dsrt.semester", "dsrt.nu_rt", "dsrt.status_res", "dsrt.alamat", "dsrt.nuc1",
+            "dsrt.nama_krt", "dsrt.jml_art", "dsrt.nama_krt2", "dsrt.jml_art2", "dsrt.status_rumah",
+            "dsrt.jml_komoditas_makanan","dsrt.jml_komoditas_nonmakanan",  "dsrt.makanan_sebulan",
+            "dsrt.nonmakanan_sebulan", "dsrt.makanan_sebulan_bypml", "dsrt.nonmakanan_sebulan_bypml",
+            "dsrt.transportasi", "dsrt.peliharaan", "dsrt.art_sekolah", "dsrt.art_bpjs", "dsrt.ijazah_krt",
+            "dsrt.kegiatan_seminggu", "dsrt.deskripsi_kegiatan", "dsrt.luas_lantai",
+            "dsrt.status_pencacahan", "dsrt.gsmp", "dsrt.foto", "dsrt.latitude", "dsrt.longitude",
+            "dsrt.durasi_pencacahan", "dsrt.pencacah", "dsrt.pengawas", "dsrt.sumber",
+            "dsrt.latitude_selesai", "dsrt.longitude_selesai", "dsrt.jam_mulai", "dsrt.jam_selesai")
             ->get()->toArray();
 
         if (!$data_dsrt) {
@@ -49,9 +66,13 @@ class DsrtApiController extends Controller
 
     public function get_alokasi_dsrt_pml(Request $request)
     {
+        $periode = Periode::get()->first();
+        $dsbs = Dsbs::select('id_bs')->where('pengawas', $request->pengawas)
+        ->where('tahun', $periode->tahun)
+        ->where('semester', $periode->semester)
+        ->get()->toArray();
 
-
-        $data_dsrt = Dsrt::where('dsrt.pengawas', $request->pengawas)
+        $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
             ->join('dsbs', function ($join) {
                 $join->on('dsrt.id_bs', 'dsbs.id_bs');
             })
@@ -64,8 +85,18 @@ class DsrtApiController extends Controller
             ->join('desas', function ($join) {
                 $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
             })
-            ->select("dsrt.id", "dsrt.kd_kab", "kabs.nama_kab", "kecs.id_kec", "kecs.nama_kec", "desas.id_desa", "desas.nama_desa", "dsrt.id_bs", "dsrt.nks", "dsrt.nu_rt", "dsrt.semester", "dsrt.alamat", "dsrt.nuc1", "dsrt.nama_krt", "dsrt.jml_art", "dsrt.nama_krt2", "dsrt.jml_art2", "dsrt.status_rumah", "dsrt.makanan_sebulan", "dsrt.nonmakanan_sebulan", "dsrt.transportasi", "dsrt.peliharaan", "dsrt.art_sekolah", "dsrt.art_bpjs", "dsrt.ijazah_krt", "dsrt.kegiatan_seminggu", "dsrt.deskripsi_kegiatan", "dsrt.luas_lantai", "dsrt.status_pencacahan", "dsrt.gsmp", "dsrt.foto", "dsrt.latitude", "dsrt.longitude", "dsrt.durasi_pencacahan", "dsrt.pencacah", "dsrt.pengawas", "dsrt.jumlah_rt_c1", "dsrt.sumber", "dsrt.latitude_selesai", "dsrt.longitude_selesai", "dsrt.jam_mulai", "dsrt.jam_selesai")
-            ->get()->toArray();
+            ->select("dsrt.id", "dsrt.kd_kab", "kabs.nama_kab", "kecs.id_kec", "kecs.nama_kec",
+            "desas.id_desa", "desas.nama_desa", "dsrt.id_bs", "dsrt.nks","dsrt.tahun",
+            "dsrt.semester", "dsrt.nu_rt", "dsrt.status_res", "dsrt.alamat", "dsrt.nuc1",
+            "dsrt.nama_krt", "dsrt.jml_art", "dsrt.nama_krt2", "dsrt.jml_art2", "dsrt.status_rumah",
+             "dsrt.jml_komoditas_makanan","dsrt.jml_komoditas_nonmakanan",  "dsrt.makanan_sebulan",
+             "dsrt.nonmakanan_sebulan", "dsrt.makanan_sebulan_bypml", "dsrt.nonmakanan_sebulan_bypml",
+              "dsrt.transportasi", "dsrt.peliharaan", "dsrt.art_sekolah", "dsrt.art_bpjs", "dsrt.ijazah_krt",
+              "dsrt.kegiatan_seminggu", "dsrt.deskripsi_kegiatan", "dsrt.luas_lantai",
+               "dsrt.status_pencacahan", "dsrt.gsmp", "dsrt.foto", "dsrt.latitude", "dsrt.longitude",
+               "dsrt.durasi_pencacahan", "dsrt.pencacah", "dsrt.pengawas", "dsrt.sumber",
+               "dsrt.latitude_selesai", "dsrt.longitude_selesai", "dsrt.jam_mulai", "dsrt.jam_selesai")
+                ->get()->toArray();
 
         if (!$data_dsrt) {
             $json = [
@@ -101,7 +132,7 @@ class DsrtApiController extends Controller
         $longitude_selesai = null;
         $jam_mulai = null;
         $jam_selesai = null;
-        
+
         try {
             //code...
             $latitude_selesai = $data_dsrt->latitude_selesai;
@@ -128,8 +159,6 @@ class DsrtApiController extends Controller
         // if ($data_dsrt->jam_selesai) {
         //     $jam_selesai = $data_dsrt->jam_selesai;
         // }
-
-
         $affectedDsrt = Dsrt::updateOrCreate(
             [
                 'id' => $data_dsrt->id
@@ -138,8 +167,12 @@ class DsrtApiController extends Controller
                 'nama_krt2' => $data_dsrt->nama_krt2,
                 'jml_art2' => $data_dsrt->jml_art2,
                 'status_rumah' => $data_dsrt->status_rumah,
+                'jml_komoditas_makanan' => $data_dsrt->jml_komoditas_makanan,
+                'jml_komoditas_nonmakanan' => $data_dsrt->jml_komoditas_nonmakanan,
                 'makanan_sebulan' => $data_dsrt->makanan_sebulan,
                 'nonmakanan_sebulan' => $data_dsrt->nonmakanan_sebulan,
+                'makanan_sebulan_bypml' => $data_dsrt->makanan_sebulan_bypml,
+                'nonmakanan_sebulan_bypml' => $data_dsrt->nonmakanan_sebulan_bypml,
                 'gsmp' => $data_dsrt->gsmp,
                 'latitude' => $data_dsrt->latitude,
                 'longitude' => $data_dsrt->longitude,
@@ -195,8 +228,13 @@ class DsrtApiController extends Controller
         $file = $request->file('file_foto');
         $data_dsrt = json_decode($request->dsrt);
 
-        $nama_foto = "foto_rumah_" . $data_dsrt->id_bs . "_" . $data_dsrt->nks . "_" . $data_dsrt->nu_rt . "_" . $file->getClientOriginalName();
-        $file->move('foto', $nama_foto);
+        if($file){
+            $nama_foto = "foto_rumah_" . $data_dsrt->id_bs . "_" . $data_dsrt->nks . "_" . $data_dsrt->nu_rt . "_" . $file->getClientOriginalName();
+            $file->move('foto', $nama_foto);
+        }else{
+            $nama_foto = $request->foto;
+        }
+
 
         $status_pencacahan = $data_dsrt->status_pencacahan;
 
@@ -239,8 +277,12 @@ class DsrtApiController extends Controller
                 'nama_krt2' => $data_dsrt->nama_krt2,
                 'jml_art2' => $data_dsrt->jml_art2,
                 'status_rumah' => $data_dsrt->status_rumah,
+                'jml_komoditas_makanan' => $data_dsrt->jml_komoditas_makanan,
+                'jml_komoditas_nonmakanan' => $data_dsrt->jml_komoditas_nonmakanan,
                 'makanan_sebulan' => $data_dsrt->makanan_sebulan,
                 'nonmakanan_sebulan' => $data_dsrt->nonmakanan_sebulan,
+                'makanan_sebulan_bypml' => $data_dsrt->makanan_sebulan_bypml,
+                'nonmakanan_sebulan_bypml' => $data_dsrt->nonmakanan_sebulan_bypml,
                 'gsmp' => $data_dsrt->gsmp,
                 'latitude' => $data_dsrt->latitude,
                 'longitude' => $data_dsrt->longitude,
@@ -353,9 +395,7 @@ class DsrtApiController extends Controller
 
     public function get_jadwal()
     {
-
         $jadwal = Jadwal212::all()->toArray();
-
         if (!$jadwal) {
             $json = [
                 'message' => 'Jadwal 212 belum dialokasikan',

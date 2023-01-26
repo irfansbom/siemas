@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Periode;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -64,5 +65,16 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'success',
         ], 200);
+    }
+
+    public function get_periode(Request $request)
+    {
+        $periode = Periode::all()->toArray();
+        $json = [
+            'message' => 'success',
+            'body' => $periode,
+            'status' => '1'
+        ];
+        return  response()->json($json, 200);
     }
 }

@@ -70,7 +70,7 @@
 
                             <div class="card-body">
                                 <div class="row mb-2">
-                                    <div class="col-10">
+                                    <div class="col-12">
                                         <form action="" id="form_filter">
                                             <fieldset>
                                                 <div class="mb-1 row">
@@ -112,10 +112,16 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <input type="text" name="bs_filter" id="bs_filter"
                                                             placeholder="cari ID BS" class="form-control"
                                                             @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                    </div>
+
+                                                    <div class="col-sm-2">
+                                                        <input type="text" name="pcl_filter" id="pcl_filter"
+                                                            placeholder="cari pcl" class="form-control"
+                                                            @if ($request->pcl_filter) value="{{ $request->pcl_filter }}" @endif>
                                                     </div>
 
                                                     <div class="col-sm-2">

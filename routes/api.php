@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DsartApiController;
 use App\Http\Controllers\API\DsbsApiController;
 use App\Http\Controllers\API\DsbsController;
 use App\Http\Controllers\API\DsrtApiController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('login_android', [AuthController::class, 'login_android']);
+Route::GET('/get_periode', [AuthController::class, 'get_periode']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout_android', [AuthController::class, 'logout_android']);
@@ -34,4 +36,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::POST('/get_jadwal', [DsrtApiController::class, 'get_jadwal']);
     Route::POST('/insert_laporan', [DsrtApiController::class, 'insert_laporan']);
     Route::POST('/get_laporan', [DsrtApiController::class, 'get_laporan']);
+
+    Route::POST('/get_dsart_pcl', [DsartApiController::class, 'get_dsart_pcl']);
+    Route::POST('/get_dsart_pml', [DsartApiController::class, 'get_dsart_pml']);
+    Route::POST('/upload_dsart', [DsartApiController::class, 'upload_dsart']);
+
 });

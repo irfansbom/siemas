@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dsbs;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 
 class DsbsApiController extends Controller
@@ -12,8 +13,14 @@ class DsbsApiController extends Controller
     public function get_alokasi_dsbs_pcl(Request $request)
     {
 
+        $periode = Periode::get()->first();
 
-        $data_dsbs = Dsbs::where('pencacah', $request->pencacah)
+        $dsbs = Dsbs::select('id_bs')->where('pencacah', $request->pencacah)
+        ->where('tahun', $periode->tahun)
+        ->where('semester', $periode->semester)
+        ->get()->toArray();
+
+        $data_dsbs = Dsbs::wherein('id_bs', $dsbs)
             ->join('kabs', function ($join) {
                 $join->on('dsbs.kd_kab', 'kabs.id_kab');
             })

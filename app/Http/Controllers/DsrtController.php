@@ -37,6 +37,7 @@ class DsrtController extends Controller
             ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
             ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
             ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
+            ->where('dsrt.pencacah', "LIKE", "%" . $request->pcl_filter . "%")
             ->select(['dsrt.*'])
             ->paginate(10);
         $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
@@ -64,7 +65,8 @@ class DsrtController extends Controller
             ->where('semester', $request->semester)->get();
             // dd($id_bs);
             foreach ($id_bs as $bs) {
-                $bss = Dsbs::where('id_bs', $bs->id_bs)->get()->first();
+                $bss = Dsbs::where('id_bs', $bs->id_bs)->where('tahun', $request->tahun)
+                ->where('semester', $request->semester)->get()->first();
                 $pengawas = $bss->pcl;
 
                 if (!$pengawas) {
@@ -77,6 +79,7 @@ class DsrtController extends Controller
                         ],
                         [
                             'kd_kab' => substr($bs->id_bs, 2, 2),
+
                             'pencacah' => $bss->pencacah,
                             'pengawas' => $pengawas->pengawas,
                             'dummy_dsrt' => $bss->dummy,
