@@ -10,13 +10,5 @@ class Laporan212 extends Model
     use HasFactory;
     protected $table = "laporan_212";
 
-    protected $fillable = [
-        "id_bs",
-        "nks",
-        "nu_rt",
-        "nama_krt",
-        "pengawas",
-        "tanggal",
-        "status"
-    ];
+    protected $guarded = [];
 }

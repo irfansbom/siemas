@@ -416,18 +416,54 @@ class DsrtApiController extends Controller
     {
         $data_laporan = json_decode($request->laporan);
 
+        // dd($data_laporan->tahun);
+
+        // $data= Laporan212::where('id_bs', $data_laporan->id_bs)
+        // ->where('tahun', $data_laporan->tahun)
+        // ->where('semester', $data_laporan->semester)
+        // ->where('nu_rt', $data_laporan->nu_rt)
+        // ->first();
+
+        // if($data){
+        //     print_r("update");
+        //     $affectedRow = Laporan212::where('id_bs', $data_laporan->id_bs)
+        //     ->where('tahun', $data_laporan->tahun)
+        //     ->where('semester', $data_laporan->semester)
+        //     ->where('nu_rt', $data_laporan->nu_rt)->update([
+        //         'nks' => $data_laporan->nks,
+        //         'nama_krt' => $data_laporan->nama_krt,
+        //         'pengawas' => $data_laporan->pengawas,
+        //         'tanggal' => $data_laporan->tanggal,
+        //         'status' => 2
+        //     ]);
+        // }else{
+        //     print_r("create");
+        //     $affectedRow = Laporan212::create([
+        //         'id_bs' => $data_laporan->id_bs,
+        //         'tahun' => $data_laporan->tahun,
+        //         'semester' => $data_laporan->semester,
+        //         'nu_rt' => $data_laporan->nu_rt,
+        //         'nks' => $data_laporan->nks,
+        //         'nama_krt' => $data_laporan->nama_krt,
+        //         'pengawas' => $data_laporan->pengawas,
+        //         'tanggal' => $data_laporan->tanggal,
+        //         'status' => 2
+        //     ]);
+
+        // }
         $affectedRow = Laporan212::updateOrCreate(
             [
                 'id_bs' => $data_laporan->id_bs,
-                'nks' => $data_laporan->nks,
-                'nu_rt' => $data_laporan->nu_rt,
-
+                'tahun' => $data_laporan->tahun,
+                'semester' => $data_laporan->semester,
+                'nu_rt' => $data_laporan->nu_rt
             ],
             [
+                'nks' => $data_laporan->nks,
                 'nama_krt' => $data_laporan->nama_krt,
                 'pengawas' => $data_laporan->pengawas,
                 'tanggal' => $data_laporan->tanggal,
-                'status' => 2,
+                'status' => 2
             ]
         );
 
@@ -448,7 +484,10 @@ class DsrtApiController extends Controller
 
     public function get_laporan(Request $request)
     {
-        $data_laporan = Laporan212::where('pengawas', $request->pengawas)->get()->toArray();
+
+        $periode = Periode::all()->first();
+        $data_laporan = Laporan212::where('pengawas', $request->pengawas)
+        ->where('tahun',$periode->tahun)->where('semester',$periode->semester)->get()->toArray();
 
         if (!$data_laporan) {
             $json = [
