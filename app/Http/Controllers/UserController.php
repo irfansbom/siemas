@@ -6,6 +6,7 @@ use App\Imports\UsersImport;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Kabs;
+use App\Models\Periode;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        $periode = Periode::first();
         Paginator::useBootstrap();
         $auth = Auth::user();
         $data_pengawas = [];
@@ -56,11 +58,12 @@ class UserController extends Controller
                 ->paginate(15);
         }
         $user->appends($request->all());
-        return view('user.index', compact('user', 'data_roles', 'auth', 'data_pengawas', 'kabs', 'request'));
+        return view('user.index', compact('user', 'data_roles', 'auth', 'data_pengawas', 'kabs', 'request', 'periode'));
     }
 
     public function create()
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $user = new User();
         $data_pengawas = [];
@@ -72,7 +75,7 @@ class UserController extends Controller
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
             $data_pengawas = User::role('pengawas')->get();
         }
-        return view('user.create', compact('user', 'auth', 'kabs', 'data_pengawas'));
+        return view('user.create', compact('user', 'auth', 'kabs', 'data_pengawas', 'periode'));
     }
 
 
@@ -96,11 +99,12 @@ class UserController extends Controller
 
     public function show($id)
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $id = Crypt::decryptString($id);
         $user = User::where('id', $id)->first();
         $kabs = Kabs::all();
-        return view('user.show', compact('user', 'id', 'auth', 'kabs'));
+        return view('user.show', compact('user', 'id', 'auth', 'kabs', 'periode'));
     }
 
     public function update(Request $request)
@@ -163,6 +167,7 @@ class UserController extends Controller
 
     public function roles()
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $data_roles = [];
         $roles = Role::all();
@@ -179,7 +184,7 @@ class UserController extends Controller
             array_push($data_roles, $data_role);
         }
         $data_permission = Permission::all();
-        return view('user/roles', compact('data_roles', 'data_permission', 'auth'));
+        return view('user/roles', compact('data_roles', 'data_permission', 'auth', 'periode'));
     }
 
     public function roles_add(Request $request)
@@ -205,9 +210,10 @@ class UserController extends Controller
 
     public function permissions()
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $permission = Permission::paginate(15);
-        return view('user/permissions', compact('permission', 'auth'));
+        return view('user/permissions', compact('permission', 'auth', 'periode'));
     }
 
     public function permissions_add(Request $request)

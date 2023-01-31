@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterWilayahController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\UserController;
+use App\Models\Periode;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('mon_dsrt', [MonitoringController::class, 'dsrt']);
     Route::get('mon_dsrt_export', [MonitoringController::class, 'dsrt_export']);
     Route::get('mon_dsrt/{id}', [MonitoringController::class, 'dsrt_show']);
+
+    Route::get('mon_212', [MonitoringController::class, 'mon_212']);
 
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
@@ -57,6 +60,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role:SUPER ADMIN']], function () {
+
+        Route::get('periode', [Periode::class, 'index']);
+
+
         Route::get('roles', [UserController::class, 'roles']);
         Route::post('roles/add', [UserController::class, 'roles_add']);
         Route::post('roles/edit', [UserController::class, 'roles_edit']);

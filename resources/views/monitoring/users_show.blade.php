@@ -100,7 +100,7 @@
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }} </td>
                                                     <td class="align-middle ">{{ $dt->nama_krt }} </td>
                                                     <td class="align-middle "><a
-                                                            href="{{ url('mon_dsrt') . '/' . $dt->id }}">{{ $dt->nama_krt2 }}
+                                                            href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt2 }}
                                                         </a>
                                                     </td>
                                                     <td class="align-middle ">

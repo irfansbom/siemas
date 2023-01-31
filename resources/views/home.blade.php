@@ -169,10 +169,17 @@
                                                             <td class="text-center">{{ $tab1->jml_dsrt }}</td>
                                                             <td class="text-center">{{ $tab1->jml_art2 }}</td>
                                                             <td class="text-center">{{ $tab1->jml_foto }}</td>
-                                                            <td class="text-center">
-                                                                {{ number_format(round(($tab1->jml_foto / $tab1->jml_dsrt) * 100, 2), 2, '.', ',') }}
-                                                                %
-                                                            </td>
+                                                            @if ($tab1->jml_dsrt != 0)
+                                                                <td class="text-center">
+                                                                    {{ number_format(round(($tab1->jml_foto / $tab1->jml_dsrt) * 100, 2), 2, '.', ',') }}
+                                                                    %
+                                                                </td>
+                                                            @else
+                                                                <td class="text-center">
+                                                                    0
+                                                                </td>
+                                                            @endif
+
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -213,7 +220,7 @@
                                             </li>
                                             <li>
                                                 Desil ke-3 dari data rata-rata perkapita adalah sebesar Rp
-                                                {{ $d3->avg_perkapita }}
+                                                {{ floor($d3->avg_perkapita) }}
                                             </li>
                                         </ul>
 
@@ -329,7 +336,7 @@
                                         {{ $dsrt->links() }}
                                     </div>
                                 @else
-                                    Data Kurang Dari 10
+                                    Data masuk Kurang Dari 10
                                 @endif
                             </div>
                         </div>

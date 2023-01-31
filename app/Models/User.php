@@ -49,11 +49,19 @@ class User extends Authenticatable
     }
     public function dsrt()
     {
-        return $this->hasMany(Dsrt::class, 'pencacah', 'email');
+        $periode = Periode::first();
+        return $this->hasMany(Dsrt::class, 'pencacah', 'email')->where('tahun', $periode->tahun)->where('semester', $periode->semester);
     }
 
     public function dsrt_sdh_cacah()
     {
-        return $this->hasMany(Dsrt::class, 'pencacah', 'email')->where('status_pencacahan', ">=", 1);
+        $periode = Periode::first();
+        return $this->hasMany(Dsrt::class, 'pencacah', 'email')->where('status_pencacahan', ">=", 1)->where('tahun', $periode->tahun)->where('semester', $periode->semester);
+    }
+
+    public function mon_212()
+    {
+        $periode = Periode::first();
+        return $this->hasMany(Laporan212::class, 'pengawas', 'email')->where('tahun', $periode->tahun)->where('semester', $periode->semester);
     }
 }

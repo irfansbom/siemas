@@ -6,6 +6,7 @@ use App\Exports\AlokasiDsbsExport;
 use App\Imports\AlokasiDsbsImport;
 use App\Models\Dsbs;
 use App\Models\Kabs;
+use App\Models\Periode;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,10 @@ class AlokasiController extends Controller
 {
     //
 
+
     public function index(Request $request)
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $data_pengawas = [];
 
@@ -38,11 +41,12 @@ class AlokasiController extends Controller
             ->paginate(15);
         $data->appends($request->all());
         $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();
-        return view('alokasi.index', compact('auth', 'data', 'kabs', 'data_pencacah', 'request'));
+        return view('alokasi.index', compact('auth', 'data', 'kabs', 'data_pencacah', 'request', 'periode'));
     }
 
     public function export(Request $request)
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         if ($auth->kd_wilayah == '00') {
             $kab = "";

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Desas;
 use App\Models\Kabs;
 use App\Models\Kecs;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,7 @@ class MasterWilayahController extends Controller
 
     public function kecamatan(Request $request)
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         if ($auth->kd_wilayah == '00') {
             $kab = "";
@@ -28,11 +30,12 @@ class MasterWilayahController extends Controller
 
         $data = Kecs::where('id_kab', 'LIKE', '%' . $kab . '%')->paginate(15);
         $data->appends($request->all());
-        return view('master_wil.kecamatan', compact('kabs', 'data', 'auth'));
+        return view('master_wil.kecamatan', compact('kabs', 'data', 'auth', 'periode'));
     }
     public function desa(Request $request)
     {
         $auth = Auth::user();
+        $periode = Periode::first();
         if ($auth->kd_wilayah == '00') {
             $kab = "";
             if ($request->kab_filter) {
@@ -45,6 +48,6 @@ class MasterWilayahController extends Controller
         }
 
         $data = Desas::where('id_kab', 'LIKE', '%' . $kab . '%')->paginate(15);
-        return view('master_wil.desa', compact('kabs', 'data', 'auth'));
+        return view('master_wil.desa', compact('kabs', 'data', 'auth', 'periode'));
     }
 }

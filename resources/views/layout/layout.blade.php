@@ -151,23 +151,27 @@
                                     <li class="side-menu-label1"><a href="javascript:void(0)">Submenus</a></li>
                                     <li><a href="{{ url('mon_users') }}" class="slide-item">User</a>
                                     </li>
-                                    <li><a href="{{ url('mon_dsrt') }}" class="slide-item">DSRT</a>
+                                    <li><a href="{{ url('mon_dsrt?tahun_filter=' . $periode->tahun . '&semester_filter=' . $periode->semester) }}"
+                                            class="slide-item">DSRT</a>
                                     </li>
-
+                                    <li><a href="{{ url('mon_212') }}" class="slide-item">Laporan 212</a>
+                                    </li>
                                 </ul>
                             </li>
                             @hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT')
                                 <li class="slide">
                                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
                                         <i class="side-menu__icon fe fe-database"></i>
-                                        <span class="side-menu__label">Data</span><i
+                                        <span class="side-menu__label">Alokasi & DSRT</span><i
                                             class="angle fa fa-angle-right"></i></a>
                                     <ul class="slide-menu">
                                         <li class="side-menu-label1"><a href="javascript:void(0)">Submenus</a></li>
-                                        <li><a href="{{ url('alokasi?dummy_filter=0') }}" class="slide-item">Alokasi
+                                        <li><a href="{{ url('alokasi?dummy_filter=0&tahun_filter=' . $periode->tahun . '&semester_filter=' . $periode->semester) }}"
+                                                class="slide-item">Alokasi
                                                 DSBS-USER</a>
                                         </li>
-                                        <li><a href="{{ url('dsrt?dummy_filter=0') }}" class="slide-item">DS RT</a>
+                                        <li><a href="{{ url('dsrt?dummy_filter=0&tahun_filter=' . $periode->tahun . '&semester_filter=' . $periode->semester) }}"
+                                                class="slide-item">DS RT</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -184,7 +188,8 @@
                                         </li>
                                         <li><a href="{{ url('desa') }}" class="slide-item">Desa</a>
                                         </li>
-                                        <li><a href="{{ url('dsbs?dummy_filter=0') }}" class="slide-item">DS BS</a>
+                                        <li><a href="{{ url('dsbs?dummy_filter=0&tahun_filter=' . $periode->tahun . '&semester_filter=' . $periode->semester) }}"
+                                                class="slide-item">DS BS</a>
                                         </li>
                                     </ul>
                                 </li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\DsbsImport;
 use App\Models\Dsbs;
 use App\Models\Kabs;
+use App\Models\Periode;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class DsbsController extends Controller
 {
     public function index(Request $request)
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $data_pengawas = [];
 
@@ -39,7 +41,7 @@ class DsbsController extends Controller
         $data->appends($request->all());
         $data_pencacah = User::where('kd_wilayah', "LIKE", "%" . $kab . "%")->role('pencacah')->get();
 
-        return view('dsbs.index', compact('auth', 'data', 'kabs', 'data_pencacah', 'request'));
+        return view('dsbs.index', compact('auth', 'data', 'kabs', 'data_pencacah', 'request', 'periode'));
     }
 
     public function store(Request $request)

@@ -6,6 +6,7 @@ use App\Imports\DsrtImport;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Kabs;
+use App\Models\Periode;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class DsrtController extends Controller
     //
     public function index(Request $request)
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $data_pengawas = [];
 
@@ -31,28 +33,38 @@ class DsrtController extends Controller
             $kab = $auth->kd_wilayah;
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
-        // dd($kabs);
-        $data = Dsrt::where('dsrt.kd_kab', "LIKE", "%" . $kab . "%")
-            ->where('tahun', "LIKE", "%" . $request->tahun_filter . "%")
-            ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
+
+        if($request->pcl_filter){
+            $data = Dsrt::where('dsrt.kd_kab', "LIKE", "%" . $kab . "%")
+            ->where('tahun',  "LIKE", "%" . $request->tahun_filter . "%" )
+            ->where('semester', "LIKE", "%" . $request->semester_filter. "%")
             ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
             ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
             ->where('dsrt.pencacah', "LIKE", "%" . $request->pcl_filter . "%")
             ->select(['dsrt.*'])
             ->paginate(10);
+        }else{
+            $data = Dsrt::where('dsrt.kd_kab', "LIKE", "%" . $kab . "%")
+            ->where('tahun',  "LIKE", "%" . $request->tahun_filter . "%" )
+            ->where('semester', "LIKE", "%" . $request->semester_filter. "%")
+            ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
+            ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
+            ->select(['dsrt.*'])
+            ->paginate(10);
+        }
+
         $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
         $data->appends($request->all());
-        // console.log();
-        // dd($data);
-        return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs', 'request'));
+        return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs', 'request', 'periode'));
     }
 
     public function show($id)
     {
+        $periode = Periode::first();
         $auth = Auth::user();
         $real_id = Crypt::decryptString($id);
         $data = Dsrt::find($real_id);
-        return view('dsrt.show', compact('auth', 'id', 'data'));
+        return view('dsrt.show', compact('auth', 'id', 'data', 'periode'));
     }
 
     public function dsrt_generate(Request $request)
@@ -60,7 +72,6 @@ class DsrtController extends Controller
         // $id_bs = $request->id_bs;
         // dd($request->all());
         try {
-
             $id_bs = Dsbs::where('kd_kab', $request->kab)->where('tahun', $request->tahun)
             ->where('semester', $request->semester)->get();
             // dd($id_bs);
@@ -79,7 +90,6 @@ class DsrtController extends Controller
                         ],
                         [
                             'kd_kab' => substr($bs->id_bs, 2, 2),
-
                             'pencacah' => $bss->pencacah,
                             'pengawas' => $pengawas->pengawas,
                             'dummy_dsrt' => $bss->dummy,
