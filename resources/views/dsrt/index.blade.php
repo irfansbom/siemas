@@ -342,7 +342,7 @@
                                 <label for="modal_generate_kabkot" class="form-label">Pilih Kab/kot</label>
                                 <select name="kab" id="modal_generate_kabkot"
                                     class="form-control select2 form-select" required>
-                                    <option value="">Pilih tahun</option>
+                                    <option value="">Pilih Kab/kot</option>
                                     @foreach ($kabs as $kab)
                                         <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}] {{ $kab->alias }}
                                         </option>

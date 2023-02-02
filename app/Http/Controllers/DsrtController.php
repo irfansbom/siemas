@@ -72,7 +72,7 @@ class DsrtController extends Controller
         // $id_bs = $request->id_bs;
         // dd($request->all());
         try {
-            $id_bs = Dsbs::where('kd_kab', $request->kab)->where('tahun', $request->tahun)
+            $id_bs = Dsbs::where('kd_kab', 'LIKE ', '%'.$request->kab.'%')->where('tahun', $request->tahun)
             ->where('semester', $request->semester)->get();
             // dd($id_bs);
             foreach ($id_bs as $bs) {
