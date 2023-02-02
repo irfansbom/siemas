@@ -43,7 +43,7 @@ class DsrtApiController extends Controller
             "dsrt.nonmakanan_sebulan", "dsrt.makanan_sebulan_bypml", "dsrt.nonmakanan_sebulan_bypml",
             "dsrt.transportasi", "dsrt.peliharaan", "dsrt.art_sekolah", "dsrt.art_bpjs", "dsrt.ijazah_krt",
             "dsrt.kegiatan_seminggu", "dsrt.deskripsi_kegiatan", "dsrt.luas_lantai",
-            "dsrt.status_pencacahan", "dsrt.gsmp", "dsrt.foto", "dsrt.latitude", "dsrt.longitude",
+            "dsrt.status_pencacahan", "dsrt.gsmp", "dsrt.gsmp_desk", "dsrt.foto", "dsrt.latitude", "dsrt.longitude",
             "dsrt.durasi_pencacahan", "dsrt.pencacah", "dsrt.pengawas", "dsrt.sumber",
             "dsrt.latitude_selesai", "dsrt.longitude_selesai", "dsrt.jam_mulai", "dsrt.jam_selesai")
             ->get()->toArray();
@@ -93,7 +93,7 @@ class DsrtApiController extends Controller
              "dsrt.nonmakanan_sebulan", "dsrt.makanan_sebulan_bypml", "dsrt.nonmakanan_sebulan_bypml",
               "dsrt.transportasi", "dsrt.peliharaan", "dsrt.art_sekolah", "dsrt.art_bpjs", "dsrt.ijazah_krt",
               "dsrt.kegiatan_seminggu", "dsrt.deskripsi_kegiatan", "dsrt.luas_lantai",
-               "dsrt.status_pencacahan", "dsrt.gsmp", "dsrt.foto", "dsrt.latitude", "dsrt.longitude",
+               "dsrt.status_pencacahan", "dsrt.gsmp" ,"dsrt.gsmp_desk", "dsrt.foto", "dsrt.latitude", "dsrt.longitude",
                "dsrt.durasi_pencacahan", "dsrt.pencacah", "dsrt.pengawas", "dsrt.sumber",
                "dsrt.latitude_selesai", "dsrt.longitude_selesai", "dsrt.jam_mulai", "dsrt.jam_selesai")
                 ->get()->toArray();
