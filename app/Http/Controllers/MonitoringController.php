@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\DsrtExport;
+use App\Exports\DsrtWebMonExport;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Jadwal212;
@@ -89,14 +90,14 @@ class MonitoringController extends Controller
                 ->where('tahun', $tahun)
                 ->where('semester', $semester)
                 ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-                ->select(['id', 'kd_kab', 'id_bs', 'nu_rt', 'nama_krt', 'nama_krt2', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art2', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art2 AS avg_perkapita")])
+                ->select(['id', 'kd_kab', 'id_bs','nk', 'nu_rt', 'nama_krt', 'nama_krt2', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art2', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art2 AS avg_perkapita")])
                 ->orderBy('avg_perkapita')->get()[$x];
             if ($d3->avg_perkapita == null) {
                 $d3->avg_perkapita = 0;
             }
         }
         $data = DB::table('dsrt')
-            ->select(['id', 'kd_kab', 'id_bs', 'nu_rt', 'nama_krt', 'nama_krt2', 'jml_art2', 'status_rumah', 'foto', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art2 ,0) AS avg_perkapita ")])
+            ->select(['id', 'kd_kab', 'id_bs','nks', 'nu_rt', 'nama_krt', 'nama_krt2', 'jml_art2', 'status_rumah', 'foto', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art2 ,0) AS avg_perkapita ")])
             ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
             ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
             ->where('dummy_dsrt', '0')
@@ -131,6 +132,23 @@ class MonitoringController extends Controller
         $data = new DsrtExport($request, $kab);
         return Excel::download($data, 'dsrt.xlsx');
     }
+
+    public function dsrt_export_webmon(Request $request)
+    {
+        // dd($request->semester);
+        $auth = Auth::user();
+        if ($auth->kd_wilayah == '00') {
+            $kab = "";
+            if ($request->kab_filter) {
+                $kab = $request->kab_filter;
+            }
+        } else {
+            $kab = $auth->kd_wilayah;
+        }
+        $data = new DsrtWebMonExport($request, $kab);
+        return Excel::download($data, 'dsrt_webmon.xlsx');
+    }
+
     public function mon_212(Request $request){
         $periode = Periode::first();
         $auth = Auth::user();

@@ -154,6 +154,7 @@
                                             <tr class="text-center align-middle">
                                                 <th>No</th>
                                                 <th>ID BS</th>
+                                                <th>NKS</th>
                                                 <th>TAHUN</th>
                                                 <th>SMT</th>
                                                 <th>NU RT</th>
@@ -169,6 +170,7 @@
                                                 <tr class="align-middle">
                                                     <td class="text-center align-middle">{{ ++$key }}</td>
                                                     <td class="align-middle text-center">{{ $dt->id_bs }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->nks }}</td>
                                                     <td class="align-middle text-center">{{ $dt->tahun }}</td>
                                                     <td class="align-middle text-center">{{ $dt->semester }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }}</td>

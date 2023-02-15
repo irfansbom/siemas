@@ -6,7 +6,10 @@ use App\Models\Dsrt;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class DsrtExport implements
     FromCollection,
@@ -16,6 +19,8 @@ class DsrtExport implements
      * @return \Illuminate\Support\Collection
      */
     use Exportable;
+    private $request;
+    private $kab;
 
     public function __construct(Request $request, string $kab)
     {
@@ -27,7 +32,9 @@ class DsrtExport implements
     {
         //
         return Dsrt::where('kd_kab', "LIKE", "%" . $this->kab . "%")
-        ->where('dummy_dsrt', '0')
+            ->where('dummy_dsrt', '0')
+            ->where('tahun',$this->request->tahun_filter)
+            ->where('semester',$this->request->semester_filter)
             ->where('id_bs', "LIKE", "%" . $this->request->bs_filter . "%")
             ->select(
                 'kd_kab',
@@ -69,4 +76,5 @@ class DsrtExport implements
         ];
         return $column;
     }
+
 }

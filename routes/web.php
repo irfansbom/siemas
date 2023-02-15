@@ -23,6 +23,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('mon_users/{id}', [MonitoringController::class, 'users_show']);
     Route::get('mon_dsrt', [MonitoringController::class, 'dsrt']);
     Route::get('mon_dsrt_export', [MonitoringController::class, 'dsrt_export']);
+
+    Route::get('mon_dsrt_export_webmon', [MonitoringController::class, 'dsrt_export_webmon']);
     Route::get('mon_dsrt/{id}', [MonitoringController::class, 'dsrt_show']);
 
     Route::get('mon_212', [MonitoringController::class, 'mon_212']);

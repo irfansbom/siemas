@@ -72,24 +72,26 @@ class DsrtController extends Controller
         // $id_bs = $request->id_bs;
         // dd($request->all());
         try {
-            $id_bs = Dsbs::where('kd_kab', 'LIKE ', '%'.$request->kab.'%')->where('tahun', $request->tahun)
+            $id_bs = Dsbs::where('kd_kab', 'LIKE', '%'.$request->kab.'%')->where('tahun', $request->tahun)
             ->where('semester', $request->semester)->get();
             // dd($id_bs);
             foreach ($id_bs as $bs) {
                 $bss = Dsbs::where('id_bs', $bs->id_bs)->where('tahun', $request->tahun)
                 ->where('semester', $request->semester)->get()->first();
                 $pengawas = $bss->pcl;
-
+                // dd($bss->nks);
                 if (!$pengawas) {
                     $pengawas = new User();
                 }
                 for ($i = 1; $i <= 10; $i++) {
+
                     $dsrt = Dsrt::updateOrCreate(
                         [
                             'id_bs' => $bs->id_bs, 'nu_rt' => $i, 'tahun'=>$request->tahun, 'semester' => $request->semester,
                         ],
                         [
                             'kd_kab' => substr($bs->id_bs, 2, 2),
+                            'nks' => $bss->nks,
                             'pencacah' => $bss->pencacah,
                             'pengawas' => $pengawas->pengawas,
                             'dummy_dsrt' => $bss->dummy,

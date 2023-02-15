@@ -25,6 +25,11 @@
                                             <i class="fe fe-log-in"></i>
                                         </span> Export
                                     </button>
+                                    <button id="export-mon-btn" class="btn btn-info btn-icon text-white">
+                                        <span>
+                                            <i class="fe fe-log-in"></i>
+                                        </span> Export Monitoring
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-header pt-0 d-flex justify-content-center">
@@ -118,6 +123,7 @@
                                                 <tr class="text-center align-middle">
                                                     <th class="text-center align-middle">No</th>
                                                     <th class="text-center align-middle">ID BS</th>
+                                                    <th class="text-center align-middle">NKS</th>
                                                     <th class="text-center align-middle">NU RT</th>
                                                     <th class="text-center align-middle">KRT Import</th>
                                                     <th class="text-center align-middle">KRT Isian</th>
@@ -136,6 +142,9 @@
                                                         </td>
                                                         <td class="text-center">
                                                             {{ $dt->id_bs }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $dt->nks }}
                                                         </td>
                                                         <td class="text-center">{{ $dt->nu_rt }}</td>
                                                         <td class="">{{ $dt->nama_krt }}</td>
@@ -226,6 +235,11 @@
         $('#export-btn').on('click', function() {
             var form = $('#form_filter');
             window.open("{{ url('mon_dsrt_export') }}" + "?" + form.serialize(), "_blank")
+        });
+
+        $('#export-mon-btn').on('click', function() {
+            var form = $('#form_filter');
+            window.open("{{ url('mon_dsrt_export_webmon') }}" + "?" + form.serialize(), "_blank")
         });
         var APP_URL = {!! json_encode(url('/')) !!}
         $('.img_btn').click(function() {
