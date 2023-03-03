@@ -36,10 +36,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
         Route::get('export_alokasi_dsbs_user', [AlokasiController::class, 'export']);
         Route::post('import_alokasi_dsbs_user', [AlokasiController::class, 'import']);
-        Route::resource('dsrt', DsrtController::class);
 
-        Route::post('dsrt/generate', [DsrtController::class, 'dsrt_generate']);
-        Route::post('dsrt/import', [DsrtController::class, 'dsrt_import']);
+        Route::resource('dsrt', DsrtController::class);
+        Route::post('dsrt_generate', [DsrtController::class, 'dsrt_generate']);
+        Route::post('dsrt_import', [DsrtController::class, 'dsrt_import']);
+        Route::post('dsrt_swap', [DsrtController::class, 'dsrt_swap']);
+
+
         Route::get('users', [UserController::class, 'index']);
         Route::get('users/create', [UserController::class, 'create']);
         Route::post('users/store', [UserController::class, 'store']);

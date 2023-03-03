@@ -50,11 +50,27 @@
                             <div class="card-header pt-0 d-flex justify-content-center">
                                 <div class="row col">
                                     <div class="alert alert-info" role="alert">
-                                        Username berguna untuk melakukan login di aplikasi android sehingga pastikan
-                                        username telah benar,<br>
-                                        Import dengan excel memberikan akses pengimport untuk melakukan update apabila ada
-                                        email yang duplikat, pastikan email tidak terduplikat di baris lain <br>
-                                        Level user yang diimport dapat dilihat pada template import user di sheet ke-2
+                                        <h5 class="h3">Hal yg perlu diperhatikan sebelum penambahan user</h5>
+
+                                        Penambahan user dapat dilakukan dengan 2 cara, yaitu dengan
+                                        <strong> menambah satu persatu (tombol tambah)</strong> dan menggunakan
+                                        <strong> import template user (tombol import)</strong><br>
+
+                                        <strong>Template user</strong> dapat didownload dengan menekan tombol <strong> panah
+                                            bawah </strong>
+                                        sebelah tombol import <br>
+
+                                        Masukkan isian excel sesuai dengan kolom pada template, apabila satker punya 2
+                                        wilayah (MURA/MURATARA & ENIM/PALI) pastikan
+                                        <strong> login dengan admin yang sesuai wilayah</strong>, karena
+                                        kode wilayah user yang diimpor akan disamakan dengan kode wilayah admin <br>
+
+                                        Pastikan Email adalah email yg <strong>uniqe</strong> (belum pernah digunakan
+                                        sebelumnya) ketika Melakukan Import. <strong>Pastikan Pula Email yang digunakan
+                                            email yang
+                                            baik/asli karena pembuatan email bisa saja sama pada kabupaten/kota lain
+                                            <br>
+                                            Level user yang diimport dapat dilihat pada template import user di sheet ke-2
                                     </div>
                                 </div>
                             </div>
@@ -116,6 +132,7 @@
                                                 <th>Username</th>
                                                 <th colspan="2">Pengawas</th>
                                                 <th colspan="2">Roles</th>
+                                                <th>Dummy</th>
                                                 <th style="width: 8%">Aksi</th>
                                             </tr>
                                         </thead>
@@ -182,18 +199,24 @@
                                                             </button>
                                                         @endif
                                                     </td>
+                                                    <td>
+                                                        {{ $usr->dummy_user }}
+                                                    </td>
 
                                                     <td class="text-center">
                                                         <a class="btn-outline-primary btn"
                                                             href="{{ url('users/' . \Crypt::encryptString($usr->id)) }}">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
-                                                        <button class="btn btn-outline-danger  btn_hapus"
-                                                            data-id="{{ $usr->id }}"
-                                                            data-nama="{{ $usr->name }}" data-bs-toggle="modal"
-                                                            data-bs-target="#modal_hapus">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
+                                                        @if ($usr->dummy_user != 1)
+                                                            <button class="btn btn-outline-danger  btn_hapus"
+                                                                data-id="{{ $usr->id }}"
+                                                                data-nama="{{ $usr->name }}" data-bs-toggle="modal"
+                                                                data-bs-target="#modal_hapus">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        @endif
+
                                                     </td>
                                                 </tr>
                                             @endforeach

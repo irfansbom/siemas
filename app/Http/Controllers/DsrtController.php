@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\DsrtImport;
+use App\Models\Dsart;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Kabs;
@@ -34,26 +35,27 @@ class DsrtController extends Controller
             $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
         }
 
-        if($request->pcl_filter){
+        if ($request->pcl_filter) {
             $data = Dsrt::where('dsrt.kd_kab', "LIKE", "%" . $kab . "%")
-            ->where('tahun',  "LIKE", "%" . $request->tahun_filter . "%" )
-            ->where('semester', "LIKE", "%" . $request->semester_filter. "%")
-            ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
-            ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
-            ->where('dsrt.pencacah', "LIKE", "%" . $request->pcl_filter . "%")
-            ->select(['dsrt.*'])
-            ->paginate(10);
-        }else{
+                ->where('tahun',  "LIKE", "%" . $request->tahun_filter . "%")
+                ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
+                ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
+                ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
+                ->where('dsrt.pencacah', "LIKE", "%" . $request->pcl_filter . "%")
+                ->select(['dsrt.*'])
+                ->paginate(10);
+        } else {
             $data = Dsrt::where('dsrt.kd_kab', "LIKE", "%" . $kab . "%")
-            ->where('tahun',  "LIKE", "%" . $request->tahun_filter . "%" )
-            ->where('semester', "LIKE", "%" . $request->semester_filter. "%")
-            ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
-            ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
-            ->select(['dsrt.*'])
-            ->paginate(10);
+                ->where('tahun',  "LIKE", "%" . $request->tahun_filter . "%")
+                ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
+                ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
+                ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
+                ->select(['dsrt.*'])
+                ->paginate(10);
         }
 
-        $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->get();
+        $dsbs = Dsbs::where('kd_kab', "LIKE", "%" . $kab . "%")->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)->get();
         $data->appends($request->all());
         return view('dsrt.index', compact('auth', 'data', 'kabs', 'dsbs', 'request', 'periode'));
     }
@@ -72,12 +74,12 @@ class DsrtController extends Controller
         // $id_bs = $request->id_bs;
         // dd($request->all());
         try {
-            $id_bs = Dsbs::where('kd_kab', 'LIKE', '%'.$request->kab.'%')->where('tahun', $request->tahun)
-            ->where('semester', $request->semester)->get();
+            $id_bs = Dsbs::where('kd_kab', 'LIKE', '%' . $request->kab . '%')->where('tahun', $request->tahun)
+                ->where('semester', $request->semester)->get();
             // dd($id_bs);
             foreach ($id_bs as $bs) {
                 $bss = Dsbs::where('id_bs', $bs->id_bs)->where('tahun', $request->tahun)
-                ->where('semester', $request->semester)->get()->first();
+                    ->where('semester', $request->semester)->get()->first();
                 $pengawas = $bss->pcl;
                 // dd($bss->nks);
                 if (!$pengawas) {
@@ -87,7 +89,7 @@ class DsrtController extends Controller
 
                     $dsrt = Dsrt::updateOrCreate(
                         [
-                            'id_bs' => $bs->id_bs, 'nu_rt' => $i, 'tahun'=>$request->tahun, 'semester' => $request->semester,
+                            'id_bs' => $bs->id_bs, 'nu_rt' => $i, 'tahun' => $request->tahun, 'semester' => $request->semester,
                         ],
                         [
                             'kd_kab' => substr($bs->id_bs, 2, 2),
@@ -114,6 +116,56 @@ class DsrtController extends Controller
 
             return redirect()->back()->with('error', 'Kesalahan File');
         }
+    }
+    public function dsrt_swap(Request $request)
+    {
+        // dd($request->all());
+        $periode = Periode::first();
+        $no_1 = $request->ruta1;
+        $no_2 = $request->ruta2;
+        $temp_num = 50;
+
+        $dsrt_1 = Dsrt::where('id_bs', $request->id_bs)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->where('nu_rt', $request->ruta1)->first();
+        $dsart_1 = Dsart::where('id_bs', $request->id_bs)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->where('nu_rt', $request->ruta1)->get();
+
+        $dsrt_2 =  Dsrt::where('id_bs', $request->id_bs)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->where('nu_rt', $request->ruta2)->first();
+
+        $dsart_2 =  Dsart::where('id_bs', $request->id_bs)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->where('nu_rt', $request->ruta2)->get();
+
+        $dsrt_1->nu_rt = $temp_num;
+        foreach ($dsart_1 as $i => $art_1) {
+            $dsart_1[$i]->nu_rt = $temp_num;
+            $dsart_1[$i]->save();
+        }
+        $dsrt_1->save();
+
+        $dsrt_2->nu_rt = $no_1;
+        foreach ($dsart_2 as $j => $art_2) {
+            $dsart_2[$j]->nu_rt = $no_1;
+            $dsart_2[$j]->save();
+        }
+        $dsrt_2->save();
+
+        $dsrt_1->nu_rt = $no_2;
+        foreach ($dsart_1 as $i => $no_2) {
+            $dsart_1[$i]->nu_rt = $no_2;
+            $dsart_1[$i]->save();
+        }
+        $dsrt_1->save();
+
+        return redirect()->back()->withInput()->with('success', 'Swap Berhasil');
     }
 
     public function destroy(Request $request)

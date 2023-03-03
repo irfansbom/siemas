@@ -21,11 +21,12 @@
                                 <h3 class="card-title mb-0">List DSRT</h3>
                                 <div class="ms-auto pageheader-btn">
                                     @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#modal_swap_dsrt">Tukar DSRT</button>
+
                                         <div class="btn-group mt-2 mb-2">
-                                            @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
-                                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                    data-bs-target="#modal_import_dsrt">Import DSRT</button>
-                                            @endrole
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#modal_import_dsrt">Import DSRT</button>
                                             <button type="button" class="btn btn-default dropdown-toggle "
                                                 data-bs-toggle="dropdown">
                                                 <span class="caret"></span>
@@ -88,7 +89,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-1">
                                                         <select name="tahun_filter" id="tahun_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih tahun</option>
@@ -101,7 +102,7 @@
 
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-1">
                                                         <select name="semester_filter" id="semester_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih Semester</option>
@@ -124,7 +125,7 @@
                                                             @if ($request->pcl_filter) value="{{ $request->pcl_filter }}" @endif>
                                                     </div>
 
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-1">
                                                         <select name="dummy_filter" id="dummy_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Semua Sampel</option>
@@ -325,7 +326,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('dsrt/generate') }}" method="post" id="form_generate">
+                    <form action="{{ url('dsrt_generate') }}" method="post" id="form_generate">
                         @csrf
                         {{-- <div class="row">
                             <div class="form-group">
@@ -420,7 +421,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('dsrt/import') }}" method="post" id="form_import"
+                    <form action="{{ url('dsrt_import') }}" method="post" id="form_import"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row ">
@@ -457,6 +458,70 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" form="form_import">Submit</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_swap_dsrt">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tukar DSRT<span></span></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('dsrt_swap') }}" method="post" id="form_tukar">
+                        @csrf
+                        <div class="row">
+                            <div class="mb-3 col-5">
+                                <div class="form-group">
+                                    <label for="id_bs" class="form-label"> Piih BS </label>
+                                    <select name="id_bs" id="modal_swap_idbs" class="form-select">
+                                        @foreach ($dsbs as $bs)
+                                            <option value="{{ $bs->id_bs }}">{{ $bs->id_bs }} /
+                                                {{ $bs->nks }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-2 text-center">
+                                <div class="form-group">
+                                    <label for="ruta1" class="form-label">Ruta 1</label>
+                                    <select name="ruta1" id="modal_swap_ruta1" class="form-select">
+                                        @for ($i = 1; $i <= 10; $i++)
+                                            <option value="{{ $i }}">{{ $i }} </option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-1 text-center">
+                                <label for="id_bs" class="form-label"> </label>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                                </svg>
+                            </div>
+                            <div class="mb-3 col-2 text-center">
+                                <div class="form-group">
+                                    <label for="ruta2" class="form-label">Ruta 2</label>
+                                    <select name="ruta2" id="modal_swap_ruta2" class="form-select">
+                                        @for ($j = 1; $j <= 10; $j++)
+                                            <option value="{{ $j }}">{{ $j }} </option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="form_tukar">Submit</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
 

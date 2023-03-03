@@ -27,11 +27,15 @@ class UserImport_S1 implements
     public function model(array $row)
     {
         $auth = Auth::user();
+        $kd_wilayah = $auth->kd_wilayah;
+        if ($auth->kd_wilayah == 00) {
+            $kd_wilayah = $row[0];
+        }
         $assign = User::where('email', $row[3])->first();
         if ($assign) {
             // jika dia ada di db
             $user = new User([
-                'kd_wilayah' => $row[0],
+                'kd_wilayah' => $kd_wilayah,
                 'name' =>  $row[1],
                 'username' => $row[2],
                 'email' => $row[3],

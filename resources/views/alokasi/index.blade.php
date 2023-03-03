@@ -35,10 +35,14 @@
                                             <li> Alokasi Dapat dilakukan dengan 2 cara, yaitu manual dengan pilih pencacah
                                                 pada list
                                                 dibawah secara satu persatu atau sekaligus dengan import excel.</li>
-                                            <li> Import alokasi dengan excel dapat dilalukan dengan cara mengexport terlebih
-                                                dahulu DSBS di list berikut(export sesuai filter yang dipilih), kemudian
-                                                melakukan pengisian email pencacah pada kolom pencacah dan Import kembali
-                                                excel yang sudah diisikan.</li>
+                                            <li><strong> Import alokasi </strong> dengan excel dapat dilalukan dengan cara
+                                                <strong> mengexport terlebih
+                                                    dahulu DSBS </strong> di list berikut(export sesuai filter yang
+                                                dipilih), kemudian
+                                                melakukan pengisian email pencacah pada kolom pencacah dan <strong> Import
+                                                    kembali</strong>
+                                                excel yang sudah diisikan.
+                                            </li>
                                             <li> Apabila email user tidak terdaftar pada menu user
                                                 maka dsbs tidak akan teralokasi ke siapapun, pastikan
                                                 user dan email telah terdaftar pada menu user.
@@ -101,13 +105,15 @@
                                                     <div class="col-sm-2">
                                                         <select name="dummy_filter" id="dummy_filter"
                                                             class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Dummy</option>
-                                                            <option value="">Dummy&Asli</option>
+                                                            <option value="">Sample Filter</option>
+                                                            <option value="">Semua Sampel</option>
                                                             <option value="1"
-                                                                @if ($request->dummy_filter == '1') selected @endif>Dummy
+                                                                @if ($request->dummy_filter == '1') selected @endif>Sampel
+                                                                Latihan
                                                             </option>
                                                             <option value="0"
-                                                                @if ($request->dummy_filter == '0') selected @endif>Asli
+                                                                @if ($request->dummy_filter == '0') selected @endif>Sampel
+                                                                Lapangan
                                                             </option>
                                                         </select>
                                                     </div>

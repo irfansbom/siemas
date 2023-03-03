@@ -33,7 +33,7 @@
                                         <label for="username" class="col-sm-4 col-form-label">Username</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" id="username" name="username"
-                                                value="{{ old('username', $user->username) }}" autocomplete="off" required >
+                                                value="{{ old('username', $user->username) }}" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -55,7 +55,10 @@
                                         <label for="kd_wilayah" class="col-sm-4 col-form-label">Kabupaten/Kota</label>
                                         <div class="col-sm-6">
                                             <select name="kd_wilayah" id="kd_wilayah" class="form-select">
-                                                <option value="00">Provinsi Sumatera Selatan</option>
+                                                @if ($auth->kd_wilayah == '00')
+                                                    <option value="00">Provinsi Sumatera Selatan</option>
+                                                @endif
+                                                {{-- <option value="00">Provinsi Sumatera Selatan</option> --}}
                                                 @foreach ($kabs as $kab)
                                                     <option value="{{ $kab->id_kab }}">{{ $kab->nama_kab }}</option>
                                                 @endforeach
