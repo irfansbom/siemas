@@ -159,7 +159,8 @@
                                                 <th>TAHUN</th>
                                                 <th>SMT</th>
                                                 <th>NU RT</th>
-                                                <th>Nama KRT</th>
+                                                <th>Nama KRT IMPORT</th>
+                                                <th>Nama KRT Pencacahan</th>
                                                 <th>Jumlah art</th>
                                                 <th>Pencacah</th>
                                                 <th>Pengawas</th>
@@ -176,6 +177,7 @@
                                                     <td class="align-middle text-center">{{ $dt->semester }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }}</td>
                                                     <td class="align-middle ">{{ $dt->nama_krt }}</td>
+                                                    <td class="align-middle ">{{ $dt->nama_krt2 }}</td>
                                                     <td class="align-middle text-center">{{ $dt->jml_art }}</td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">

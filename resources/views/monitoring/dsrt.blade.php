@@ -127,6 +127,7 @@
                                                     <th class="text-center align-middle">NU RT</th>
                                                     <th class="text-center align-middle">KRT Import</th>
                                                     <th class="text-center align-middle">KRT Isian</th>
+                                                    <th class="text-center align-middle">Status Pencacahan</th>
                                                     <th class="text-center align-middle">Jumlah <br> ART</th>
                                                     <th class="text-center align-middle">Status <br> Rumah</th>
                                                     <th class="text-center align-middle">Rata2 <br>Perkapita</th>
@@ -150,6 +151,29 @@
                                                         <td class="">{{ $dt->nama_krt }}</td>
                                                         <td class=""><a
                                                                 href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt2 }}</a>
+                                                        </td>
+                                                        <td class="align-middle ">
+                                                            @switch($dt->status_pencacahan)
+                                                                @case(0)
+                                                                    <span>Belum Cacah</span>
+                                                                @break
+
+                                                                @case(1)
+                                                                    <span>Sudah Cacah</span>
+                                                                @break
+
+                                                                @case(4)
+                                                                    <span>Sudah Upload <br> Pemeriksaan Pencacah</span>
+                                                                @break
+
+                                                                @case(5)
+                                                                    <span>Sudah Pemeriksaan <br> Pengawas</span>
+                                                                @break
+
+                                                                @case(6)
+                                                                    <span>Sudah Upload <br> Pemeriksaan Pengawas</span>
+                                                                @break
+                                                            @endswitch
                                                         </td>
                                                         <td class="text-center">{{ $dt->jml_art2 }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
