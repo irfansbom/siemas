@@ -481,7 +481,7 @@
                             <div class="mb-3 col-5">
                                 <div class="form-group">
                                     <label for="id_bs" class="form-label"> Piih BS </label>
-                                    <select name="id_bs" id="modal_swap_idbs" class="form-select">
+                                    <select name="id_bs" id="modal_swap_idbs" class="form-select select2-show-search ">
                                         @foreach ($dsbs as $bs)
                                             <option value="{{ $bs->id_bs }}">{{ $bs->id_bs }} /
                                                 {{ $bs->nks }}</option>
@@ -547,8 +547,8 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            $('#modal_edit_pencacah').find("#pencacah").select2({
-                dropdownParent: $("#modal_edit_pencacah")
+            $('#modal_swap_dsrt').find("#modal_swap_idbs").select2({
+                dropdownParent: $("#modal_swap_dsrt")
             });
         });
         $('.btn_pencacah').click(function() {

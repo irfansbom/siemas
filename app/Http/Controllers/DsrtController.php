@@ -71,7 +71,11 @@ class DsrtController extends Controller
         $auth = Auth::user();
         $real_id = Crypt::decryptString($id);
         $data = Dsrt::find($real_id);
-        return view('dsrt.show', compact('auth', 'id', 'data', 'periode'));
+        $dsart = Dsart::where('id_bs', $data->id_bs)
+            ->where('nu_rt', $data->nu_rt)
+            ->where('tahun', $data->tahun)
+            ->where('semester', $data->semester)->get();
+        return view('dsrt.show', compact('auth', 'id', 'data', 'periode', 'dsart'));
     }
 
     public function dsrt_generate(Request $request)
@@ -129,11 +133,14 @@ class DsrtController extends Controller
         $no_1 = $request->ruta1;
         $no_2 = $request->ruta2;
         $temp_num = 50;
+        $temp_kk_import_1 = "";
+        $temp_kk_import_2 = "";
 
         $dsrt_1 = Dsrt::where('id_bs', $request->id_bs)
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('nu_rt', $request->ruta1)->first();
+        $temp_kk_import_1 = $dsrt_1->nama_krt;
         $dsart_1 = Dsart::where('id_bs', $request->id_bs)
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
@@ -143,6 +150,7 @@ class DsrtController extends Controller
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('nu_rt', $request->ruta2)->first();
+        $temp_kk_import_2 = $dsrt_2->nama_krt;
 
         $dsart_2 =  Dsart::where('id_bs', $request->id_bs)
             ->where('tahun', $periode->tahun)
@@ -157,6 +165,7 @@ class DsrtController extends Controller
         $dsrt_1->save();
 
         $dsrt_2->nu_rt = $no_1;
+        $dsrt_2->nama_krt = $temp_kk_import_1;
         foreach ($dsart_2 as $j => $art_2) {
             $dsart_2[$j]->nu_rt = $no_1;
             $dsart_2[$j]->save();
@@ -174,6 +183,7 @@ class DsrtController extends Controller
             ->where('nu_rt', $temp_num)->get();
 
         $dsrt_3->nu_rt = $no_2;
+        $dsrt_3->nama_krt = $temp_kk_import_2;
         foreach ($dsart_3 as $k => $art_3) {
             $dsart_3[$k]->nu_rt = $no_2;
             $dsart_3[$k]->save();

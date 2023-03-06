@@ -315,7 +315,7 @@
                                                         </td>
                                                         <td class="text-center">{{ $dt->nu_rt }}</td>
                                                         <td class=""><a
-                                                                href="{{ url('mon_dsrt') . '/' . $dt->id }}">{{ $dt->nama_krt2 }}
+                                                                href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt2 }}
                                                         </td>
                                                         <td class="text-center">{{ $dt->jml_art2 }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>

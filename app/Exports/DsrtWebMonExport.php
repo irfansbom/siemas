@@ -16,8 +16,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyles, WithColumnWidths
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     use Exportable;
     private $request;
     private $kab;
@@ -44,12 +44,14 @@ class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyl
             ["Data Progress Pencacahan Susenas"],
             [
                 'kode prop', 'kode kab',  'kode NKS', 'No Urut Ruta', 'Sudah Selesai?',
-                 'Jumlah Anggota Rumah Tangga (ART)',
-                 'Jumlah ART umur 10 tahun ke atas yang melakukan kegiatan untuk menenangkan hati/ pikiran?',
-                 'Jumlah komoditas makanan',
-                 'Jumlah Komoditas Non Makanan'
+                'Hasil Pencacahan Ruta (R203) KOR',
+                'Hasil Pencacahan Ruta (R203) KP '
             ],
-            ["","","","","","","[P.813 = 1 ]", "[KP Blok III P.304]", "[KP BLOK III P.305]"]
+            [
+                "", "", "", "", "",
+                "1= Terisi Lengkap, 2=Terisi tdk lengkap, 3=Tidak ada ART/responden yang memberikan informasi sampai akhir masa pencacahan, 4= menolak, 5=Ruta pindah",
+                "1= Terisi Lengkap, 2=Terisi tdk lengkap, 3= Tidak ada ART/responden yang memberikan informasi sampai akhir masa pencacahan, 4= menolak, 5=Ruta pindah"
+            ]
         ];
     }
 
@@ -57,22 +59,21 @@ class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyl
     {
 
         $status = "";
-        if($dsrt->status_pencacahan >= 4){
+        if ($dsrt->status_pencacahan >= 4) {
             $status = "sudah";
-        }else{
+        } else {
             $status = "belum";
         }
 
         return [
-            [ "16",
+            [
+                "16",
                 $dsrt->kd_kab,
                 $dsrt->nks,
                 $dsrt->nu_rt,
                 $status,
-                $dsrt->jml_art2,
                 "",
-                $dsrt->jml_komoditas_makanan,
-                $dsrt->jml_komoditas_nonmakanan
+                ""
 
             ],
         ];
@@ -81,15 +82,14 @@ class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyl
     {
         $sheet->getStyle('A1:I3')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A1:I3')->getAlignment()->setHorizontal('center')->setVertical('center');
-        $sheet->getStyle('A1:I1')->getFill()
-        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setARGB('974706');
-        $sheet->getStyle('A2:I2')->getFill()
-        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setARGB('ED7D31');
+        $sheet->getStyle('A1:G1')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('974706');
+        $sheet->getStyle('A2:G2')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('ED7D31');
 
-
-        $sheet->mergeCells('A1:I1');
+        $sheet->mergeCells('A1:G1');
     }
 
     public function columnWidths(): array
@@ -100,11 +100,8 @@ class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyl
             'C' => 13.86,
             'D' => 13.29,
             'E' => 16.29,
-            'F' => 12.29,
+            'F' => 21.43,
             'G' => 21.57,
-            'H' => 8.43,
-            'I' => 12.43,
         ];
     }
-
 }

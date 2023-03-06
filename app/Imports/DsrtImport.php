@@ -41,17 +41,17 @@ class DsrtImport implements
     public function model(array $row)
     {
         $auth = Auth::user();
-        if ($row['51'] == 1) {
+        if ($row['53'] == 1) {
             $dsbs = Dsbs::where('id_bs', $row[8])
                 ->where('tahun', $this->tahun)
                 ->where('semester', $this->semester)
                 ->get()
                 ->first();
 
-            $nama_krt = $row[29];
+            $nama_krt = $row[30];
 
-            if ($row[37]) {
-                $nama_krt = $row[37];
+            if ($row[38]) {
+                $nama_krt = $row[38];
             }
 
             if ($dsbs) {
@@ -61,7 +61,7 @@ class DsrtImport implements
                     'nks' => $row[13],
                     'tahun' => $this->tahun,
                     'semester' => $this->semester,
-                    'nu_rt' => $row[52],
+                    'nu_rt' => $row[54],
                     'nama_krt' => $nama_krt,
                     'jml_art' => '1',
                     'pencacah' => $dsbs->pcl->email,

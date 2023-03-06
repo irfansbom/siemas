@@ -90,7 +90,7 @@
                                                         <td class="text-center">
                                                             {{ ++$key }}
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td>
                                                             {{ $dt->name }}
                                                         </td>
                                                         <td class="text-center">

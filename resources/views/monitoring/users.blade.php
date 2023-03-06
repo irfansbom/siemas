@@ -91,9 +91,15 @@
                                                         <td class="align-middle text-center">
                                                             {{ count($dt->dsrt_sdh_cacah) }}
                                                         </td>
-                                                        <td class="text-center">
-                                                            {{ round((count($dt->dsrt_sdh_cacah) / count($dt->dsrt)) * 100, 2) }}
-                                                        </td>
+
+                                                        @if (count($dt->dsrt) != 0)
+                                                            <td class="text-center">
+                                                                {{ round((count($dt->dsrt_sdh_cacah) / count($dt->dsrt)) * 100, 2) }}
+                                                            </td>
+                                                        @else
+                                                            <td class="text-center"> 0%</td>
+                                                        @endif
+
                                                     </tr>
                                                 @endforeach
                                             </tbody>
