@@ -11,6 +11,7 @@ class Dsrt extends Model
     protected $table = 'dsrt';
     protected $guarded = [];
 
+
     public function dsbs()
     {
         return $this->belongsTo(Dsbs::class, 'id_bs', 'id_bs');
@@ -24,5 +25,13 @@ class Dsrt extends Model
     public function pms()
     {
         return $this->belongsTo(User::class, 'pengawas', 'email');
+    }
+
+    public function art()
+    {
+        return $this->hasMany(Dsart::class, 'id_bs', 'id_bs')
+            ->where('nu_rt', $this->nu_rt)
+            ->where('tahun', $this->tahun)
+            ->where('semester', $this->semester);
     }
 }

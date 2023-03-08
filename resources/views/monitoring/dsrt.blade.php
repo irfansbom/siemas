@@ -55,61 +55,115 @@
                                         <form action="" id="form_filter">
                                             <fieldset>
                                                 <div class="mb-1 row">
-                                                    <div class="col-2">
-                                                        <select name="kab_filter" id="kab_filter"
-                                                            class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Kab/Kot</option>
-                                                            <option value=""> [00] PROVINSI SUMSEL</option>
-                                                            @foreach ($kabs as $kab)
-                                                                <option value="{{ $kab->id_kab }}"
-                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
-                                                                    [{{ $kab->id_kab }}]
-                                                                    {{ $kab->alias }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <select name="tahun_filter" id="tahun_filter"
-                                                            class="form-control select2 form-select">
-                                                            <option value="">Pilih tahun</option>
-                                                            <option value="2022"
-                                                                @if ($request->tahun_filter == '2022') selected @endif>2022
-                                                            </option>
-                                                            <option value="2023"
-                                                                @if ($request->tahun_filter == '2023') selected @endif>2023
-                                                            </option>
+                                                    <div class="col-11">
+                                                        <div class="row mb-1">
+                                                            <div class="col-sm-2">
+                                                                <select name="kab_filter" id="kab_filter"
+                                                                    class="form-control select2-show-search form-select">
+                                                                    <option value="">Pilih Kab/Kot</option>
+                                                                    <option value=""> [00] PROVINSI SUMSEL</option>
+                                                                    @foreach ($kabs as $kab)
+                                                                        <option value="{{ $kab->id_kab }}"
+                                                                            @if ($kab->id_kab == $request->kab_filter) selected @endif>
+                                                                            [{{ $kab->id_kab }}]
+                                                                            {{ $kab->alias }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <select name="tahun_filter" id="tahun_filter"
+                                                                    class="form-control select2 form-select">
+                                                                    <option value="">Pilih tahun</option>
+                                                                    <option value="2022"
+                                                                        @if ($request->tahun_filter == '2022') selected @endif>
+                                                                        2022
+                                                                    </option>
+                                                                    <option value="2023"
+                                                                        @if ($request->tahun_filter == '2023') selected @endif>
+                                                                        2023
+                                                                    </option>
 
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <select name="semester_filter" id="semester_filter"
-                                                            class="form-control select2 form-select">
-                                                            <option value="">Pilih Semester</option>
-                                                            <option value="1"
-                                                                @if ($request->semester_filter == '1') selected @endif>1</option>
-                                                            <option value="2"
-                                                                @if ($request->semester_filter == '2') selected @endif>2</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <input type="text" name="bs_filter" id="bs_filter"
-                                                            placeholder="cari BS" class="form-control"
-                                                            @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
-                                                    </div>
-                                                    <div class="col-1">
-                                                        <input type="text" name="minimum_filter" id="minimum_filter"
-                                                            placeholder="Perkapita Minimum" class="form-control"
-                                                            @if ($request->minimum_filter) value="{{ $request->minimum_filter }}" @endif>
-                                                    </div>
-                                                    <div class="col-1">
-                                                        <input type="text" name="maksimum_filter" id="maksimum_filter"
-                                                            placeholder="Perkapita Maksimum" class="form-control"
-                                                            @if ($request->maksimum_filter) value="{{ $request->maksimum_filter }}" @endif>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <select name="semester_filter" id="semester_filter"
+                                                                    class="form-control select2 form-select">
+                                                                    <option value="">Pilih Semester</option>
+                                                                    <option value="1"
+                                                                        @if ($request->semester_filter == '1') selected @endif>1
+                                                                    </option>
+                                                                    <option value="2"
+                                                                        @if ($request->semester_filter == '2') selected @endif>2
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="bs_filter" id="bs_filter"
+                                                                    placeholder="cari BS" class="form-control"
+                                                                    @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="nks_filter" id="nks_filter"
+                                                                    placeholder="cari NKS" class="form-control"
+                                                                    @if ($request->nks_filter) value="{{ $request->nks_filter }}" @endif>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <select name="status_filter" id="status_filter"
+                                                                    class="form-control select2 form-select">
+                                                                    <option value="">Pilih Status Pencacahan</option>
+                                                                    <option value="0"
+                                                                        @if ($request->status_filter == '0') selected @endif>
+                                                                        Belum
+                                                                        Cacah
+                                                                    </option>
+                                                                    <option value="1"
+                                                                        @if ($request->status_filter == '1') selected @endif>
+                                                                        Sudah
+                                                                        Cacah
+                                                                    </option>
+                                                                    <option value="4"
+                                                                        @if ($request->status_filter == '4') selected @endif>
+                                                                        Sudah
+                                                                        Upload Pemeriksaan Pencacah
+                                                                    </option>
+                                                                    <option value="5"
+                                                                        @if ($request->status_filter == '5') selected @endif>
+                                                                        Sudah
+                                                                        Pemeriksaan Pengawas
+                                                                    </option>
+                                                                    <option value="6"
+                                                                        @if ($request->status_filter == '6') selected @endif>
+                                                                        Sudah
+                                                                        Upload Pemeriksaan Pengawas
+                                                                    </option>
+                                                                </select>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-2">
+                                                                <input type="text" name="minimum_filter"
+                                                                    id="minimum_filter" placeholder="Perkapita Minimum"
+                                                                    class="form-control"
+                                                                    @if ($request->minimum_filter) value="{{ $request->minimum_filter }}" @endif>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input type="text" name="maksimum_filter"
+                                                                    id="maksimum_filter" placeholder="Perkapita Maksimum"
+                                                                    class="form-control"
+                                                                    @if ($request->maksimum_filter) value="{{ $request->maksimum_filter }}" @endif>
+                                                            </div>
+                                                            <div class="col-7"></div>
+
+                                                        </div>
                                                     </div>
                                                     <div class="col-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>
+
                                                 </div>
+
                                             </fieldset>
                                         </form>
                                     </div>

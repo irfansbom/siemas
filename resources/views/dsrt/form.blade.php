@@ -154,6 +154,13 @@
                          name="gsmp">
                  </div>
              </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Yang Diterima dari GSMP</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('gsmp_desk', $data->gsmp_desk) }}"
+                         name="gsmp_desk">
+                 </div>
+             </div>
          </div>
 
          <div class="col-6">
@@ -181,13 +188,6 @@
                  </div>
              </div>
 
-             <div class="row mb-3">
-                 <label class="col-sm-4 form-label">Peliharaan</label>
-                 <div class="col-sm-8">
-                     <input type="text" class="form-control" value="{{ old('peliharaan', $data->peliharaan) }}"
-                         name="peliharaan">
-                 </div>
-             </div>
          </div>
      </div>
 

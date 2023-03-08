@@ -41,6 +41,7 @@ class DsrtController extends Controller
                 ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
                 ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
                 ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
+                ->where('dsrt.nks', "LIKE", "%" . $request->nks_filter . "%")
                 ->where('dsrt.pencacah', "LIKE", "%" . $request->pcl_filter . "%")
                 ->select(['dsrt.*'])
                 ->orderby('id_bs')
@@ -52,6 +53,7 @@ class DsrtController extends Controller
                 ->where('semester', "LIKE", "%" . $request->semester_filter . "%")
                 ->where('dummy_dsrt', "LIKE", "%" . $request->dummy_filter . "%")
                 ->where('dsrt.id_bs', "LIKE", "%" . $request->bs_filter . "%")
+                ->where('dsrt.nks', "LIKE", "%" . $request->nks_filter . "%")
                 ->select(['dsrt.*'])
                 ->orderby('id_bs')
                 ->orderby('nu_rt')
@@ -189,6 +191,49 @@ class DsrtController extends Controller
             $dsart_3[$k]->save();
         }
         $dsrt_3->save();
+
+        return redirect()->back()->withInput()->with('success', 'Swap Berhasil');
+    }
+
+    public function dsart_swap(Request $request)
+    {
+        // dd($request->all());
+        $periode = Periode::first();
+        $no_1 = $request->ruta1;
+        $no_2 = $request->ruta2;
+        $temp_num = 50;
+        $temp_kk_import_1 = "";
+        $temp_kk_import_2 = "";
+
+        $dsart_1 = Dsart::where('id_bs', $request->id_bs)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->where('nu_rt', $request->ruta1)->get();
+
+        $dsart_2 =  Dsart::where('id_bs', $request->id_bs)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->where('nu_rt', $request->ruta2)->get();
+
+        foreach ($dsart_1 as $i => $art_1) {
+            $dsart_1[$i]->nu_rt = $temp_num;
+            $dsart_1[$i]->save();
+        }
+
+        foreach ($dsart_2 as $j => $art_2) {
+            $dsart_2[$j]->nu_rt = $no_1;
+            $dsart_2[$j]->save();
+        }
+
+        $dsart_3 = Dsart::where('id_bs', $request->id_bs)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->where('nu_rt', $temp_num)->get();
+
+        foreach ($dsart_3 as $k => $art_3) {
+            $dsart_3[$k]->nu_rt = $no_2;
+            $dsart_3[$k]->save();
+        }
 
         return redirect()->back()->withInput()->with('success', 'Swap Berhasil');
     }

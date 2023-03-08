@@ -253,7 +253,7 @@
                                                             name="bs_filter"
                                                             @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
                                                     </div>
-                                                    <div class="col-sm-3">
+                                                    {{-- <div class="col-sm-3">
                                                         <select name="status_filter" id="status_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih Status Pencacahan</option>
@@ -279,7 +279,7 @@
                                                             </option>
                                                         </select>
 
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>

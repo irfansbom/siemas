@@ -22,6 +22,9 @@
                                 <div class="ms-auto pageheader-btn">
                                     @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#modal_swap_dsart">Tukar ART Saja</button>
+
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                             data-bs-target="#modal_swap_dsrt">Tukar DSRT</button>
 
                                         <div class="btn-group mt-2 mb-2">
@@ -55,16 +58,16 @@
                                         </button>
                                     @endhasanyrole
                                 </div>
-
                             </div>
+
                             <div class="card-header pt-0 d-flex justify-content-center">
                                 <div class="row col">
                                     <div class="alert alert-info" role="alert">
-                                        Generate DSRT untuk membuat list daftar DSRT kosongan setelah dilakukan import DS
-                                        BS, <br>
-                                        Apabila telah memiliki list DSRT (nama KRT, dan Jumlah ART dari aplikasi
-                                        pemutakhiran), dapat dilakukan IMPORT
-                                        langsung DSRT dengan excel
+                                        Generate DSRT untuk membuat list daftar DSRT kosongan(NU RT 1-10), sedangkan IMPORT
+                                        DSRT akan sesuai NU_RT yg sesuai dengan aplikasi pemutakhiran<br>
+                                        <strong>Apabila dilakukan keduanya</strong> maka akan membuat dsrt yang tak ada isi
+                                        akibat masih tersisanya hasil generate, apabila ada maka cukup <b> dihapus </b> saja
+                                        yang tidak terpakai
                                     </div>
                                 </div>
                             </div>
@@ -120,6 +123,12 @@
                                                     </div>
 
                                                     <div class="col-sm-2">
+                                                        <input type="text" name="nks_filter" id="nks_filter"
+                                                            placeholder="cari NKS" class="form-control"
+                                                            @if ($request->nks_filter) value="{{ $request->nks_filter }}" @endif>
+                                                    </div>
+
+                                                    <div class="col-sm-2">
                                                         <input type="text" name="pcl_filter" id="pcl_filter"
                                                             placeholder="cari pcl" class="form-control"
                                                             @if ($request->pcl_filter) value="{{ $request->pcl_filter }}" @endif>
@@ -162,6 +171,7 @@
                                                 <th>Nama KRT IMPORT</th>
                                                 <th>Nama KRT Pencacahan</th>
                                                 <th>Jumlah art</th>
+                                                <th>DSART</th>
                                                 <th>Pencacah</th>
                                                 <th>Pengawas</th>
                                                 <th>Aksi</th>
@@ -178,7 +188,16 @@
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }}</td>
                                                     <td class="align-middle ">{{ $dt->nama_krt }}</td>
                                                     <td class="align-middle ">{{ $dt->nama_krt2 }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->jml_art }}</td>
+                                                    <td class="align-middle text-center">{{ $dt->jml_art2 }}</td>
+                                                    <td class="align-middle text-center">
+
+                                                        @foreach ($dt->art as $art)
+                                                            <ul>
+                                                                <li> {{ $art->nama_art }}</li>
+
+                                                            </ul>
+                                                        @endforeach
+                                                    </td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
                                                         @isset($dt->pencacah)
@@ -196,7 +215,7 @@
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                         <button class="btn btn-outline-danger btn_hapus"
-                                                            data-id="{{ $dt }}"
+                                                            data-id="{{ $dt->id }}"
                                                             data-id_bs="{{ $dt->id_bs }}" data-bs-toggle="modal"
                                                             data-bs-target="#modal_hapus">
                                                             <i class="fa fa-trash"></i>
@@ -391,7 +410,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('dsrt/delete') }}" method="post" id="form_hapus">
+                    <form action="{{ url('dsrt') }}" method="post" id="form_hapus">
                         @csrf
                         @method('delete')
                         <div class="row ">
@@ -493,7 +512,7 @@
                                 <div class="form-group">
                                     <label for="ruta1" class="form-label">Ruta 1</label>
                                     <select name="ruta1" id="modal_swap_ruta1" class="form-select">
-                                        @for ($i = 1; $i <= 10; $i++)
+                                        @for ($i = 1; $i <= 20; $i++)
                                             <option value="{{ $i }}">{{ $i }} </option>
                                         @endfor
                                     </select>
@@ -511,7 +530,7 @@
                                 <div class="form-group">
                                     <label for="ruta2" class="form-label">Ruta 2</label>
                                     <select name="ruta2" id="modal_swap_ruta2" class="form-select">
-                                        @for ($j = 1; $j <= 10; $j++)
+                                        @for ($j = 1; $j <= 20; $j++)
                                             <option value="{{ $j }}">{{ $j }} </option>
                                         @endfor
                                     </select>
@@ -524,6 +543,70 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" form="form_tukar">Submit</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_swap_dsart">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tukar Art Saja<span></span></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('dsart_swap') }}" method="post" id="form_tukar_art">
+                        @csrf
+                        <div class="row">
+                            <div class="mb-3 col-5">
+                                <div class="form-group">
+                                    <label for="id_bs" class="form-label"> Piih BS </label>
+                                    <select name="id_bs" id="modal_swap_idbs" class="form-select select2-show-search ">
+                                        @foreach ($dsbs as $bs)
+                                            <option value="{{ $bs->id_bs }}">{{ $bs->id_bs }} /
+                                                {{ $bs->nks }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-2 text-center">
+                                <div class="form-group">
+                                    <label for="ruta1" class="form-label">Ruta 1</label>
+                                    <select name="ruta1" id="modal_swap_ruta1" class="form-select">
+                                        @for ($i = 1; $i <= 20; $i++)
+                                            <option value="{{ $i }}">{{ $i }} </option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-1 text-center">
+                                <label for="id_bs" class="form-label"> </label>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                                </svg>
+                            </div>
+                            <div class="mb-3 col-2 text-center">
+                                <div class="form-group">
+                                    <label for="ruta2" class="form-label">Ruta 2</label>
+                                    <select name="ruta2" id="modal_swap_ruta2" class="form-select">
+                                        @for ($j = 1; $j <= 20; $j++)
+                                            <option value="{{ $j }}">{{ $j }} </option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="form_tukar_art">Submit</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
 
@@ -550,6 +633,9 @@
             $('#modal_swap_dsrt').find("#modal_swap_idbs").select2({
                 dropdownParent: $("#modal_swap_dsrt")
             });
+            $('#modal_swap_dsart').find("#modal_swap_idbs").select2({
+                dropdownParent: $("#modal_swap_dsart")
+            });
         });
         $('.btn_pencacah').click(function() {
             // console.log($(this).data("id"))
@@ -560,9 +646,9 @@
         })
 
         $('.btn_hapus').click(function() {
-            console.log($(this).data("id"))
             $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
             $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
+            $('#modal_hapus').find('#form_hapus').attr('action', "{{ url('dsrt') }}" + "/" + $(this).data('id'));
         })
     </script>
 @endsection

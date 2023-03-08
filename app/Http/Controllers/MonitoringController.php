@@ -99,6 +99,8 @@ class MonitoringController extends Controller
             ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt', 'nama_krt2', 'status_pencacahan', 'jml_art2', 'status_rumah', 'foto', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art2 ,0) AS avg_perkapita ")])
             ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
             ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
+            ->where('nks', "LIKE", "%" . $request->nks_filter . "%")
+            ->where('status_pencacahan', "LIKE", $request->status_filter)
             ->where('dummy_dsrt', '0')
             ->where('tahun', $tahun)
             ->where('semester', $semester)

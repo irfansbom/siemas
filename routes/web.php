@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('dsrt_generate', [DsrtController::class, 'dsrt_generate']);
         Route::post('dsrt_import', [DsrtController::class, 'dsrt_import']);
         Route::post('dsrt_swap', [DsrtController::class, 'dsrt_swap']);
+        Route::post('dsart_swap', [DsrtController::class, 'dsart_swap']);
 
 
         Route::get('users', [UserController::class, 'index']);
