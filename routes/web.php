@@ -20,6 +20,7 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('mon_users', [MonitoringController::class, 'users']);
+    Route::get('mon_users_export', [MonitoringController::class, 'users_export']);
     Route::get('mon_users/{id}', [MonitoringController::class, 'users_show']);
     Route::get('mon_dsrt', [MonitoringController::class, 'dsrt']);
     Route::get('mon_dsrt_export', [MonitoringController::class, 'dsrt_export']);

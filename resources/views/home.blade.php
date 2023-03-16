@@ -25,107 +25,8 @@
 
                     </div>
                 </div>
-                <!-- PAGE-HEADER END -->
                 @include('alert')
-                <!-- ROW-1 -->
-                {{-- <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h6 class="">Total Sales</h6>
-                                                <h3 class="mb-2 number-font">34,516</h3>
-                                                <p class="text-muted mb-0">
-                                                    <span class="text-primary"><i
-                                                            class="fa fa-chevron-circle-up text-primary me-1"></i>
-                                                        3%</span> last month
-                                                </p>
-                                            </div>
-                                            <div class="col col-auto">
-                                                <div
-                                                    class="counter-icon bg-primary-gradient box-shadow-primary brround ms-auto">
-                                                    <i class="fe fe-trending-up text-white mb-5 "></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h6 class="">Total Leads</h6>
-                                                <h3 class="mb-2 number-font">56,992</h3>
-                                                <p class="text-muted mb-0">
-                                                    <span class="text-secondary"><i
-                                                            class="fa fa-chevron-circle-up text-secondary me-1"></i>
-                                                        3%</span> last month
-                                                </p>
-                                            </div>
-                                            <div class="col col-auto">
-                                                <div
-                                                    class="counter-icon bg-danger-gradient box-shadow-danger brround  ms-auto">
-                                                    <i class="icon icon-rocket text-white mb-5 "></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h6 class="">Total Profit</h6>
-                                                <h3 class="mb-2 number-font">$42,567</h3>
-                                                <p class="text-muted mb-0">
-                                                    <span class="text-success"><i
-                                                            class="fa fa-chevron-circle-down text-success me-1"></i>
-                                                        0.5%</span> last month
-                                                </p>
-                                            </div>
-                                            <div class="col col-auto">
-                                                <div
-                                                    class="counter-icon bg-secondary-gradient box-shadow-secondary brround ms-auto">
-                                                    <i class="fe fe-dollar-sign text-white mb-5 "></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h6 class="">Total Cost</h6>
-                                                <h3 class="mb-2 number-font">$34,789</h3>
-                                                <p class="text-muted mb-0">
-                                                    <span class="text-danger"><i
-                                                            class="fa fa-chevron-circle-down text-danger me-1"></i>
-                                                        0.2%</span> last month
-                                                </p>
-                                            </div>
-                                            <div class="col col-auto">
-                                                <div
-                                                    class="counter-icon bg-success-gradient box-shadow-success brround  ms-auto">
-                                                    <i class="fe fe-briefcase text-white mb-5 "></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
@@ -142,7 +43,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-8">
                                         <div class="table-responsive">
                                             <table
                                                 class="table border text-nowrap text-md-nowrap table-bordered mg-b-0 table-sm">
@@ -152,6 +53,9 @@
                                                         <th class="text-center align-middle">KAB</th>
                                                         <th class="text-center align-middle">Jml <br> DSRT</th>
                                                         <th class="text-center align-middle">Jml <br> ART</th>
+                                                        <th class="text-center align-middle">Selesai<br>Cacah</th>
+                                                        <th class="text-center align-middle">Persentase<br> Selesai Cacah
+                                                        </th>
                                                         <th class="text-center align-middle">Foto <br> Masuk </th>
                                                         <th class="text-center align-middle">Persentase <br> Foto Masuk
                                                         </th>
@@ -168,27 +72,33 @@
                                                             </td>
                                                             <td class="text-center">{{ $tab1->jml_dsrt }}</td>
                                                             <td class="text-center">{{ $tab1->jml_art2 }}</td>
+                                                            <td class="text-center">{{ $tab1->selesai_cacah }}</td>
+                                                            <td class="text-center">
+                                                                @if ($tab1->jml_dsrt != 0)
+                                                                    {{ number_format(round(($tab1->selesai_cacah / $tab1->jml_dsrt) * 100, 2), 2, '.', ',') }}
+                                                                    %
+                                                                @else
+                                                                    0
+                                                                @endif
+                                                            </td>
                                                             <td class="text-center">{{ $tab1->jml_foto }}</td>
-                                                            @if ($tab1->jml_dsrt != 0)
-                                                                <td class="text-center">
+                                                            <td class="text-center">
+                                                                @if ($tab1->jml_dsrt != 0)
                                                                     {{ number_format(round(($tab1->jml_foto / $tab1->jml_dsrt) * 100, 2), 2, '.', ',') }}
                                                                     %
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">
+                                                                @else
                                                                     0
-                                                                </td>
-                                                            @endif
-
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="chart-container">
-                                            <canvas id="chartBar1" class="h-275"></canvas>
+                                            <canvas id="chart_cacah_foto" class="h-600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -197,7 +107,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
@@ -361,10 +270,7 @@
 
     @section('script')
         <script>
-            $(document).ready(function() {
-
-            });
-
+            $(document).ready(function() {});
             $('.img_btn').click(function() {
                 // console.log(window.location.origin + window.location.pathname + "foto/" + $(this).data('foto'))
                 $('#modal_gambar').find('#modal_gambar_foto').attr("src", window.location.origin + window.location
@@ -372,66 +278,134 @@
                         'foto'))
             })
 
-            /* Bar-Chart1 */
             var label_tab1 = {!! json_encode($label_tab1) !!};
-            var data_tab1 = {!! json_encode($data_tab1) !!};
+            var data_chart_foto = {!! json_encode($data_chart_foto) !!};
+            var data_chart_selesai = {!! json_encode($data_chart_selesai) !!};
             $(function() {
                 console.log(label_tab1)
-                var ctx = document.getElementById("chartBar1").getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: label_tab1,
-                        datasets: [{
-                            label: 'Persentase',
-                            data: data_tab1,
-                            borderWidth: 2,
-                            backgroundColor: '#6259ca',
-                            borderColor: '#6259ca',
-                            borderWidth: 2.0,
-                            pointBackgroundColor: '#ffffff',
+                var ctx = document.getElementById("chart_cacah_foto").getContext('2d');
 
+                // var myChart = new Chart(ctx, {
+                //     type: 'bar',
+                //     data: {
+                //         labels: label_tab1,
+                //         datasets: [{
+                //             label: 'Persentase',
+                //             data: data_tab1,
+                //             borderWidth: 2,
+                //             backgroundColor: '#6259ca',
+                //             borderColor: '#6259ca',
+                //             borderWidth: 2.0,
+                //             pointBackgroundColor: '#ffffff',
+                //         }]
+                //     },
+
+                //     options: {
+                //         title: {
+                //             display: true,
+                //             text: 'Persentase Petugas Kab/Kota Telah Upload Foto'
+                //         },
+                //         responsive: true,
+                //         maintainAspectRatio: false,
+                //         legend: {
+                //             display: true
+                //         },
+                //         scales: {
+                //             yAxes: [{
+                //                 ticks: {
+                //                     beginAtZero: true,
+                //                     stepSize: 100,
+                //                     fontColor: "#77778e",
+                //                 },
+                //                 gridLines: {
+                //                     color: 'rgba(119, 119, 142, 0.2)'
+                //                 }
+                //             }],
+                //             xAxes: [{
+                //                 ticks: {
+                //                     display: true,
+                //                     fontColor: "#77778e",
+                //                 },
+                //                 gridLines: {
+                //                     display: false,
+                //                     color: 'rgba(119, 119, 142, 0.2)'
+                //                 }
+                //             }]
+                //         },
+                //         legend: {
+                //             labels: {
+                //                 fontColor: "#77778e"
+                //             },
+                //         },
+                //     }
+                // });
+
+                console.log(data_chart_foto)
+                data = {
+                    labels: label_tab1,
+                    datasets: [{
+                        label: 'Foto Terupload',
+                        data: data_chart_foto,
+                        borderWidth: 2,
+                        backgroundColor: '#6259ca',
+                        pointBackgroundColor: '#0000',
+                    }, {
+                        label: 'Selesai Cacah',
+                        data: data_chart_selesai
+                    }]
+                }
+
+                options = {
+                    indexAxis: 'y',
+                    title: {
+                        display: true,
+                        text: 'Persentase Progress Pencacahan Kab/Kota'
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: true
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 100,
+                                fontColor: "#77778e",
+                            },
+                            gridLines: {
+                                color: 'rgba(119, 119, 142, 0.2)'
+                            },
+                            // stacked: true
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                display: true,
+                                fontColor: "#77778e",
+                            },
+                            gridLines: {
+                                display: false,
+                                color: 'rgba(119, 119, 142, 0.2)'
+                            },
+                            // stacked: true
                         }]
                     },
-                    options: {
-                        title: {
-                            display: true,
-                            text: 'Persentase Petugas Kab/Kota Telah Upload Foto'
+                    legend: {
+                        labels: {
+                            fontColor: "#77778e"
                         },
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: true
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    stepSize: 100,
-                                    fontColor: "#77778e",
-                                },
-                                gridLines: {
-                                    color: 'rgba(119, 119, 142, 0.2)'
-                                }
-                            }],
-                            xAxes: [{
-                                ticks: {
-                                    display: true,
-                                    fontColor: "#77778e",
-                                },
-                                gridLines: {
-                                    display: false,
-                                    color: 'rgba(119, 119, 142, 0.2)'
-                                }
-                            }]
-                        },
-                        legend: {
-                            labels: {
-                                fontColor: "#77778e"
-                            },
-                        },
-                    }
+                    },
+                }
+
+
+                var myBarChart = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: data,
+                    options: options
                 });
+
+
+
             });
         </script>
     @endsection

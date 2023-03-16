@@ -54,6 +54,7 @@ class DsrtImport implements
                 $nama_krt = $row[38];
             }
 
+            // dd($row[30]);
             if ($dsbs) {
                 $data =  new Dsrt([
                     'kd_kab' => $row[3],

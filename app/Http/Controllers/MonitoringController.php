@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\DsrtExport;
 use App\Exports\DsrtWebMonExport;
+use App\Exports\MonUsersExport;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
 use App\Models\Jadwal212;
@@ -52,6 +53,11 @@ class MonitoringController extends Controller
             ->where('status_pencacahan', 'LIKE', '%' . $request->status_filter . '%')
             ->get();
         return view('monitoring.users_show', compact('auth', 'request', 'data', 'periode'));
+    }
+
+    public function users_export(Request $request)
+    {
+        return Excel::download(new MonUsersExport($request), 'Mon_users_' . $request->kab_filter . '.xlsx');
     }
 
     public function dsrt(Request $request)

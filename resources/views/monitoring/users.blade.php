@@ -20,11 +20,11 @@
                             <div class="card-header border-0 pb-0 mb-3">
                                 <h3 class="card-title ">List User</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
+                                    <button class="btn btn-success btn-icon text-white btn_export">
                                         <span>
                                             <i class="fe fe-log-in"></i>
                                         </span> Export
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
 
@@ -91,7 +91,6 @@
                                                         <td class="align-middle text-center">
                                                             {{ count($dt->dsrt_sdh_cacah) }}
                                                         </td>
-
                                                         @if (count($dt->dsrt) != 0)
                                                             <td class="text-center">
                                                                 {{ round((count($dt->dsrt_sdh_cacah) / count($dt->dsrt)) * 100, 2) }}
@@ -150,6 +149,12 @@
             // console.log($(this).data("id"))
             $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
             $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
+        })
+
+        $('.btn_export').click(function() {
+            var form = $('#form_filter')
+            window.open("{{ url('mon_users_export') }}" + "?" + form.serialize(), "_blank")
+            // console.log(a)
         })
     </script>
 @endsection
