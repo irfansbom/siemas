@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterWilayahController;
 use App\Http\Controllers\MonitoringController;
+use App\Http\Controllers\PclController;
 use App\Http\Controllers\UserController;
 use App\Models\Periode;
 use Illuminate\Support\Facades\Route;
@@ -69,8 +70,6 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:SUPER ADMIN']], function () {
 
         Route::get('periode', [Periode::class, 'index']);
-
-
         Route::get('roles', [UserController::class, 'roles']);
         Route::post('roles/add', [UserController::class, 'roles_add']);
         Route::post('roles/edit', [UserController::class, 'roles_edit']);
@@ -79,5 +78,22 @@ Route::middleware(['auth'])->group(function () {
         Route::get('permissions', [UserController::class, 'permissions']);
         Route::post('permissions/add', [UserController::class, 'permissions_add']);
         Route::post('permissions/delete', [UserController::class, 'permissions_delete']);
+    });
+
+    Route::group(['middleware' => ['role:SUPER ADMIN|PENCACAH']], function () {
+        Route::get('pcl_dashboard', [PclController::class, 'dashboard']);
+        Route::get('pcl_pencacahan_dsbs', [PclController::class, 'pcl_pencacahan_dsbs']);
+        Route::get('pcl_pencacahan_dsrt/{id}', [PclController::class, 'pcl_pencacahan_dsrt']);
+        Route::get('pcl_pencacahan_ruta/{id}', [PclController::class, 'pcl_pencacahan_ruta']);
+        Route::post('pcl_pencacahan_ruta/{id}', [PclController::class, 'pcl_pencacahan_ruta_update']);
+
+        Route::get('pcl_pemeriksaan_dsbs', [PclController::class, 'pcl_pemeriksaan_dsbs']);
+        Route::get('pcl_pemeriksaan_dsrt/{id}', [PclController::class, 'pcl_pemeriksaan_dsrt']);
+        Route::get('pcl_pemeriksaan_ruta/{id}', [PclController::class, 'pcl_pemeriksaan_ruta']);
+        Route::post('pcl_pemeriksaan_ruta/{id}', [PclController::class, 'pcl_pemeriksaan_ruta_update']);
+        Route::post('pcl_pemeriksaan_dsart', [PclController::class, 'pcl_pemeriksaan_dsart_update']);
+    });
+    Route::group(['middleware' => ['role:SUPER ADMIN|PENGAWAS']], function () {
+        Route::get('pml_dashboard', [PclController::class, 'dashboard']);
     });
 });

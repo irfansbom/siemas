@@ -24,7 +24,14 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/');
+            $auth = Auth::user();
+            if ($auth->hasRole('PENCACAH')) {
+                return redirect('pcl_dashboard');
+            } else if ($auth->hasRole('PENGAWAS')) {
+                return redirect('pml_dashboard');
+            } else {
+                return redirect('/');
+            }
         } else {
             return back()->with('error', "gagal");
         }
