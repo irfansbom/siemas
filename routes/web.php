@@ -18,18 +18,21 @@ Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/', [HomeController::class, 'index']);
+Route::get('mon_users', [MonitoringController::class, 'users']);
+Route::get('mon_users_export', [MonitoringController::class, 'users_export']);
+Route::get('mon_users/{id}', [MonitoringController::class, 'users_show']);
+Route::get('mon_dsrt', [MonitoringController::class, 'dsrt']);
+Route::get('mon_dsrt_export', [MonitoringController::class, 'dsrt_export']);
+
+Route::get('mon_dsrt_export_webmon', [MonitoringController::class, 'dsrt_export_webmon']);
+Route::get('mon_dsrt/{id}', [MonitoringController::class, 'dsrt_show']);
+
+Route::get('mon_212', [MonitoringController::class, 'mon_212']);
+
+
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [HomeController::class, 'index']);
-    Route::get('mon_users', [MonitoringController::class, 'users']);
-    Route::get('mon_users_export', [MonitoringController::class, 'users_export']);
-    Route::get('mon_users/{id}', [MonitoringController::class, 'users_show']);
-    Route::get('mon_dsrt', [MonitoringController::class, 'dsrt']);
-    Route::get('mon_dsrt_export', [MonitoringController::class, 'dsrt_export']);
-
-    Route::get('mon_dsrt_export_webmon', [MonitoringController::class, 'dsrt_export_webmon']);
-    Route::get('mon_dsrt/{id}', [MonitoringController::class, 'dsrt_show']);
-
-    Route::get('mon_212', [MonitoringController::class, 'mon_212']);
 
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {

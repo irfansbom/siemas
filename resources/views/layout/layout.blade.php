@@ -54,7 +54,7 @@
         <div class="page-main">
 
             <!-- app-Header -->
-            <div class="app-header header sticky">
+            {{-- <div class="app-header header sticky">
                 <div class="container-fluid main-container">
                     <div class="d-flex align-items-center">
                         <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar"
@@ -62,45 +62,164 @@
                         <div class="d-flex order-lg-2 ms-auto header-right-icons">
                             <div class="navbar navbar-collapse responsive-navbar p-0">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                                    @if ($auth)
+                                        <div class="d-flex order-lg-2">
+                                            <h5 class="text-dark mb-0"> Hai, {{ $auth->name }}</h5>
+                                            <div class="dropdown d-md-flex">
+                                                <a class="nav-link icon theme-layout nav-link-bg layout-setting">
+                                                    <span class="dark-layout"><i class="fe fe-moon"></i></span>
+                                                    <span class="light-layout"><i class="fe fe-sun"></i></span>
+                                                </a>
+                                            </div>
+                                            <div class="dropdown d-md-flex profile-1">
+                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
+                                                    class="nav-link leading-none d-flex px-1">
+                                                    <span>
+                                                        <img src="{{ url('assets/images/users/8.png') }}"
+                                                            alt="profile-user"
+                                                            class="avatar  profile-user brround cover-image">
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                    <div class="drop-heading">
+                                                        <div class="text-center">
+                                                            <h5 class="text-dark mb-0">{{ $auth->name }}</h5>
+                                                            <small class="text-muted">{{ $auth->level }}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="dropdown-divider m-0"></div>
+                                                    <a class="dropdown-item"
+                                                        href="{{ url('users/' . \Crypt::encryptString($auth->id)) }}">
+                                                        <i class="dropdown-icon fe fe-user"></i> Profile
+                                                    </a>
+                                                    <a class="dropdown-item" href="{{ url('logout') }}">
+                                                        <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown d-md-flex header-settings">
+                                                <a href="javascript:void(0);" class="nav-link icon "
+                                                    data-bs-toggle="sidebar-right" data-target=".sidebar-right">
+                                                    <i class="fe fe-menu"></i>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    @else
+                                        <button class="btn btn-info" href="{{ url('login') }}">Login</button>
+                                    @endif
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+
+            <div class="app-header header sticky">
+                <div class="container-fluid main-container">
+                    <div class="d-flex align-items-center">
+                        <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar"
+                            href="javascript:void(0);"></a>
+                        <div class="responsive-logo">
+                            <a href="index.html" class="header-logo">
+                                <img src="../assets/images/brand/logo-3.png" class="mobile-logo logo-1" alt="logo">
+                                <img src="../assets/images/brand/logo.png" class="mobile-logo dark-logo-1"
+                                    alt="logo">
+                            </a>
+                        </div>
+                        <!-- sidebar-toggle-->
+                        <a class="logo-horizontal " href="index.html">
+                            <img src="../assets/images/brand/logo.png" class="header-brand-img desktop-logo"
+                                alt="logo">
+                            <img src="../assets/images/brand/logo-3.png" class="header-brand-img light-logo1"
+                                alt="logo">
+                        </a>
+                        <!-- LOGO -->
+
+                        <div class="d-flex order-lg-2 ms-auto header-right-icons">
+                            <!-- SEARCH -->
+                            <button class="navbar-toggler navresponsive-toggler d-lg-none ms-auto" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
+                                aria-controls="navbarSupportedContent-4" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon fe fe-more-vertical text-dark"></span>
+                            </button>
+                            <div class="navbar navbar-collapse responsive-navbar p-0">
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                                     <div class="d-flex order-lg-2">
-                                        <h5 class="text-dark mb-0"> Hai, {{ $auth->name }}</h5>
+                                        @if ($auth)
+                                            <h5 class="text-dark mb-0"> Hai, {{ $auth->name }}</h5>
+                                        @endif
+
                                         <div class="dropdown d-md-flex">
                                             <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                                 <span class="dark-layout"><i class="fe fe-moon"></i></span>
                                                 <span class="light-layout"><i class="fe fe-sun"></i></span>
                                             </a>
                                         </div>
-                                        <div class="dropdown d-md-flex profile-1">
-                                            <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                class="nav-link leading-none d-flex px-1">
-                                                <span>
-                                                    <img src="{{ url('assets/images/users/8.png') }}" alt="profile-user"
-                                                        class="avatar  profile-user brround cover-image">
-                                                </span>
+                                        <!-- Theme-Layout -->
+                                        <div class="dropdown d-md-flex">
+                                            <a class="nav-link icon full-screen-link nav-link-bg">
+                                                <i class="fe fe-minimize fullscreen-button" id="myvideo"></i>
                                             </a>
-                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                <div class="drop-heading">
-                                                    <div class="text-center">
-                                                        <h5 class="text-dark mb-0">{{ $auth->name }}</h5>
-                                                        <small class="text-muted">{{ $auth->level }}</small>
+                                        </div>
+
+                                        @if ($auth)
+                                            <div class="d-flex order-lg-2">
+
+
+                                                <div class="dropdown d-md-flex profile-1">
+                                                    <a href="javascript:void(0);" data-bs-toggle="dropdown"
+                                                        class="nav-link leading-none d-flex px-1">
+                                                        <span>
+                                                            <img src="{{ url('assets/images/users/8.png') }}"
+                                                                alt="profile-user"
+                                                                class="avatar  profile-user brround cover-image">
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                        <div class="drop-heading">
+                                                            <div class="text-center">
+                                                                <h5 class="text-dark mb-0">{{ $auth->name }}</h5>
+                                                                <small class="text-muted">{{ $auth->level }}</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown-divider m-0"></div>
+                                                        <a class="dropdown-item"
+                                                            href="{{ url('users/' . \Crypt::encryptString($auth->id)) }}">
+                                                            <i class="dropdown-icon fe fe-user"></i> Profile
+                                                        </a>
+                                                        <a class="dropdown-item" href="{{ url('logout') }}">
+                                                            <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="dropdown-divider m-0"></div>
-                                                <a class="dropdown-item"
-                                                    href="{{ url('users/' . \Crypt::encryptString($auth->id)) }}">
-                                                    <i class="dropdown-icon fe fe-user"></i> Profile
-                                                </a>
-                                                <a class="dropdown-item" href="{{ url('logout') }}">
-                                                    <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                                <div class="dropdown d-md-flex header-settings">
+                                                    <a href="javascript:void(0);" class="nav-link icon "
+                                                        data-bs-toggle="sidebar-right" data-target=".sidebar-right">
+                                                        <i class="fe fe-menu"></i>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        @else
+                                            <div class="dropdown d-md-flex">
+                                                <a class="nav-link  btn-primary full-screen-link nav-link-bg"
+                                                    style="border-radius:10%" href="{{ url('login') }}">
+                                                    Login
                                                 </a>
                                             </div>
-                                        </div>
-                                        <div class="dropdown d-md-flex header-settings">
+                                        @endif
+
+
+                                        {{-- <div class="dropdown d-md-flex header-settings">
                                             <a href="javascript:void(0);" class="nav-link icon "
                                                 data-bs-toggle="sidebar-right" data-target=".sidebar-right">
                                                 <i class="fe fe-menu"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
+                                        <!-- SIDE-MENU -->
                                     </div>
                                 </div>
                             </div>
@@ -108,6 +227,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- /app-Header -->
 
             <!--APP-SIDEBAR-->
@@ -116,14 +236,14 @@
                 <aside class="app-sidebar">
                     <div class="side-header text-center px-0 py-5">
                         <a class="header-brand1 text-center" href="{{ url('/') }}">
-                            <img src="{{ url('assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo"
-                                alt="logo">
-                            <img src="{{ url('assets/images/brand/logo-1.png') }}" class="header-brand-img toggle-logo"
-                                alt="logo">
-                            <img src="{{ url('assets/images/brand/logo-2.png') }}" class="header-brand-img light-logo"
-                                alt="logo">
-                            <img src="{{ url('assets/images/brand/logo-3.png') }}" class="header-brand-img light-logo1"
-                                alt="logo">
+                            <img src="{{ url('assets/images/brand/logo.png') }}"
+                                class="header-brand-img desktop-logo" alt="logo">
+                            <img src="{{ url('assets/images/brand/logo-1.png') }}"
+                                class="header-brand-img toggle-logo" alt="logo">
+                            <img src="{{ url('assets/images/brand/logo-2.png') }}"
+                                class="header-brand-img light-logo" alt="logo">
+                            <img src="{{ url('assets/images/brand/logo-3.png') }}"
+                                class="header-brand-img light-logo1" alt="logo">
                         </a>
                         <!-- LOGO -->
                     </div>

@@ -16,6 +16,11 @@ class HomeController extends Controller
         $periode = Periode::first();
         $auth = Auth::user();
         $kabs = Kabs::all();
+
+        // if ($auth->hasRole('PENCACAH')) {
+        //     return redirect('pcl_dashboard');
+        // }
+
         //// table foto
         $tab_tab1 =
             Dsrt::join('kabs', 'kabs.id_kab', 'dsrt.kd_kab')
@@ -106,6 +111,8 @@ class HomeController extends Controller
         }
         $dsrt->appends($request->all());
         $data = [];
+
+
         return view('home', compact('request', 'auth', 'data', 'kabs', 'request', 'tab_tab1', 'data_chart_foto', 'data_chart_selesai', 'label_tab1', 'dsrt', 'd3', 'periode'));
     }
 }

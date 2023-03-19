@@ -32,11 +32,12 @@ class PclController extends Controller
         $auth = Auth::user();
 
         $periode = Periode::first();
-        $dsrt = Dsrt::where('pencacah', $auth->email)
-            ->where('tahun', $periode->tahun)
+        $dsrt = Dsrt::where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('id_bs', $id)
             ->get();
+
+        // dd($dsrt);
         return view("pencacah.pencacahan_dsrt", compact('auth', 'dsrt'));
     }
 
