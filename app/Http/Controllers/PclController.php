@@ -16,17 +16,13 @@ class PclController extends Controller
         $auth = Auth::user();
         return view('pencacah.dashboard', compact('auth'));
     }
-
     public function pcl_pencacahan_dsbs()
     {
         $auth = Auth::user();
-
         $periode = Periode::first();
         $dsbs = Dsbs::where('pencacah', $auth->email)->where('tahun', $periode->tahun)->where('semester', $periode->semester)->get();
-        // dd($dsbs);
         return view("pencacah.pencacahan_dsbs", compact('auth', 'dsbs'));
     }
-
     public function pcl_pencacahan_dsrt($id)
     {
         $auth = Auth::user();
@@ -40,7 +36,6 @@ class PclController extends Controller
         // dd($dsrt);
         return view("pencacah.pencacahan_dsrt", compact('auth', 'dsrt'));
     }
-
     public function pcl_pencacahan_ruta($id)
     {
         $auth = Auth::user();
@@ -94,8 +89,6 @@ class PclController extends Controller
 
         return redirect('pcl_pencacahan_ruta' . '/' . $id)->with('success', "Berhasil Disimpan");
     }
-
-
     public function pcl_pemeriksaan_dsbs()
     {
         $auth = Auth::user();
@@ -105,21 +98,17 @@ class PclController extends Controller
         // dd($dsbs);
         return view("pencacah.pemeriksaan_dsbs", compact('auth', 'dsbs'));
     }
-
     public function pcl_pemeriksaan_dsrt($id)
     {
         $auth = Auth::user();
-
         $periode = Periode::first();
-        $dsrt = Dsrt::where('pencacah', $auth->email)
-            ->where('tahun', $periode->tahun)
+        $dsrt = Dsrt::where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('id_bs', $id)
             ->get();
         // dd($dsbs);
         return view("pencacah.pemeriksaan_dsrt", compact('auth', 'dsrt'));
     }
-
     public function pcl_pemeriksaan_ruta($id)
     {
         $auth = Auth::user();
@@ -136,7 +125,6 @@ class PclController extends Controller
         // dd($dsart);
         return view("pencacah.pemeriksaan_ruta", compact('id', 'auth', 'dsrt', 'dsart'));
     }
-
     public function pcl_pemeriksaan_ruta_update($id, Request $request)
     {
         $auth = Auth::user();
@@ -163,7 +151,6 @@ class PclController extends Controller
         $dsrt->save();
         return redirect('pcl_pemeriksaan_ruta' . '/' . $id)->with('success', "Berhasil Disimpan");
     }
-
     public function pcl_pemeriksaan_dsart_update(Request $request)
     {
         // dump($request->all());
