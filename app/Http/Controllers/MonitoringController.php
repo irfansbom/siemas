@@ -36,6 +36,8 @@ class MonitoringController extends Controller
         $data = User::wherein('email', $dsbs)
             ->where('dummy_user', 0)
             ->where('name', "LIKE", "%" . $request->nama_filter . "%")
+            ->orderby('kd_wilayah')
+            ->orderby('name')
             ->paginate(10);
         $data->appends($request->all());
         return view('monitoring.users', compact('auth', 'data', 'kabs', 'request', 'periode'));
@@ -51,6 +53,8 @@ class MonitoringController extends Controller
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('status_pencacahan', 'LIKE', '%' . $request->status_filter . '%')
+            ->orderby('id_bs')
+            ->orderby('nu_rt')
             ->get();
         return view('monitoring.users_show', compact('auth', 'request', 'data', 'periode'));
     }

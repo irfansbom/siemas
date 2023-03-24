@@ -81,7 +81,7 @@
                                                 <tr class="text-center align-middle">
                                                     <th class="text-center align-middle">No</th>
                                                     <th class="text-center align-middle">Pengawas</th>
-                                                    <th class="text-center align-middle">Jumlah Dokumen</th>
+                                                    <th class="text-center align-middle">Jumlah <br> Dokumen</th>
                                                     <th class="text-center align-middle">Tanggal dan RUTA</th>
                                             </thead>
                                             <tbody>
@@ -97,15 +97,16 @@
                                                             {{ count($dt->mon_212) }}
                                                         </td>
                                                         <td>
-                                                            <ul style=" list-style-type: circle; " class="ms-4">
+                                                            <div class="row">
                                                                 @foreach ($dt->mon_212 as $m212)
-                                                                    <li>
+                                                                    <div
+                                                                        class="col-12 col-sm-8 col-md-6 col-lg-6 col-xl-4 text-center">
                                                                         {{ $m212->tanggal }} :
                                                                         {{ $m212->id_bs }}-{{ $m212->nu_rt }}
-                                                                    </li>
+                                                                    </div>
                                                                 @endforeach
 
-                                                            </ul>
+                                                            </div>
                                                         </td>
 
                                                     </tr>

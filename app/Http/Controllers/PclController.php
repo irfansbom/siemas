@@ -68,10 +68,25 @@ class PclController extends Controller
         $dsrt->status_pencacahan = 1;
         $dsrt->save();
 
+        // dd($dsrt->id_bs);
+        $art = Dsart::where('id_bs', $dsrt->id_bs)
+            ->where('tahun', $dsrt->tahun)
+            ->where('semester', $dsrt->semester)
+            ->where('nu_rt', $dsrt->nu_rt)
+            ->count('*');
+        // dd($art);
+        if ($dsrt->jml_art2 < $art) {
+            Dsart::where('id_bs', $dsrt->id_bs)
+                ->where('tahun', $dsrt->tahun)
+                ->where('semester', $dsrt->semester)
+                ->where('nu_rt', $dsrt->nu_rt)
+                ->delete();
+        }
+
         for ($i = 1; $i <= $request->jml_art2; $i++) {
             Dsart::updateOrCreate(
                 [
-                    'kd_kab' => substr($request->id_bs, 2, 2),
+                    'kd_kab' => substr($dsrt->id_bs, 2, 2),
                     'id_bs' => $dsrt->id_bs,
                     'tahun' => $dsrt->tahun,
                     'semester' => $dsrt->semester,
