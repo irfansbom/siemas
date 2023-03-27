@@ -19,7 +19,7 @@ class DsrtExport implements
     WithMapping
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * return \Illuminate\Support\Collection
      */
     use Exportable;
     private $request;
@@ -85,6 +85,30 @@ class DsrtExport implements
         // This example will return 3 rows.
         // First row will have 2 column, the next 2 will have 1 column
         $format_rp = array("Rp", ".");
+
+        $status_pencchan = "Belum Cacah";
+        switch ($data->status_pencacahan) {
+            case 0:
+                $status_pencchan = "Belum Cacah";
+                break;
+
+            case 1:
+                $status_pencchan = "Sudah Cacah";
+                break;
+
+            case 4:
+                $status_pencchan = "Sudah Upload Pemeriksaan Pencacah";
+                break;
+
+            case 5:
+                $status_pencchan = "Sudah Pemeriksaan Pengawas";
+                break;
+
+            case 6:
+                $status_pencchan = "Sudah Upload Pemeriksaan Pengawas";
+                break;
+        }
+
         return [
             $data->kd_kab,
             $data->tahun,
@@ -95,7 +119,7 @@ class DsrtExport implements
             $data->alamat,
             $data->nama_krt2,
             $data->jml_art2,
-            $data->status_pencacahan,
+            $status_pencchan,
             str_replace($format_rp, "", $data->makanan_sebulan),
             str_replace($format_rp, "", $data->nonmakanan_sebulan),
             str_replace($format_rp, "", $data->makanan_sebulan_bypml),

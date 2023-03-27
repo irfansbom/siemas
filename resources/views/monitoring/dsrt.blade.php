@@ -20,10 +20,15 @@
                             <div class="card-header border-0 pb-0 mb-3">
                                 <h3 class="card-title ">List DSRT</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    <button id="export-btn" class="btn btn-success btn-icon text-white">
+                                    <button id="export-dsrt-btn" class="btn btn-success btn-icon text-white">
                                         <span>
                                             <i class="fe fe-log-in"></i>
-                                        </span> Export
+                                        </span> Export DSRT
+                                    </button>
+                                    <button id="export-dsart-btn" class="btn btn-success btn-icon text-white">
+                                        <span>
+                                            <i class="fe fe-log-in"></i>
+                                        </span> Export DSART
                                     </button>
                                     <button id="export-mon-btn" class="btn btn-info btn-icon text-white">
                                         <span>
@@ -310,9 +315,13 @@
             $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
             $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
         })
-        $('#export-btn').on('click', function() {
+        $('#export-dsrt-btn').on('click', function() {
             var form = $('#form_filter');
             window.open("{{ url('mon_dsrt_export') }}" + "?" + form.serialize(), "_blank")
+        });
+        $('#export-dsart-btn').on('click', function() {
+            var form = $('#form_filter');
+            window.open("{{ url('mon_dsart_export') }}" + "?" + form.serialize(), "_blank")
         });
 
         $('#export-mon-btn').on('click', function() {

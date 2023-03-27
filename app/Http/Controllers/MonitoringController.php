@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DsartExport;
 use App\Exports\DsrtExport;
 use App\Exports\DsrtWebMonExport;
 use App\Exports\MonUsersExport;
@@ -142,6 +143,21 @@ class MonitoringController extends Controller
         }
         $data = new DsrtExport($request, $kab);
         return Excel::download($data, 'dsrt.xlsx');
+    }
+
+    public function dsart_export(Request $request)
+    {
+        $auth = Auth::user();
+        if ($auth->kd_wilayah == '00') {
+            $kab = "";
+            if ($request->kab_filter) {
+                $kab = $request->kab_filter;
+            }
+        } else {
+            $kab = $auth->kd_wilayah;
+        }
+        $data = new DsartExport($request, $kab);
+        return Excel::download($data, 'dsart.xlsx');
     }
 
     public function dsrt_export_webmon(Request $request)
