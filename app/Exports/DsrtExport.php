@@ -61,6 +61,7 @@ class DsrtExport implements
             'Nonmakanan Sebulan',
             'Makanan Sebulan PML',
             'Nonmakanan Sebulan PML',
+            'Rata-rata Perkapita',
             'Transportasi',
             'Peliharaan',
             'ART yang Sekolah',
@@ -75,6 +76,8 @@ class DsrtExport implements
             'Jam Mulai',
             'Jam Selesai',
             'Durasi Pencacahan',
+            'Longitude',
+            'Latitude',
             'Pencacah',
             'Pengawas',
         ];
@@ -82,8 +85,6 @@ class DsrtExport implements
     }
     public function map($data): array
     {
-        // This example will return 3 rows.
-        // First row will have 2 column, the next 2 will have 1 column
         $format_rp = array("Rp", ".");
 
         $status_pencchan = "Belum Cacah";
@@ -109,6 +110,13 @@ class DsrtExport implements
                 break;
         }
 
+        $pengeluaran_perkapita = 0;
+        if ($data->jml_art2 != 0) {
+            $pengeluaran_perkapita = round(((int) str_replace($format_rp, "", $data->makanan_sebulan) + (int) str_replace($format_rp, "", $data->nonmakanan_sebulan)) / $data->jml_art2, 2);
+        }
+
+        $dms = $this->decimalToDMS(abs($data->latitude), abs($data->longitude));
+
         return [
             $data->kd_kab,
             $data->tahun,
@@ -124,6 +132,7 @@ class DsrtExport implements
             str_replace($format_rp, "", $data->nonmakanan_sebulan),
             str_replace($format_rp, "", $data->makanan_sebulan_bypml),
             str_replace($format_rp, "", $data->nonmakanan_sebulan_bypml),
+            $pengeluaran_perkapita,
             str_replace($format_rp, "", $data->transportasi),
             str_replace($format_rp, "", $data->peliharaan),
             $data->art_sekolah,
@@ -138,8 +147,45 @@ class DsrtExport implements
             $data->jam_mulai,
             $data->jam_selesai,
             $data->durasi_pencacahan,
+            $dms['longitude'],
+            $dms['latitude'],
             $data->pencacah,
             $data->pengawas,
         ];
+    }
+
+    function decimalToDMS($lat_decimal, $long_decimal)
+    {
+        $lat_degrees = floor($lat_decimal);
+        $lat_decimal -= $lat_degrees;
+        $lat_decimal *= 60;
+        $lat_minutes = floor($lat_decimal);
+        $lat_decimal -= $lat_minutes;
+        $lat_decimal *= 60;
+        $lat_seconds = round($lat_decimal);
+        $lat_dms = array("degrees" => $lat_degrees, "minutes" => $lat_minutes, "seconds" => $lat_seconds);
+        if ($lat_decimal < 0) {
+            $latitude_dms = 'S ';
+        } else {
+            $latitude_dms = 'U ';
+        }
+        $latitude_dms .= $lat_dms['degrees'] . '° ' . $lat_dms['minutes'] . '\' ' . $lat_dms['seconds'] . '"';
+
+        $long_degrees = floor($long_decimal);
+        $long_decimal -= $long_degrees;
+        $long_decimal *= 60;
+        $long_minutes = floor($long_decimal);
+        $long_decimal -= $long_minutes;
+        $long_decimal *= 60;
+        $long_seconds = round($long_decimal);
+        $long_dms = array("degrees" => $long_degrees, "minutes" => $long_minutes, "seconds" => $long_seconds);
+        if ($long_decimal < 0) {
+            $longitude_dms = 'B ';
+        } else {
+            $longitude_dms = 'T ';
+        }
+        $longitude_dms .= $long_dms['degrees'] . '° ' . $long_dms['minutes'] . '\' ' . $long_dms['seconds'] . '"';
+
+        return ["latitude" => $latitude_dms, "longitude" => $longitude_dms];
     }
 }

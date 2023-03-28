@@ -33,11 +33,11 @@
                             <div class="card-header">
                                 <h3 class="card-title">Tabulasi Foto Per Kabupaten Kota</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
+                                    {{-- <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
                                         <span>
                                             <i class="fe fe-log-in"></i>
                                         </span> Export
-                                    </a>
+                                    </a> --}}
                                 </div>
 
                             </div>
@@ -113,11 +113,11 @@
                             <div class="card-header border-0 pb-0 mb-3">
                                 <h3 class="card-title ">List DSRT</h3>
                                 <div class="ms-auto pageheader-btn">
-                                    <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
+                                    {{-- <a href="javascript:void(0);" class="btn btn-success btn-icon text-white">
                                         <span>
                                             <i class="fe fe-log-in"></i>
                                         </span> Export
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                             <div class="card-header pt-0 d-flex justify-content-center">

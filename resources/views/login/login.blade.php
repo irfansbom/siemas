@@ -59,7 +59,7 @@
                             <form class="login100-form validate-form" method="post" action="{{ url('authenticate') }}">
                                 @csrf
                                 <div class="text-center">
-                                    <img src="assets/images/brand/logo-3.png" class="header-brand-img" alt="">
+                                    <img src="assets/images/brand/logo-3.png" alt="">
                                 </div>
                                 <br>
                                 @include('alert')
@@ -93,28 +93,13 @@
                                 </div>
                             </form>
                         </div>
-                        {{-- <div class="card-footer">
-                            <div class="d-flex justify-content-center my-3">
-                                <a href="" class="social-login  text-center me-4">
-                                    <i class="fa fa-instagram"></i>
-                                </a>
-                                <a href="" class="social-login  text-center me-4">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                                <a href="" class="social-login  text-center">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            </div>
-                        </div> --}}
+
                     </div>
                 </div>
-                <!-- CONTAINER CLOSED -->
             </div>
         </div>
-        <!-- End PAGE -->
 
     </div>
-    <!-- BACKGROUND-IMAGE CLOSED -->
 
     <!-- JQUERY JS -->
     <script src="assets/js/jquery.min.js"></script>

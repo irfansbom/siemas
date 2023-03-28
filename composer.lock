@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8afc029a4686c185fd005ce5aef983a8",
+    "content-hash": "497df2469d4a1029972b7f5974fb51da",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2910,6 +2910,38 @@
                 }
             ],
             "time": "2022-07-30T15:51:26+00:00"
+        },
+        {
+            "name": "prairiewest/phpconvertdmstodecimal",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/prairiewest/phpconvertdmstodecimal.git",
+                "reference": "d9bc2b0db949d2a85b426f645de4eb20e6035b54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/prairiewest/phpconvertdmstodecimal/zipball/d9bc2b0db949d2a85b426f645de4eb20e6035b54",
+                "reference": "d9bc2b0db949d2a85b426f645de4eb20e6035b54",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "convert.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Todd Trann"
+                }
+            ],
+            "description": " Convert degrees / minutes / seconds to decimal degrees in PHP ",
+            "support": {
+                "source": "https://github.com/prairiewest/phpconvertdmstodecimal/tree/1.0",
+                "issues": "https://github.com/prairiewest/phpconvertdmstodecimal/issues"
+            },
+            "time": "2021-07-30T18:51:18+00:00"
         },
         {
             "name": "psr/container",
