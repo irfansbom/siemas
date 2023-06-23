@@ -27,39 +27,35 @@ class UserImport_S1 implements
     public function model(array $row)
     {
         $auth = Auth::user();
-        $kd_wilayah = $auth->kd_wilayah;
-        if ($auth->kd_wilayah == 00) {
-            $kd_wilayah = $row[0];
+        $kd_kab = $auth->kd_kab;
+        if ($auth->hasRole(['SUPER ADMIN', 'ADMIN PROVINSI'])) {
+            $kd_kab = $row[0];
         }
         $assign = User::where('email', $row[3])->first();
         if ($assign) {
             // jika dia ada di db
             $user = new User([
-                'kd_wilayah' => $kd_wilayah,
+                'kd_kab' => $kd_kab,
                 'name' =>  $row[1],
-                'username' => $row[2],
-                'email' => $row[3],
-                'password' => Hash::make($row[4]),
-                'pengawas' => $row[6],
-                'created_by' => $auth->id
+                'email' => $row[2],
+                'password' => Hash::make($row[3]),
+                'updated_by' => $auth->id
             ]);
         } else {
             $user = User::create([
-                'kd_wilayah' => $row[0],
+                'kd_kab' => $kd_kab,
                 'name' =>  $row[1],
-                'username' => $row[2],
-                'email' => $row[3],
-                'password' => Hash::make($row[4]),
-                'pengawas' => $row[6],
+                'email' => $row[2],
+                'password' => Hash::make($row[3]),
                 'created_by' => $auth->id
             ]);
         }
         if (in_array($row[5], ['PENCACAH', 'PENGAWAS', 'ADMIN KABKOT', 'SUPERVISOR'])) {
             if ($assign) {
                 // jika dia ada di db
-                $assign->syncRoles($row[5]);
+                $assign->syncRoles($row[4]);
             } else {
-                $user->assignRole($row[5]);
+                $user->assignRole($row[4]);
             }
         }
         return $user;

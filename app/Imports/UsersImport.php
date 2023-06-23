@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Throwable;
 
-class UsersImport implements    WithMultipleSheets
+class UsersImport implements WithMultipleSheets
 {
     /**
      * @param array $row

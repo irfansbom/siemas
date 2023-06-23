@@ -17,67 +17,19 @@
                 <div class="row">
                     <div class="col-12 col-sm-12">
                         <div class="card ">
-                            <form action="{{ url('users/store') }}" method="POST">
+                            <form action="{{ url('users') }}" method="POST" class="p-5">
                                 @csrf
-                                <fieldset class="p-5">
-                                    <input type="text" name="id" id="id" hidden
-                                        value="{{ old('id', $user->id) }}">
-                                    <div class="mb-3 row">
-                                        <label for="name" class="col-sm-4 col-form-label">Nama User</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                value="{{ old('name', $user->name) }}" autocomplete="off" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="username" class="col-sm-4 col-form-label">Username</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                value="{{ old('username', $user->username) }}" autocomplete="off" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="email" class="col-sm-4 col-form-label">Email</label>
-                                        <div class="col-sm-6">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                value="{{ old('email', $user->email) }}" autocomplete="off" required>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="password" class="col-sm-4 col-form-label">Password</label>
-                                        <div class="col-sm-6">
-                                            <input type="password" class="form-control" id="password" name="password"
-                                                value="{{ old('password', $user->password) }}" required autocomplete="off">
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 row">
-                                        <label for="kd_wilayah" class="col-sm-4 col-form-label">Kabupaten/Kota</label>
-                                        <div class="col-sm-6">
-                                            <select name="kd_wilayah" id="kd_wilayah" class="form-select">
-                                                @if ($auth->kd_wilayah == '00')
-                                                    <option value="00">Provinsi Sumatera Selatan</option>
-                                                @endif
-                                                {{-- <option value="00">Provinsi Sumatera Selatan</option> --}}
-                                                @foreach ($kabs as $kab)
-                                                    <option value="{{ $kab->id_kab }}">{{ $kab->nama_kab }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <button class="btn btn-primary" type="submit" id="simpanbtn">simpan</button>
-                                    </div>
-                                </fieldset>
+                                @include('user.form')
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a class="btn btn-primary" type="button" href="{{ url('users') }}">Kembali</a>
+                                    <button class="btn btn-primary" type="submit" id="simpanbtn">simpan</button>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <!-- COL END -->
             </div>
-            <!-- ROW-5 END -->
         </div>
-        <!-- CONTAINER END -->
     </div>
 @endsection
 

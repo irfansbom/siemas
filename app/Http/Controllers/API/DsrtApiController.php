@@ -9,6 +9,7 @@ use App\Models\Jadwal212;
 use App\Models\Laporan212;
 use App\Models\Periode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DsrtApiController extends Controller
 {
@@ -284,12 +285,13 @@ class DsrtApiController extends Controller
     {
         $file = $request->file('file_foto');
         $id_dsrt = $request->id_dsrt;
-
         $dsrt = Dsrt::find($id_dsrt);
-
-
-        $nama_foto = "foto_rumah_" . $dsrt->id_bs . "_" . $dsrt->nks . "_" . $dsrt->nu_rt . "_" . $file->getClientOriginalName();
-        $file->move('foto', $nama_foto);
+        if ($file) {
+            $nama_foto = "foto_rumah_" . $dsrt->id_bs . "_" . $dsrt->nks . "_" . $dsrt->nu_rt . ".png";
+            $file->move('foto', $nama_foto);
+        } else {
+            $nama_foto = $request->foto;
+        };
 
         $affectedRows = Dsrt::where("id", $id_dsrt)->update(['foto' => $nama_foto]);
         if ($affectedRows > 0) {
@@ -305,15 +307,12 @@ class DsrtApiController extends Controller
     {
         $file = $request->file('file_foto');
         $data_dsrt = json_decode($request->dsrt);
-
         if ($file) {
-            $nama_foto = "foto_rumah_" . $data_dsrt->id_bs . "_" . $data_dsrt->nks . "_" . $data_dsrt->nu_rt;
+            $nama_foto = "foto_rumah_" . $data_dsrt->id_bs . "_" . $data_dsrt->nks . "_" . $data_dsrt->nu_rt . ".png";
             $file->move('foto', $nama_foto);
         } else {
             $nama_foto = $request->foto;
         }
-
-
         $status_pencacahan = $data_dsrt->status_pencacahan;
 
         if ($status_pencacahan == 4) {

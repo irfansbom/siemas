@@ -17,17 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('username', 50)->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('pengawas')->nullable();
-            $table->string('alamat')->nullable();
-            $table->char('kd_wilayah', 6)->nullable();
-            $table->char('no_hp', 15)->nullable();
-            $table->char('flag', 2)->default('1');;
-            $table->rememberToken();
-            $table->char('created_by', 5)->nullable();
-            $table->char('updated_by', 5)->nullable();
+            $table->string('kd_kab', 2)->nullable();
+            $table->integer('flag_active')->default(1)->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

@@ -30,12 +30,9 @@ Route::get('mon_212', [MonitoringController::class, 'mon_212']);
 
 
 Route::middleware(['auth'])->group(function () {
-
-
     Route::get('mon_users_export', [MonitoringController::class, 'users_export']);
     Route::get('mon_dsrt_export', [MonitoringController::class, 'dsrt_export']);
     Route::get('mon_dsart_export', [MonitoringController::class, 'dsart_export']);
-
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
         Route::resource('alokasi', AlokasiController::class);
@@ -50,16 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('dsrt_swap', [DsrtController::class, 'dsrt_swap']);
         Route::post('dsart_swap', [DsrtController::class, 'dsart_swap']);
 
-
-        Route::get('users', [UserController::class, 'index']);
-        Route::get('users/create', [UserController::class, 'create']);
-        Route::post('users/store', [UserController::class, 'store']);
-        Route::get('users/{id}', [UserController::class, 'show']);
-        Route::post('users/update', [UserController::class, 'update']);
-        Route::post('users/delete', [UserController::class, 'delete']);
-        Route::post('users/roles', [UserController::class, 'user_roles']);
-        Route::post('users/pengawas', [UserController::class, 'user_pengawas']);
-        Route::post('users/ubahpassword', [UserController::class, 'ubahpassword']);
+        Route::resource('users', UserController::class);
         Route::post('users/import', [UserController::class, 'user_import']);
     });
 

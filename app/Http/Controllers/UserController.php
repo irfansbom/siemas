@@ -10,7 +10,6 @@ use App\Models\Periode;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -25,72 +24,61 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $periode = Periode::first();
-        Paginator::useBootstrap();
         $auth = Auth::user();
+        $data_roles = Role::all();
         $data_pengawas = [];
-        $kab = '';
-        if ($auth->kd_wilayah == '00') {
-            if ($request->kab_filter) {
-                $kab = $request->kab_filter;
-            }
+        // $kab = $auth->kd_kab;
+        // dd($auth->hasAnyRole(['SUPER ADMIN', 'ADMIN PROVINSI']));
+        if ($auth->hasAnyRole(['SUPER ADMIN', 'ADMIN PROVINSI'])) {
+            $kab = $request->kab_filter;
             $kabs = Kabs::all();
-            $data_pengawas = User::role('pengawas')->get();
         } else {
-            $kab = $auth->kd_wilayah;
-            $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
-            $data_pengawas = User::where('kd_wilayah', $auth->kd_wilayah)->role('pengawas')->get();
+            $kab = $auth->kd_kab;
+            $kabs = Kabs::where('id_kab', $auth->kd_kab)->get();
         }
+        $data = User::where('kd_kab', 'LIKE', '%' . $kab . '%')
+            ->where('name', 'LIKE', '%' . $request->nama_filter  . '%');
 
-        if ($auth->hasRole('SUPER ADMIN')) {
-            $data_roles = Role::all();
-        } else {
-            $data_roles = Role::where('name', '!=', 'SUPER ADMIN')->where('name', '!=', 'ADMIN PROVINSI')->get();
+        if (!empty($request->role_filter)) {
+            $data->role($request->role_filter);
         }
-
-        if ($request->role_filter) {
-            $user = User::where('kd_wilayah', 'LIKE', '%' . $kab . '%')
-                ->where('name', 'LIKE', '%' . $request->nama_filter  . '%')
-                ->role($request->role_filter)
-                ->paginate(15);
-        } else {
-            $user = User::where('kd_wilayah', 'LIKE', '%' . $kab . '%')
-                ->where('name', 'LIKE', '%' . $request->nama_filter  . '%')
-                ->paginate(15);
-        }
-        $user->appends($request->all());
-        return view('user.index', compact('user', 'data_roles', 'auth', 'data_pengawas', 'kabs', 'request', 'periode'));
+        $data = $data->paginate(15);
+        $data->appends($request->all());
+        // dd($kabs);
+        return view('user.index', compact('data', 'data_roles', 'auth', 'kabs', 'request', 'periode'));
     }
 
     public function create()
     {
         $periode = Periode::first();
         $auth = Auth::user();
-        $user = new User();
-        $data_pengawas = [];
-
-        if ($auth->kd_wilayah == '00') {
+        $data = new User();
+        if ($auth->hasRole(['SUPER ADMIN', 'ADMIN PROVINSI'])) {
             $kabs = Kabs::all();
-            $data_pengawas = Role::all();
+            $roles = Role::whereNotIn('name', ['SUPER ADMIN'])->get();
         } else {
-            $kabs = Kabs::where('id_kab', $auth->kd_wilayah)->get();
-            $data_pengawas = User::role('pengawas')->get();
+            $kabs = Kabs::where('id_kab', $auth->kd_kab)->get();
+            $roles = Role::whereNotIn('name', ['SUPER ADMIN', 'ADMIN PROVINSI'])->get();
         }
-        return view('user.create', compact('user', 'auth', 'kabs', 'data_pengawas', 'periode'));
+        // dd($auth->roles);
+        return view('user.create', compact('data', 'auth', 'kabs', 'periode', 'roles'));
     }
 
 
     public function store(Request $request)
     {
+
         $auth = Auth::user();
         try {
             $user = User::create([
                 'name' => $request->name,
-                'username' => $request->username,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'kd_wilayah' => $request->kd_wilayah,
+                'kd_kab' => $request->kd_kab,
                 'created_by' => $auth->id,
             ]);
+
+            $user->syncRoles($request->roles);
             return redirect('users')->with('message', 'Berhasil Disimpan');
         } catch (QueryException $ex) {
             return redirect('users\create')->withInput()->with('error', $ex->getMessage());
@@ -101,58 +89,46 @@ class UserController extends Controller
     {
         $periode = Periode::first();
         $auth = Auth::user();
-        $id = Crypt::decryptString($id);
-        $user = User::where('id', $id)->first();
-        $kabs = Kabs::all();
-        return view('user.show', compact('user', 'id', 'auth', 'kabs', 'periode'));
+        $real_id = Crypt::decryptString($id);
+        $data = User::where('id', $real_id)->first();
+        // $kabs = Kabs::all();
+        if ($auth->hasRole(['SUPER ADMIN', 'ADMIN PROVINSI'])) {
+            $kabs = Kabs::all();
+            $roles = Role::whereNotIn('name', ['SUPER ADMIN'])->get();
+        } else {
+            $kabs = Kabs::where('id_kab', $auth->kd_kab)->get();
+            $roles = Role::whereNotIn('name', ['SUPER ADMIN', 'ADMIN PROVINSI'])->get();
+        }
+        return view('user.show', compact('data', 'real_id', 'id', 'auth', 'kabs', 'roles', 'periode'));
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
+        $real_id = Crypt::decryptString($id);
         $auth = Auth::user();
-        User::where('id', $request->id)
+        User::where('id', $request->real_id)
             ->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'no_hp' => $request->no_hp,
-                'kd_wilayah' => $request->kd_wilayah,
+                'password' => Hash::make($request->password),
+                'kd_kab' => $request->kd_kab,
                 'updated_by' =>  $auth->id,
             ]);
+        $user = User::find($request->real_id);
+        if (!empty($request->roles)) {
+            $user = User::find($request->real_id);
+            $user->syncRoles($request->roles);
+        }
+
         return redirect()->back()->with('success', 'Berhasil Disimpan');
     }
 
-    public function delete(Request $request)
+    public function destroy($id)
     {
-        User::where('id', $request->user_id)->delete();
+        User::where('id', $id)->delete();
         return redirect()->back()->with('success', 'Berhasil Dihapus');
     }
 
-
-    public function ubahpassword(Request $request)
-    {
-        User::where('id', $request->id)
-            ->update([
-                'password' => Hash::make($request->password),
-            ]);
-        return redirect()->back()->with('success', 'Berhasil Disimpan');
-    }
-
-    public function user_pengawas(Request $request)
-    {
-        $user = User::find($request->user_id);
-        $user->pengawas = $request->pengawas;
-        $user->save();
-        $dsbs = Dsbs::where('pencacah', $user->email)->update(['pengawas' => $request->pengawas]);
-        $dsrt = Dsrt::where('pencacah', $user->email)->update(['pengawas' => $request->pengawas]);
-        return redirect('users/')->with('success', 'User berhasil diperbaharui.');
-    }
-
-    public function user_roles(Request $request)
-    {
-        $user = User::find($request->user_id);
-        $user->syncRoles([$request->roles]);
-        return redirect('users/')->with('success', 'User berhasil diperbaharui.');
-    }
 
     public function user_import(Request $request)
     {

@@ -34,7 +34,8 @@
                                                     Import
                                                     <b class="fa fa-angle-up"></b>
                                                 </li>
-                                                <li><a href="{{ url('template/Template User.xlsx') }}">Template Import User</a>
+                                                <li>
+                                                    <a href="{{ url('template/Template User.xlsx') }}">Template Import User</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -80,18 +81,16 @@
                                         <form action="" id="form_filter">
                                             <fieldset>
                                                 <div class="mb-1 row">
-                                                    {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
                                                     <div class="col-sm-3">
                                                         <select name="kab_filter" id="kab_filter"
                                                             class="form-control select2-show-search form-select">
                                                             <option value="">Pilih Kab/Kot</option>
-                                                            <option value=""> [00]
-                                                                PROVINSI SUMSEL</option>
+                                                            <option value=""> [00] PROVINSI SUMSEL</option>
                                                             @foreach ($kabs as $kab)
                                                                 <option value="{{ $kab->id_kab }}"
                                                                     @if ($kab->id_kab == $request->kab_filter) selected @endif>
-                                                                    [{{ $kab->id_kab }}]
-                                                                    {{ $kab->alias }}</option>
+                                                                    [{{ $kab->id_kab }}] {{ $kab->alias }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -124,92 +123,37 @@
                                 <div class="table-responsive">
                                     <table class="table border table-bordered text-nowrap text-md-nowrap mg-b-0 table-sm">
                                         <thead>
-                                            <tr class="text-center align-middle">
+                                            <tr class="text-center ">
                                                 <th>No</th>
+                                                <th>Kab</th>
                                                 <th>Nama</th>
-                                                <th>KD <br> Wilayah</th>
                                                 <th>Email</th>
-                                                <th>Username</th>
-                                                <th colspan="2">Pengawas</th>
-                                                <th colspan="2">Roles</th>
-                                                <th>Dummy</th>
+                                                <th>Roles</th>
+                                                <th>Flag/Active</th>
                                                 <th style="width: 8%">Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="align-middle">
-                                            @foreach ($user as $key => $usr)
-                                                <tr class="align-middle">
-                                                    <td class="text-center align-middle">{{ ++$key }}</td>
-                                                    <td class="align-middle">
-                                                        {{ $usr->name }}
-                                                    </td>
-                                                    <td class="align-middle text-center">{{ $usr->kd_wilayah }}</td>
-                                                    <td class="align-middle"
-                                                        style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{ $usr->email }}</td>
-                                                    <td class="align-middle"
-                                                        style="word-break: break-word; overflow-wrap: break-word;">
-                                                        {{ $usr->username }}</td>
-                                                    <td class="align-middle"
-                                                        style="word-break: break-word; overflow-wrap: break-word;">
-                                                        @isset($usr->pml)
-                                                            {{ $usr->pml->name }}
-                                                        @endisset
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($auth->hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'))
-                                                            <button class="btn btn-outline-secondary btn_pengawas"
-                                                                data-bs-toggle="modal" data-bs-target="#modal_edit_pengawas"
-                                                                data-id="{{ $usr->id }}"
-                                                                data-pengawas="{{ $usr->pengawas }}"
-                                                                data-nama="{{ $usr->name }}">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                        @else
-                                                            <button class="btn btn-outline-secondary"
-                                                                data-bs-placement="top" data-bs-toggle="tooltip"
-                                                                title="BUKAN ADMIN">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                        @endif
+                                        <tbody class="">
+                                            @foreach ($data as $key => $usr)
+                                                <tr class="text-center">
+                                                    <td>{{ ++$key }}</td>
+                                                    <td class="">{{ $usr->kd_kab }}</td>
+                                                    <td class="text-start"> {{ $usr->name }} </td>
+                                                    <td class="text-start"> {{ $usr->email }} </td>
+                                                    <td class="text-start">
+                                                        @foreach ($usr->roles->pluck('name') as $role)
+                                                            {{ $role . ', ' }}
+                                                        @endforeach
                                                     </td>
 
-                                                    <td class="align-middle">
-                                                        <ul class="m-0">
-                                                            @foreach ($usr->roles->pluck('name') as $role)
-                                                                <li>{{ $role }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($auth->hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'))
-                                                            <button
-                                                                class="btn btn-outline-secondary btn_roles"data-bs-toggle="modal"
-                                                                data-bs-target="#modal_edit_roles"
-                                                                data-id="{{ $usr->id }}"
-                                                                data-roles="{{ $usr->roles }}"
-                                                                data-nama="{{ $usr->name }}">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                        @else
-                                                            <button class="btn btn-outline-secondary"
-                                                                data-bs-placement="top" data-bs-toggle="tooltip"
-                                                                title="BUKAN ADMIN">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        {{ $usr->dummy_user }}
-                                                    </td>
-
+                                                    <td> {{ $usr->flag_active }} </td>
                                                     <td class="text-center">
                                                         <a class="btn-outline-primary btn"
                                                             href="{{ url('users/' . \Crypt::encryptString($usr->id)) }}">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                         @if ($usr->dummy_user != 1)
-                                                            <button class="btn btn-outline-danger  btn_hapus"
+                                                            <button class="btn btn-outline-danger btn_hapus"
                                                                 data-id="{{ $usr->id }}"
                                                                 data-nama="{{ $usr->name }}" data-bs-toggle="modal"
                                                                 data-bs-target="#modal_hapus">
@@ -224,7 +168,7 @@
                                     </table>
                                 </div>
 
-                                {{ $user->links() }}
+                                {{ $data->links() }}
                             </div>
                         </div>
                     </div>
@@ -236,7 +180,7 @@
         <!-- CONTAINER END -->
     </div>
 
-    <div class="modal fade" id="modal_edit_roles">
+    {{-- <div class="modal fade" id="modal_edit_roles">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <!-- Modal Header -->
@@ -326,7 +270,8 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
+
     <div class="modal fade" id="modal_hapus">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -337,11 +282,12 @@
                 <div class="modal-body">
                     <form action="{{ url('users/delete') }}" method="post" id="form_hapus">
                         @csrf
+                        @method('delete')
                         <div class="row ">
                             <input type="text" name="user_id" id="user_id" hidden>
                             <div class="mb-3 ">
-                                <label for="nama_user" class="form-label">Nama user</label>
-                                <input type="text" class="form-control" id="user_name" name="nama" readonly>
+                                <label for="nama_hapus" class="form-label">Nama user</label>
+                                <input type="text" class="form-control" id="nama_hapus" name="nama" readonly>
                             </div>
                         </div>
                     </form>
@@ -349,8 +295,8 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="form_hapus">Submit</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" form="form_hapus">Submit</button>
                 </div>
 
             </div>
@@ -440,10 +386,10 @@
         })
 
         $('.btn_hapus').click(function() {
-            // console.log($(this).data("id"))
-            $('#modal_hapus').find('#user_id').val($(this).data("id"));
-            $('#modal_hapus').find('#user_name').val($(this).data("nama"));
-
+            id = $(this).data("id")
+            console.log($(this).data("id"))
+            $('#modal_hapus').find('#nama_hapus').val($(this).data("nama"));
+            $("#form_hapus").attr('action', "{{ url('users') }}" + '/' + id);
         })
     </script>
 @endsection
