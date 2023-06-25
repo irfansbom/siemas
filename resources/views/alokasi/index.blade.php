@@ -276,7 +276,6 @@
             const kab_value = {!! json_encode($request->kab_filter) !!}
             const kec_value = {!! json_encode($request->kec_filter) !!}
             const desa_value = {!! json_encode($request->desa_filter) !!}
-
             if (kab_value) {
                 set_kab(kab_value)
                     .then(function() {
@@ -303,24 +302,11 @@
                 select_kecs();
             })
 
-            $('#modal_edit_pencacah').find("#pencacah").select2({
-                dropdownParent: $("#modal_edit_pencacah")
-            });
-
             $('#export-btn').on('click', function() {
                 var form = $('#form_filter');
                 window.open("{{ url('export_alokasi_dsbs_user') }}" + "?" + form.serialize(), "_blank")
             });
         });
-
-
-        $('.btn_pencacah').click(function() {
-
-            $('#modal_edit_pencacah').find('#id').val($(this).data("id"));
-            $('#modal_edit_pencacah').find('#id_bs').val($(this).data("id_bs"));
-            $("#modal_edit_pencacah").find("#pencacah").val($(this).data("pencacah"));
-
-        })
 
         function select_kabs() {
             return new Promise((resolve, reject) => {

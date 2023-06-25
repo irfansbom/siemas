@@ -1,5 +1,4 @@
 <fieldset class="">
-    {{-- <input type="text" name="id" id="id" hidden value="{{ old('id', $data->id) }}"> --}}
     <div class="mb-3 row">
         <div class="col-sm-3">
             <label for="tahun" class="form-label">Tahun*</label>

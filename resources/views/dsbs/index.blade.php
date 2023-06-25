@@ -337,26 +337,13 @@
                         console.log(error);
                     });
             }
-
             $('#kab_filter').change(function() {
                 select_kabs();
             })
             $('#kec_filter').change(function() {
                 select_kecs();
             })
-
-
-            $('#modal_edit_pencacah').find("#pencacah").select2({
-                dropdownParent: $("#modal_edit_pencacah")
-            });
         });
-
-        $('.btn_pencacah').click(function() {
-            $('#modal_edit_pencacah').find('#id').val($(this).data("id"));
-            $('#modal_edit_pencacah').find('#id_bs').val($(this).data("id_bs"));
-            $("#modal_edit_pencacah").find("#pencacah").val($(this).data("pencacah"));
-
-        })
 
         $('.btn_hapus').click(function() {
             id = $(this).data("id")

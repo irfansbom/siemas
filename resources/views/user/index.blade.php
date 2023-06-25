@@ -166,110 +166,14 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                                 {{ $data->links() }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- COL END -->
-            </div>
-            <!-- ROW-5 END -->
-        </div>
-        <!-- CONTAINER END -->
-    </div>
-
-    {{-- <div class="modal fade" id="modal_edit_roles">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Roles<span></span></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="{{ url('users/roles') }}" method="post" id="edit_form_roles">
-                        @csrf
-                        <div class="row ">
-                            <input type="text" name="user_id" id="user_id" hidden>
-                            <div class="mb-3 ">
-                                <label for="nama_user" class="form-label">Nama user</label>
-                                <input type="text" class="form-control" id="user_name" name="nama" readonly>
-                            </div>
-
-                        </div>
-                        Roles
-                        @foreach ($data_roles as $role)
-                            <div class="form-check">
-                                <input class="form-check-input roles" type="checkbox" value="{{ $role->name }}"
-                                    name="roles[]" id="{{ $role->name }}">
-                                <label class="form-check-label" for="{{ $role->name }}">
-                                    {{ $role->name }}
-                                </label>
-                            </div>
-                        @endforeach
-
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="edit_form_roles">Submit</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
-
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal_edit_pengawas">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Pengawas<span></span></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="{{ url('users/pengawas') }}" method="post" id="edit_form_pengawas">
-                        @csrf
-                        <div class="row">
-                            <input type="text" name="user_id" id="user_id" hidden>
-                            <div class="mb-3 ">
-                                <label for="nama_user" class="form-label">Nama user</label>
-                                <input type="text" class="form-control" id="user_name" name="nama" readonly>
-                            </div>
-                        </div>
-                        Pengawas
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <select name="pengawas" id="pengawas"
-                                        class="form-control select2-show-search form-select"
-                                        data-placeholder="Pilih Pengawas" style="width:100%">
-                                        <option value=" ">Pilih Pengawas</option>
-                                        @foreach ($data_pengawas as $pms)
-                                            <option value="{{ $pms->email }}">{{ $pms->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="edit_form_pengawas">Submit</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
-
-            </div>
-        </div>
-    </div> --}}
 
     <div class="modal fade" id="modal_hapus">
         <div class="modal-dialog modal-lg">
@@ -291,13 +195,10 @@
                         </div>
                     </form>
                 </div>
-
-                <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-danger" form="form_hapus">Submit</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -349,41 +250,6 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('#modal_edit_pengawas').find("#pengawas").select2({
-                dropdownParent: $("#modal_edit_pengawas ")
-            });
-        });
-
-        $('.btn_roles').click(function() {
-            console.log($(this).data("id"))
-            $('#modal_edit_roles').find('#user_id').val($(this).data("id"));
-            $('#modal_edit_roles').find('#user_name').val($(this).data("nama"));
-            var roles = [];
-            $(this).data("roles").forEach(element => {
-                roles.push(element['name']);
-            });
-            $('#modal_edit_roles').find('input[name="roles[]"]').each(function() {
-                if (roles.includes(this.value)) {
-                    $(this).prop('checked', true);
-                } else {
-                    $(this).prop('checked', false);
-                }
-            });
-        })
-
-        $('.btn_pengawas').click(function() {
-            // console.log($(this).data("id"))
-            $('#modal_edit_pengawas').find('#user_id').val($(this).data("id"));
-            $('#modal_edit_pengawas').find('#user_name').val($(this).data("nama"));
-            $("#modal_edit_pengawas").find("#pengawas").val($(this).data("pengawas"));
-            // $("#modal_edit_pengawas").find("input[name='pengawas']").each(function() {
-            //     $(this).prop('checked', false);
-            // });
-            // $("#modal_edit_pengawas").find("input[name='pengawas'][value='" + $(this).data("pengawas") + "']")
-            //     .prop('checked', true);
-        })
-
         $('.btn_hapus').click(function() {
             id = $(this).data("id")
             $('#modal_hapus').find('#nama_hapus').val($(this).data("nama"));

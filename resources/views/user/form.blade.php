@@ -54,5 +54,4 @@
             @endforeach
         </div>
     </div>
-
 </fieldset>
