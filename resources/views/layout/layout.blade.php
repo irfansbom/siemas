@@ -123,16 +123,17 @@
                             href="javascript:void(0);"></a>
                         <div class="responsive-logo">
                             <a href="index.html" class="header-logo">
-                                <img src="../assets/images/brand/logo-3.png" class="mobile-logo logo-1" alt="logo">
-                                <img src="../assets/images/brand/logo.png" class="mobile-logo dark-logo-1"
+                                <img src="{{ url('assets/images/brand/logo-3.png') }}" class="mobile-logo logo-1"
+                                    alt="logo">
+                                <img src="{{ url('assets/images/brand/logo.png') }}" class="mobile-logo dark-logo-1"
                                     alt="logo">
                             </a>
                         </div>
                         <!-- sidebar-toggle-->
                         <a class="logo-horizontal " href="index.html">
-                            <img src="../assets/images/brand/logo.png" class="header-brand-img desktop-logo"
-                                alt="logo">
-                            <img src="../assets/images/brand/logo-3.png" class="header-brand-img light-logo1"
+                            <img src="{{ url('assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo"
+                                style="width: 100%" alt="logo">
+                            <img src="{{ url('assets/images/brand/logo-3.png') }}" class="header-brand-img light-logo1"
                                 alt="logo">
                         </a>
                         <!-- LOGO -->
@@ -234,12 +235,13 @@
             <div class="sticky">
                 <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
                 <aside class="app-sidebar">
-                    <div class="side-header text-center px-0 py-5">
+                    <div class="side-header text-center py-0">
                         <a class="header-brand1 text-center" href="{{ url('/') }}">
                             <img src="{{ url('assets/images/brand/logo.png') }}"
-                                class="header-brand-img desktop-logo" alt="logo">
+                                class="header-brand-img desktop-logo mt-2" alt="logo"
+                                style="height: fit-content">
                             <img src="{{ url('assets/images/brand/logo-1.png') }}"
-                                class="header-brand-img toggle-logo" alt="logo">
+                                class="header-brand-img toggle-logo mt-4" alt="logo">
                             <img src="{{ url('assets/images/brand/logo-2.png') }}"
                                 class="header-brand-img light-logo" alt="logo">
                             <img src="{{ url('assets/images/brand/logo-3.png') }}"

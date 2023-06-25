@@ -168,8 +168,6 @@ class PclController extends Controller
     }
     public function pcl_pemeriksaan_dsart_update(Request $request)
     {
-        // dump($request->all());
-
         $dsart = Dsart::where('id_bs', $request->id_bs)
             ->where('tahun', $request->tahun)
             ->where('semester', $request->semester)

@@ -15,53 +15,52 @@ class CreateDsbsTable extends Migration
     {
         Schema::create('dsbs', function (Blueprint $table) {
             $table->id();
-            $table->char('kd_kab', 3);
-            $table->char('kd_kec', 4);
-            $table->char('kd_desa', 4);
-            $table->char('nbs', 5);
-            $table->char('id_bs', 15)->unique();
-            $table->char('nks', 6)->unique();
-            $table->char('tahun',5);
-            $table->integer('semester');
-            $table->string('status')->nullable();
-            $table->integer('jumlah_rt_c1')->nullable();
-            $table->integer('sumber')->nullable();
+            $table->string('tahun', 4);
+            $table->string('semester', 1);
+            $table->string('kd_kab', 2);
+            $table->string('kd_kec', 3);
+            $table->string('kd_desa', 3);
+            $table->string('kd_bs', 4);
+            $table->string('nks', 6);
+            $table->string('sls')->nullable();
+            $table->integer('jml_rt')->nullable();
             $table->string('pencacah')->nullable();
             $table->string('pengawas')->nullable();
-            $table->integer('dummy')->default('0');
-            $table->char('created_by', 5)->nullable();
-            $table->char('updated_by', 5)->nullable();
+            $table->integer('flag_active')->default('1');
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
-            $table->unique(["id_bs",'tahun', 'semester'], 'dsrt');
+            $table->unique(['kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'tahun', 'semester'], 'dsrt');
         });
 
 
         Schema::create('dsrt', function (Blueprint $table) {
             $table->id();
-            $table->char('id_bs', 15);
-            $table->char('kd_kab', 3);
-            $table->char('nks', 6);
-            $table->integer('nu_rt');
-            $table->char('tahun',5);
+            $table->string('tahun', 4);
             $table->integer('semester');
-            $table->string('alamat', 100)->nullable();
-            $table->string('nuc1')->nullable();
+            $table->string('kd_kab', 2);
+            $table->string('kd_kec', 3);
+            $table->string('kd_desa', 3);
+            $table->string('kd_bs', 4);
+            $table->integer('nu_rt');
+            $table->string('nks', 6);
+            $table->string('status_pencacahan')->default(0);
 
-            $table->string('nama_krt', 100)->nullable();
-            $table->string('jml_art', 4)->nullable();
-            $table->string('nama_krt2', 100)->nullable();
-            $table->string('jml_art2', 4)->nullable();
+            $table->string('nama_krt_prelist')->nullable();
+            $table->integer('jml_art_prelist')->nullable();
+            $table->string('nama_krt_cacah')->nullable();
+            $table->integer('jml_art_cacah')->nullable();
 
-            $table->string('status_rumah', 2)->nullable();
+            $table->string('status_rumah')->nullable();
             $table->integer('jml_komoditas_makanan')->nullable();
             $table->integer('jml_komoditas_nonmakanan')->nullable();
-            $table->string('makanan_sebulan', 15)->nullable();
-            $table->string('nonmakanan_sebulan', 15)->nullable();
-            $table->string('makanan_sebulan_bypml', 15)->nullable();
-            $table->string('nonmakanan_sebulan_bypml', 15)->nullable();
+            $table->string('makanan_sebulan', 20)->nullable();
+            $table->string('nonmakanan_sebulan', 20)->nullable();
+            $table->string('makanan_sebulan_bypml', 20)->nullable();
+            $table->string('nonmakanan_sebulan_bypml', 20)->nullable();
 
-            $table->string('transportasi', 15)->nullable();
-            $table->string('peliharaan', 15)->nullable();
+            $table->string('transportasi', 20)->nullable();
+            $table->string('peliharaan', 20)->nullable();
             $table->integer('art_sekolah')->nullable();
             $table->integer('art_bpjs')->nullable();
             $table->string('ijazah_krt', 30)->nullable();
@@ -69,24 +68,26 @@ class CreateDsbsTable extends Migration
             $table->text('deskripsi_kegiatan')->nullable();
             $table->integer('luas_lantai')->nullable();
 
-            $table->string('status_pencacahan')->nullable();
-            $table->string('lama_pencacahan', 10)->nullable();
-
             $table->integer('gsmp')->nullable();
+            $table->text('gsmp_desk')->nullable();
             $table->text('foto')->nullable();
+
             $table->string('latitude', 20)->nullable();
             $table->string('longitude', 20)->nullable();
+            $table->string('latitude_selesai', 20)->nullable();
+            $table->string('longitude_selesai', 20)->nullable();
+
+            $table->string('jam_mulai', 20)->nullable();
+            $table->string('jam_selesai', 20)->nullable();
+            $table->string('durasi_pencacahan', 10)->nullable();
+
             $table->string('pencacah')->nullable();
             $table->string('pengawas')->nullable();
-
-            $table->integer('dummy_dsrt')->default('0');
-            $table->integer('jumlah_rt_c1')->nullable();
-            $table->integer('sumber')->nullable();
-
-            $table->char('created_by', 5)->nullable();
-            $table->char('updated_by', 5)->nullable();
+            $table->integer('flag_active')->default('1');
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
-            $table->unique(["id_bs", "nu_rt",'tahun', 'semester'], 'dsrt');
+            $table->unique(['tahun', 'semester', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt'], 'dsrt');
         });
     }
 

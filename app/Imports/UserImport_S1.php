@@ -50,7 +50,7 @@ class UserImport_S1 implements
                 'created_by' => $auth->id
             ]);
         }
-        if (in_array($row[5], ['PENCACAH', 'PENGAWAS', 'ADMIN KABKOT', 'SUPERVISOR'])) {
+        if (in_array($row[4], ['PENCACAH', 'PENGAWAS', 'ADMIN KABKOT', 'SUPERVISOR'])) {
             if ($assign) {
                 // jika dia ada di db
                 $assign->syncRoles($row[4]);

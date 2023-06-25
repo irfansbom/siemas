@@ -137,16 +137,15 @@
                                             @foreach ($data as $key => $usr)
                                                 <tr class="text-center">
                                                     <td>{{ ++$key }}</td>
-                                                    <td class="">{{ $usr->kd_kab }}</td>
-                                                    <td class="text-start"> {{ $usr->name }} </td>
-                                                    <td class="text-start"> {{ $usr->email }} </td>
-                                                    <td class="text-start">
+                                                    <td class="align-middle">{{ $usr->kd_kab }}</td>
+                                                    <td class="text-start align-middle"> {{ $usr->name }} </td>
+                                                    <td class="text-start align-middle"> {{ $usr->email }} </td>
+                                                    <td class="text-start align-middle">
                                                         @foreach ($usr->roles->pluck('name') as $role)
                                                             {{ $role . ', ' }}
                                                         @endforeach
                                                     </td>
-
-                                                    <td> {{ $usr->flag_active }} </td>
+                                                    <td class="align-middle"> {{ $usr->flag_active }} </td>
                                                     <td class="text-center">
                                                         <a class="btn-outline-primary btn"
                                                             href="{{ url('users/' . \Crypt::encryptString($usr->id)) }}">
@@ -280,7 +279,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('users/delete') }}" method="post" id="form_hapus">
+                    <form method="post" id="form_hapus">
                         @csrf
                         @method('delete')
                         <div class="row ">
@@ -387,7 +386,6 @@
 
         $('.btn_hapus').click(function() {
             id = $(this).data("id")
-            console.log($(this).data("id"))
             $('#modal_hapus').find('#nama_hapus').val($(this).data("nama"));
             $("#form_hapus").attr('action', "{{ url('users') }}" + '/' + id);
         })

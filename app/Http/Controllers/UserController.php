@@ -19,32 +19,27 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
-    //
-
     public function index(Request $request)
     {
         $periode = Periode::first();
         $auth = Auth::user();
         $data_roles = Role::all();
         $data_pengawas = [];
-        // $kab = $auth->kd_kab;
-        // dd($auth->hasAnyRole(['SUPER ADMIN', 'ADMIN PROVINSI']));
         if ($auth->hasAnyRole(['SUPER ADMIN', 'ADMIN PROVINSI'])) {
             $kab = $request->kab_filter;
             $kabs = Kabs::all();
         } else {
             $kab = $auth->kd_kab;
-            $kabs = Kabs::where('id_kab', $auth->kd_kab)->get();
+            $kabs = Kabs::where('id_kab', $kab)->get();
         }
+
         $data = User::where('kd_kab', 'LIKE', '%' . $kab . '%')
             ->where('name', 'LIKE', '%' . $request->nama_filter  . '%');
-
         if (!empty($request->role_filter)) {
             $data->role($request->role_filter);
         }
         $data = $data->paginate(15);
         $data->appends($request->all());
-        // dd($kabs);
         return view('user.index', compact('data', 'data_roles', 'auth', 'kabs', 'request', 'periode'));
     }
 
@@ -64,10 +59,8 @@ class UserController extends Controller
         return view('user.create', compact('data', 'auth', 'kabs', 'periode', 'roles'));
     }
 
-
     public function store(Request $request)
     {
-
         $auth = Auth::user();
         try {
             $user = User::create([
@@ -106,29 +99,35 @@ class UserController extends Controller
     {
         $real_id = Crypt::decryptString($id);
         $auth = Auth::user();
-        User::where('id', $request->real_id)
-            ->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'kd_kab' => $request->kd_kab,
-                'updated_by' =>  $auth->id,
-            ]);
-        $user = User::find($request->real_id);
-        if (!empty($request->roles)) {
+        try {
+            User::where('id', $real_id)
+                ->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'kd_kab' => $request->kd_kab,
+                    'updated_by' =>  $auth->id,
+                ]);
             $user = User::find($request->real_id);
-            $user->syncRoles($request->roles);
+            if (!empty($request->roles)) {
+                $user = User::find($request->real_id);
+                $user->syncRoles($request->roles);
+            }
+            return redirect()->back()->with('success', 'Berhasil Disimpan');
+        } catch (QueryException $ex) {
+            return redirect('users\create')->withInput()->with('error', $ex->getMessage());
         }
-
-        return redirect()->back()->with('success', 'Berhasil Disimpan');
     }
 
     public function destroy($id)
     {
-        User::where('id', $id)->delete();
-        return redirect()->back()->with('success', 'Berhasil Dihapus');
+        $data = User::where('id', $id)->delete();
+        if ($data > 0) {
+            return redirect()->back()->with('success', 'Berhasil Dihapus');
+        } else {
+            return redirect()->back()->with('error', 'Gagal Dihapus');
+        }
     }
-
 
     public function user_import(Request $request)
     {

@@ -10,9 +10,9 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithUpserts;
+use Throwable;
 
 class DsbsImport implements
-    // WithMappedCells,
     SkipsOnError,
     ToModel,
     WithStartRow,
@@ -28,56 +28,66 @@ class DsbsImport implements
         $this->semester = $request->semester;
     }
 
-
     public function startRow(): int
     {
         return 10;
     }
     public function uniqueBy()
     {
-        return ['id_bs','tahun','semester'];
+        return ['tahun', 'semester', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs'];
     }
     public function model(array $row)
     {
         $auth = Auth::user();
-        $user = User::where('email', $row[11])->get()->first();
-        // dd($user);
-        if (!$user) {
-            $user = new User();
-        }
-
-        if ($row[4] == null) {
+        if (strlen($row[1]) != 3) {
             return null;
         }
+        if (strlen($row[3]) != 3) {
+            return null;
+        }
+        if (strlen($row[6]) != 4) {
+            return null;
+        }
+        $bs = Dsbs::where('tahun', $this->tahun)
+            ->where('semester', $this->semester)
+            ->where('kd_kab', $this->kab)
+            ->where('kd_kec',  $row[1])
+            ->where('kd_desa', $row[3])
+            ->where('kd_bs', $row[6])
+            ->first();
 
-        $data =  new Dsbs([
-            'kd_kab' => $this->kab,
-            'kd_kec' => $row[1],
-            'kecamatan' => $row[2],
-            'kd_desa' => $row[3],
-            'desa' => $row[4],
-            'klas' => $row[5],
-            'nbs' => $row[6],
-            'id_bs' => '16' . $this->kab . $row[1] . $row[3] . $row[6],
-            'nks' => $row[7],
-            'tahun' => $this->tahun,
-            'semester' => $this->semester,
-            'jml_rt' => $row[8],
-            'sls' => trim($row[9],'  '),
-            'sls_wilkerstat' => '[' .trim( $row[11],' ') . '] ' . trim($row[12],'  '),
-            'status' => 0,
-            'pencacah' => $user->email,
-            'pengawas' => $user->pengawas,
-            'created_by' => $auth->id,
-        ]);
+        if ($bs) {
+            $data =  new Dsbs([
+                'tahun' => $this->tahun,
+                'semester' => $this->semester,
+                'kd_kab' => $this->kab,
+                'kd_kec' => $row[1],
+                'kd_desa' => $row[3],
+                'kd_bs' => $row[6],
+                'nks' => $row[7],
+                'sls' => trim($row[9], '  '),
+                'jml_rt' => $row[8],
+                'updated_by' => $auth->id,
+            ]);
+        } else {
+            $data = Dsbs::create([
+                'tahun' => $this->tahun,
+                'semester' => $this->semester,
+                'kd_kab' => $this->kab,
+                'kd_kec' => $row[1],
+                'kd_desa' => $row[3],
+                'kd_bs' => $row[6],
+                'nks' => $row[7],
+                'sls' => trim($row[9], '  '),
+                'jml_rt' => $row[8],
+                'created_by' => $auth->id,
+            ]);
+        }
         return $data;
     }
 
-    public function onError(\Throwable $e)
+    public function onError(Throwable $e)
     {
-        // dd($e);
         return redirect()->back()->with('error',  $e->getMessage());
-        // print_r($e);
-        // Handle the exception how you'd like.
     }
 }

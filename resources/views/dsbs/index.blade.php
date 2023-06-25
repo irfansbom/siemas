@@ -15,7 +15,7 @@
                 </div>
                 @include('alert')
                 <div class="row">
-                    <div class="col-12 col-sm-12">
+                    <div class="col-12">
                         <div class="card ">
                             <div class="card-header border-0 pb-0">
                                 <h3 class="card-title mb-0">List DS BS</h3>
@@ -38,12 +38,11 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <button class="btn btn-primary btn-icon text-white" data-bs-toggle="modal"
-                                            data-bs-target="#modal_tambah" data-kd_kab="{{ $auth->kd_wilayah }}">
+                                        <a class="btn btn-primary btn-icon text-white" href="{{ url('dsbs/create') }}">
                                             <span>
                                                 <i class="fe fe-plus"></i>
                                             </span> Tambah
-                                        </button>
+                                        </a>
                                     @endhasanyrole
                                 </div>
                             </div>
@@ -57,78 +56,87 @@
                             </div>
                             <div class="card-body">
                                 <div class="row mb-2">
-                                    <div class="col-10">
+                                    <div class="col-12">
                                         <form action="" id="form_filter">
                                             <fieldset>
-                                                <div class="mb-1 row">
-                                                    {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
-                                                    <div class="col-sm-2">
-                                                        <select name="kab_filter" id="kab_filter"
-                                                            class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Kab/Kota</option>
-                                                            <option value=""> [00] PROVINSI SUMSEL</option>
-                                                            @foreach ($kabs as $kab)
-                                                                <option value="{{ $kab->id_kab }}"
-                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
-                                                                    [{{ $kab->id_kab }}]
-                                                                    {{ $kab->alias }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                <div class="mb-2 row">
                                                     <div class="col-sm-2">
                                                         <select name="tahun_filter" id="tahun_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih tahun</option>
                                                             <option value="2022"
-                                                                @if ($request->tahun_filter == '2022') selected @endif>2022
+                                                                @if ($tahun == '2022') selected @endif>2022
                                                             </option>
                                                             <option value="2023"
-                                                                @if ($request->tahun_filter == '2023') selected @endif>2023
+                                                                @if ($tahun == '2023') selected @endif>2023
                                                             </option>
-
+                                                            <option value="2024"
+                                                                @if ($tahun == '2024') selected @endif>2024
+                                                            </option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-3">
                                                         <select name="semester_filter" id="semester_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih Semester</option>
                                                             <option value="1"
-                                                                @if ($request->semester_filter == '1') selected @endif>1</option>
+                                                                @if ($semester == '1') selected @endif>1</option>
                                                             <option value="2"
-                                                                @if ($request->semester_filter == '2') selected @endif>2</option>
+                                                                @if ($semester == '2') selected @endif>2</option>
                                                         </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="flag_active" id="flag_active"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="0"
+                                                                @if ($flag_active == '0') selected @endif>
+                                                                Inaktif/Dummy
+                                                            </option>
+                                                            <option value="1"
+                                                                @if ($flag_active == '1') selected @endif>
+                                                                Aktif/Lapangan
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <div class="col-sm-2">
+                                                        <select name="kab_filter" id="kab_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Semua Kab/Kot</option>
+                                                            @foreach ($kabs as $kab)
+                                                                <option value="{{ $kab->id_kab }}"
+                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
+                                                                    [{{ $kab->id_kab }}] {{ $kab->alias }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="kec_filter" id="kec_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Semua Kecamatan</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="desa_filter" id="desa_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Semua Desa</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" name="nks_filter" id="nks_filter"
+                                                            placeholder="cari NKS" class="form-control"
+                                                            @if ($request->nks_filter) value="{{ $request->nks_filter }}" @endif>
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <input type="text" name="bs_filter" id="bs_filter"
-                                                            placeholder="cari ID BS" class="form-control"
-                                                            @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <select name="dummy_filter" id="dummy_filter"
-                                                            class="form-control select2-show-search form-select">
-                                                            <option value="">Sampel filter</option>
-                                                            <option value="">Semua</option>
-                                                            <option value="1"
-                                                                @if ($request->dummy_filter == '1') selected @endif>Sample
-                                                                Latihan
-                                                            </option>
-                                                            <option value="0"
-                                                                @if ($request->dummy_filter == '0') selected @endif>Sampel
-                                                                Lapangan
-                                                            </option>
-                                                        </select>
-                                                    </div>
                                                     <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>
                                                 </div>
-                                            </fieldset>`
+                                            </fieldset>
                                         </form>
                                     </div>
-                                </div>
-                                <div class="row">
-
                                 </div>
 
                                 <div class="table-responsive">
@@ -138,68 +146,40 @@
                                                 <th>No</th>
                                                 <th>Kab</th>
                                                 <th>Kec</th>
-                                                <th>desa</th>
-                                                <th>NBS</th>
-                                                <th>ID BS</th>
+                                                <th>Desa</th>
+                                                <th>BS</th>
                                                 <th>NKS</th>
-                                                <th>Tahun</th>
-                                                <th>SMT</th>
-                                                <th colspan="2">Pencacah</th>
+                                                <th>SLS</th>
+                                                <th>Pencacah</th>
                                                 <th>Pengawas</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody class="align-middle">
                                             @foreach ($data as $key => $dt)
-                                                <tr class="align-middle">
-                                                    <td class="text-center align-middle">{{ ++$key }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->kd_kab }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->kd_kec }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->kd_desa }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->nbs }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->id_bs }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->nks }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->tahun }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->semester }}</td>
-                                                    <td class="align-middle text-center"
-                                                        style="word-break: break-word; overflow-wrap: break-word;">
-                                                        @isset($dt->pcl->name)
-                                                            {{ $dt->pcl->name }}
-                                                        @endisset
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($auth->hasanyrole('SUPER ADMIN|ADMIN KABKOT'))
-                                                            <button class="btn btn-outline-secondary btn_pencacah"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#modal_edit_pencacah"
-                                                                data-id="{{ $dt->id }}"
-                                                                data-id_bs="{{ $dt->id_bs }}">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                        @else
-                                                            <button class="btn btn-outline-secondary"
-                                                                data-bs-placement="top" data-bs-toggle="tooltip"
-                                                                title="BUKAN ADMIN">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                        @endif
-                                                    </td>
-
-                                                    <td class="align-middle text-center">
-                                                        @isset($dt->pcl->pengawas)
-                                                            {{ $dt->pcl->pml->name }}
-                                                        @endisset
-
-                                                    </td>
-
-                                                    <td class="text-center">
-                                                        {{-- <a class="btn btn-outline-primary"
+                                                <tr class="align-middle text-center">
+                                                    <td class="align-middle">{{ ++$key }}</td>
+                                                    <td class="align-middle ">{{ $dt->kd_kab }}</td>
+                                                    <td class="align-middle ">{{ $dt->kd_kec }}</td>
+                                                    <td class="align-middle ">{{ $dt->kd_desa }}</td>
+                                                    <td class="align-middle ">{{ $dt->kd_bs }}</td>
+                                                    <td class="align-middle ">{{ $dt->nks }}</td>
+                                                    <td class="align-middle text-start">{{ $dt->sls }}</td>
+                                                    <td class="align-middle text-start">{{ $dt->pencacah }}</td>
+                                                    <td class="align-middle text-start">{{ $dt->pengawas }}</td>
+                                                    <td class="align-middle">
+                                                        <a class="btn btn-outline-primary"
                                                             href="{{ url('dsbs/' . \Crypt::encryptString($dt->id)) }}">
                                                             <i class="fa fa-eye"></i>
-                                                        </a> --}}
+                                                        </a>
                                                         <button class="btn btn-outline-danger btn_hapus"
                                                             data-id="{{ $dt->id }}"
-                                                            data-id_bs="{{ $dt->id_bs }}" data-bs-toggle="modal"
+                                                            data-kd_kab="{{ $dt->kd_kab }}"
+                                                            data-kd_kec="{{ $dt->kd_kec }}"
+                                                            data-kd_desa="{{ $dt->kd_desa }}"
+                                                            data-kd_bs="{{ $dt->kd_bs }}"
+                                                            data-nks="{{ $dt->nks }}"
+                                                            data-sls="{{ $dt->sls }}" data-bs-toggle="modal"
                                                             data-bs-target="#modal_hapus">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
@@ -209,135 +189,11 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                                 {{ $data->links() }}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal_tambah">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <h6 class="modal-title">Tambah Data</h6>
-                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url('dsbs') }}" method="post" id="form_tambah">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="modal_tambah_kab" class="form-label">Kab</label>
-                                <input type="text" class="form-control" id="modal_tambah_kab" name="kd_kab"
-                                    @hasanyrole('ADMIN KABKOT') value="{{ $auth->kd_wilayah }}" readonly @endrole>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_kec" class="form-label">Kec</label>
-                                <input type="text" class="form-control" id="modal_tambah_kec" name="kd_kec">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_desa" class="form-label">Desa</label>
-                                <input type="text" class="form-control" id="modal_tambah_desa" name="kd_desa">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_nbs" class="form-label">NBS</label>
-                                <input type="text" class="form-control" id="modal_tambah_nbs" name="nbs">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_nks" class="form-label">NKS</label>
-                                <input type="text" class="form-control" id="modal_tambah_nks" name="nks">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="modal_tambah_tahun" class="form-label">Tahun</label>
-                                <select name="tahun" id="modal_tambah_tahun" class="form-control select2 form-select"
-                                    required>
-                                    <option value="">Pilih tahun</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="modal_tambah_semester" class="form-label">Semester</label>
-                                <select name="semester" id="modal_tambah_semester"
-                                    class="form-control select2 form-select" required>
-                                    <option value="">Pilih semester</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="modal_tambah_pencacah" class="form-label">Pencacah</label>
-                                <select name="pencacah" id="modal_tambah_pencacah"
-                                    class="form-control select2-show-search form-select"
-                                    data-placeholder="Pilih Pencacah">
-                                    <option label="Pilih Pencacah"></option>
-                                    @foreach ($data_pencacah as $pcl)
-                                        <option value="{{ $pcl->email }}">{{ $pcl->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="form_tambah">Submit</button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal_edit_pencacah">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Pencacah<span></span></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url('dsbs/pencacah') }}" method="post" id="edit_form_pencacah">
-                        @csrf
-                        <div class="row">
-                            <input type="text" name="id" id="id" hidden>
-                            <div class="mb-3 ">
-                                <label for="id_bs" class="form-label">ID BS</label>
-                                <input type="text" class="form-control" id="id_bs" name="id_bs" readonly>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="id_bs" class="form-label">Pencacah</label>
-                                    <select name="pencacah" id="pencacah"
-                                        class="form-control select2-show-search form-select col-12"
-                                        data-placeholder="Pilih Pencacah" style="width: 100%">
-                                        <option label="Pilih Pencacah"></option>
-                                        @foreach ($data_pencacah as $pcl)
-                                            <option value="{{ $pcl->email }}">{{ $pcl->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="edit_form_pencacah">Submit</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
-
             </div>
         </div>
     </div>
@@ -350,21 +206,25 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('dsbs/delete') }}" method="post" id="form_hapus">
+                    <form method="post" id="form_hapus">
                         @csrf
                         @method('delete')
-                        <div class="row ">
-                            <input type="text" name="id" id="modal_hapus_id" hidden>
-                            <div class="mb-3 ">
-                                <label for="modal_hapus_id_bs" class="form-label">ID BS</label>
-                                <input type="text" class="form-control" id="modal_hapus_id_bs" name="id_bs"
-                                    readonly>
+                        <input type="text" name="id" id="modal_hapus_id" hidden>
+                        <div class="row mb-3 ">
+                            <div class="col">
+                                <label for="id_bs_hapus" class="form-label">ID BS</label>
+                                <input type="text" class="form-control" id="id_bs_hapus" name="id_bs" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ">
+                            <div class="col">
+                                <label for="nks_hapus" class="form-label">NKS</label>
+                                <input type="text" class="form-control" id="nks_hapus" name="nks" readonly>
                             </div>
                         </div>
                     </form>
                 </div>
 
-                <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" form="form_hapus">Submit</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -403,15 +263,17 @@
                                     class="form-control select2-show-search form-select" required>
                                     <option value="">Pilih tahun</option>
                                     <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
+                                    <option value="2023" @if ($periode->tahun == '2023') selected @endif>2023</option>
+                                    <option value="2024" @if ($periode->tahun == '2024') selected @endif>2024
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-6">
                                 <select name="semester" id="semester_import"
                                     class="form-control select2-show-search form-select" required>
                                     <option value="">pilih semester</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="1"@if ($periode->semester == '1') selected @endif>1</option>
+                                    <option value="2"@if ($periode->semester == '2') selected @endif>2 </option>
                                 </select>
                             </div>
                         </div>
@@ -453,13 +315,43 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            const kab_value = {!! json_encode($request->kab_filter) !!}
+            const kec_value = {!! json_encode($request->kec_filter) !!}
+            const desa_value = {!! json_encode($request->desa_filter) !!}
+
+            if (kab_value) {
+                set_kab(kab_value)
+                    .then(function() {
+                        select_kabs()
+                    }).then(function() {
+                        if (kec_value) {
+                            set_kec(kec_value)
+                        }
+                    }).then(function() {
+                        select_kecs()
+                    }).then(function() {
+                        if (desa_value) {
+                            set_desa(desa_value)
+                        }
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
+            }
+
+            $('#kab_filter').change(function() {
+                select_kabs();
+            })
+            $('#kec_filter').change(function() {
+                select_kecs();
+            })
+
+
             $('#modal_edit_pencacah').find("#pencacah").select2({
                 dropdownParent: $("#modal_edit_pencacah")
             });
         });
 
         $('.btn_pencacah').click(function() {
-            // console.log($(this).data("id"))
             $('#modal_edit_pencacah').find('#id').val($(this).data("id"));
             $('#modal_edit_pencacah').find('#id_bs').val($(this).data("id_bs"));
             $("#modal_edit_pencacah").find("#pencacah").val($(this).data("pencacah"));
@@ -467,9 +359,101 @@
         })
 
         $('.btn_hapus').click(function() {
-            // console.log($(this).data("id"))
-            $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
-            $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
+            id = $(this).data("id")
+            $('#modal_hapus').find('#nks_hapus').val($(this).data("nks"));
+            $('#modal_hapus').find('#id_bs_hapus').val('16' + $(this).data("kd_kab") + $(this).data("kd_kec") + $(
+                this).data("kd_desa") + $(this).data("kd_bs"));
+            $("#form_hapus").attr('action', "{{ url('dsbs') }}" + '/' + id);
         })
+
+        function select_kabs() {
+            return new Promise((resolve, reject) => {
+                const kab_filter = document.getElementById('kab_filter').value;
+                var request = new XMLHttpRequest();
+                request.open('GET', "{{ url('list_kec?kab_filter=') }}" +
+                    kab_filter,
+                    false
+                ); // Set argumen ketiga menjadi false untuk menjalankan permintaan secara sinkron
+                request.send();
+                if (request.status === 200) {
+                    var data = JSON.parse(request.responseText);
+                    const kec_select = document.getElementById('kec_filter');
+                    kec_select.innerHTML = "";
+                    var option = document.createElement('option');
+                    option.value = "";
+                    option.textContent = "Semua";
+                    kec_select.appendChild(option);
+                    data.data.forEach(element => {
+                        var option = document.createElement('option');
+                        option.value = element.id_kec;
+                        option.textContent = '[' + element.id_kec + '] ' + element.nama_kec;
+                        kec_select.appendChild(option);
+                    });
+                } else {
+                    console.error('Error:', request.status);
+                }
+                resolve();
+            })
+        }
+
+        function select_kecs() {
+            return new Promise((resolve, reject) => {
+                const kec_filter = document.getElementById('kec_filter').value;
+                const kab_filter = document.getElementById('kab_filter').value;
+                var request = new XMLHttpRequest();
+                request.open('GET', "{{ url('list_desa?kab_filter=') }}" +
+                    kab_filter +
+                    '&kec_filter=' + kec_filter,
+                    false
+                ); // Set argumen ketiga menjadi false untuk menjalankan permintaan secara sinkron
+                request.send();
+                if (request.status === 200) {
+                    var data = JSON.parse(request.responseText);
+                    const desa_select = document.getElementById('desa_filter');
+                    desa_select.innerHTML = "";
+                    var option = document.createElement('option');
+                    option.value = "";
+                    option.textContent = "Semua";
+                    desa_select.appendChild(option);
+                    data.data.forEach(element => {
+                        var option = document.createElement('option');
+                        option.value = element.id_desa;
+                        option.textContent = '[' + element.id_desa + '] ' + element
+                            .nama_desa;
+                        desa_select.appendChild(option);
+                    });
+                } else {
+                    console.error('Error:', request.status);
+                }
+                resolve();
+            })
+        }
+
+        function set_kab(kab_value) {
+            return new Promise((resolve, reject) => {
+                const kab_select = document.getElementById('kab_filter');
+                kab_select.value = kab_value
+                resolve();
+            });
+        }
+
+        function set_kec(kec_value) {
+            return new Promise((resolve, reject) => {
+                const kec_select = document.getElementById('kec_filter');
+                kec_select.value = kec_value
+                // $('#kec_filter').val(kec_value);
+                kec_select.dispatchEvent(new Event('change'));
+                resolve();
+            });
+        }
+
+        function set_desa(desa_value) {
+            return new Promise((resolve, reject) => {
+                const desa_select = document.getElementById('desa_filter');
+                desa_select.value = desa_value
+                desa_select.dispatchEvent(new Event('change'));
+                resolve();
+            });
+        }
     </script>
 @endsection
