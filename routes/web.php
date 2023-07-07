@@ -16,11 +16,11 @@ Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-// Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/', function () {
-    return "Maintenance";
-});
+// Route::get('/', function () {
+//     return "Maintenance";
+// });
 Route::get('mon_users', [MonitoringController::class, 'users']);
 Route::get('mon_users/{id}', [MonitoringController::class, 'users_show']);
 Route::get('mon_dsrt', [MonitoringController::class, 'dsrt']);
@@ -30,7 +30,6 @@ Route::get('mon_212', [MonitoringController::class, 'mon_212']);
 
 Route::get('list_kec', [MasterWilayahController::class, 'list_kec']);
 Route::get('list_desa', [MasterWilayahController::class, 'list_desa']);
-// Route::get('list_desa', []);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('mon_users_export', [MonitoringController::class, 'users_export']);
@@ -59,10 +58,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('users', UserController::class);
         Route::post('users/import', [UserController::class, 'user_import']);
         Route::resource('alokasi', AlokasiController::class);
+        Route::get('alokasi_export', [AlokasiController::class, 'export']);
+        Route::post('alokasi_import', [AlokasiController::class, 'import']);
 
-        Route::post('dsbs/pencacah', [DsbsController::class, 'dsbs_pencacah']);
-        Route::get('export_alokasi_dsbs_user', [AlokasiController::class, 'export']);
-        Route::post('import_alokasi_dsbs_user', [AlokasiController::class, 'import']);
         Route::resource('dsrt', DsrtController::class);
         Route::post('dsrt_generate', [DsrtController::class, 'dsrt_generate']);
         Route::post('dsrt_import', [DsrtController::class, 'dsrt_import']);

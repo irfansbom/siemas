@@ -17,16 +17,14 @@
                         </ol>
                     </div>
                     <div class="ms-auto pageheader-btn">
-                        <a href="javascript:void(0);" class="btn btn-primary btn-icon text-white me-2">
+                        {{-- <a href="javascript:void(0);" class="btn btn-primary btn-icon text-white me-2">
                             <span>
                                 <i class="fe fe-plus"></i>
                             </span> Add Account
-                        </a>
-
+                        </a> --}}
                     </div>
                 </div>
                 @include('alert')
-
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card">
@@ -39,11 +37,10 @@
                                         </span> Export
                                     </a> --}}
                                 </div>
-
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-7">
                                         <div class="table-responsive">
                                             <table
                                                 class="table border text-nowrap text-md-nowrap table-bordered mg-b-0 table-sm">
@@ -54,8 +51,6 @@
                                                         <th class="text-center align-middle">Jml <br> DSRT</th>
                                                         <th class="text-center align-middle">Jml <br> ART</th>
                                                         <th class="text-center align-middle">Selesai<br>Cacah</th>
-                                                        <th class="text-center align-middle">Persentase<br> Selesai Cacah
-                                                        </th>
                                                         <th class="text-center align-middle">Foto <br> Masuk </th>
                                                         <th class="text-center align-middle">Persentase <br> Foto Masuk
                                                         </th>
@@ -68,7 +63,8 @@
                                                                 {{ ++$key }}
                                                             </td>
                                                             <td class="">
-                                                                [{{ $tab1->kd_kab }}] {{ $tab1->alias }}
+                                                                [{{ $tab1->kd_kab }}]
+                                                                {{ $tab1->kabs ? $tab1->kabs['alias'] : '' }}
                                                             </td>
                                                             <td class="text-center">{{ $tab1->jml_dsrt }}</td>
                                                             <td class="text-center">{{ $tab1->jml_art2 }}</td>
@@ -96,7 +92,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-5">
                                         <div class="chart-container">
                                             <canvas id="chart_cacah_foto" class="h-600"></canvas>
                                         </div>
@@ -205,6 +201,7 @@
                                                 <tr class="text-center align-middle">
                                                     <th class="text-center align-middle">No</th>
                                                     <th class="text-center align-middle">ID BS</th>
+                                                    <th class="text-center align-middle">NKS</th>
                                                     <th class="text-center align-middle">NU RT</th>
                                                     <th class="text-center align-middle">KRT</th>
                                                     <th class="text-center align-middle">Jumlah <br> ART</th>
@@ -215,28 +212,32 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($dsrt as $key => $dt)
-                                                    <tr>
-                                                        <td class="text-center">
+                                                    <tr class="text-center">
+                                                        <td>
                                                             {{ ++$key }}
                                                         </td>
-                                                        <td class="text-center">
-                                                            {{ $dt->id_bs }}
+                                                        <td>
+                                                            {{ '16' . $dt->kd_kab . $kd_kec . $kd_desa . $kd_bs }}
                                                         </td>
-                                                        <td class="text-center">{{ $dt->nu_rt }}</td>
-                                                        <td class=""><a
-                                                                href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt2 }}
+                                                        <td>
+                                                            {{ $dt->nks }}
                                                         </td>
-                                                        <td class="text-center">{{ $dt->jml_art2 }}</td>
-                                                        <td class="text-center">{{ $dt->status_rumah }}</td>
+                                                        <td>{{ $dt->nu_rt }}</td>
+                                                        <td class="text-start">
+                                                            <a href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">
+                                                                {{ $dt->nama_krt_cacah }}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{ $dt->jml_art_cacah }}</td>
+                                                        <td>{{ $dt->status_rumah }}</td>
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
-                                                        <td class="text-center">
+                                                        <td>
                                                             <a href="javascript:void(0);">
                                                                 <img class="br-5 img_btn" data-foto="{{ $dt->foto }}"
                                                                     src="{{ url('foto') . '/' . $dt->foto }}"
                                                                     alt="Belum Ada Foto" style="max-height:150px"
                                                                     data-bs-toggle="modal" data-bs-target="#modal_gambar">
                                                             </a>
-
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -272,7 +273,6 @@
         <script>
             $(document).ready(function() {});
             $('.img_btn').click(function() {
-                // console.log(window.location.origin + window.location.pathname + "foto/" + $(this).data('foto'))
                 $('#modal_gambar').find('#modal_gambar_foto').attr("src", window.location.origin + window.location
                     .pathname + "foto/" + $(this).data(
                         'foto'))
@@ -282,9 +282,7 @@
             var data_chart_foto = {!! json_encode($data_chart_foto) !!};
             var data_chart_selesai = {!! json_encode($data_chart_selesai) !!};
             $(function() {
-                console.log(label_tab1)
                 var ctx = document.getElementById("chart_cacah_foto").getContext('2d');
-
                 // var myChart = new Chart(ctx, {
                 //     type: 'bar',
                 //     data: {
@@ -340,7 +338,6 @@
                 //     }
                 // });
 
-                console.log(data_chart_foto)
                 data = {
                     labels: label_tab1,
                     datasets: [{
@@ -397,15 +394,11 @@
                     },
                 }
 
-
                 var myBarChart = new Chart(ctx, {
                     type: 'horizontalBar',
                     data: data,
                     options: options
                 });
-
-
-
             });
         </script>
     @endsection

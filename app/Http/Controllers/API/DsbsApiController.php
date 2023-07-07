@@ -15,12 +15,14 @@ class DsbsApiController extends Controller
 
         $periode = Periode::get()->first();
 
-        $dsbs = Dsbs::select('id_bs')->where('pencacah', $request->pencacah)
-        ->where('tahun', $periode->tahun)
-        ->where('semester', $periode->semester)
-        ->get()->toArray();
+        $dsbs = Dsbs::select('id')
+            ->where('pencacah', $request->pencacah)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->get()
+            ->toArray();
 
-        $data_dsbs = Dsbs::wherein('id_bs', $dsbs)
+        $data_dsbs = Dsbs::wherein('id', $dsbs)
             ->join('kabs', function ($join) {
                 $join->on('dsbs.kd_kab', 'kabs.id_kab');
             })

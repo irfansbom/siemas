@@ -202,7 +202,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Hapus DS BS<span></span></h4>
+                    <h4 class="modal-title">Hapus DSBS<span></span></h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">

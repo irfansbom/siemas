@@ -1,9 +1,11 @@
  <fieldset class="p-5">
-     <input type="text" name="id" id="id" hidden value="{{ old('id', $data->id) }}">
+
      <div class="mb-3 row">
          <label class="col-sm-2 form-label">ID BS</label>
          <div class="col-sm-4">
-             <input type="text" class="form-control" value="{{ old('id_bs', $data->id_bs) }}" name="id_bs">
+             <input type="text" class="form-control"
+                 value="{{ old('id_bs', '16' . $data->kd_kab . $data->kd_kec . $data->kd_desa . $data->kd_bs) }}"
+                 name="id_bs">
          </div>
          <label class="col-sm-2 form-label">NKS</label>
          <div class="col-sm-4">
@@ -11,24 +13,29 @@
          </div>
      </div>
      <div class="mb-3 row">
-         <label class="col-sm-2 form-label">Nomor Urut RT</label>
+         <label class="col-sm-2 form-label">Nomor Urut RUTA</label>
          <div class="col-sm-4">
              <input type="text" class="form-control" value="{{ old('nu_rt', $data->nu_rt) }}" name="nu_rt">
          </div>
-         <label class="col-sm-2 form-label">Semester</label>
-         <div class="col-sm-4">
+         <label class="col-sm-1 form-label">Tahun</label>
+         <div class="col-sm-2">
+             <input type="text" class="form-control" value="{{ old('tahun', $data->tahun) }}" name="tahun">
+         </div>
+         <label class="col-sm-1 form-label">Semester</label>
+         <div class="col-sm-2">
              <input type="text" class="form-control" value="{{ old('semester', $data->semester) }}" name="semester">
          </div>
      </div>
      <div class="mb-3 row">
-         <label class="col-sm-2 form-label">Nama KRT Import</label>
+         <label class="col-sm-2 form-label">Nama KRT Prelist</label>
          <div class="col-sm-4">
-             <input type="text" class="form-control" value="{{ old('nama_krt', $data->nama_krt) }}" name="nama_krt">
+             <input type="text" class="form-control" value="{{ old('nama_krt_prelist', $data->nama_krt_prelist) }}"
+                 name="nama_krt_prelist">
          </div>
-         <label class="col-sm-2 form-label">Nama KRT 2</label>
+         <label class="col-sm-2 form-label">Nama KRT Cacah</label>
          <div class="col-sm-4">
-             <input type="text" class="form-control" value="{{ old('nama_krt2', $data->nama_krt2) }}"
-                 name="nama_krt2">
+             <input type="text" class="form-control" value="{{ old('nama_krt_cacah', $data->nama_krt_cacah) }}"
+                 name="nama_krt_cacah">
          </div>
      </div>
      <div class="mb-3 row">
@@ -36,9 +43,10 @@
          <div class="col-sm-4">
              <input type="text" class="form-control" value="{{ old('alamat', $data->alamat) }}" name="alamat">
          </div>
-         <label class="col-sm-2 form-label">Jumlah ART 2</label>
+         <label class="col-sm-2 form-label">Jumlah ART Cacah</label>
          <div class="col-sm-4">
-             <input type="text" class="form-control" value="{{ old('jml_art2', $data->jml_art2) }}" name="jml_art2">
+             <input type="text" class="form-control" value="{{ old('jml_art_cacah', $data->jml_art_cacah) }}"
+                 name="jml_art_cacah">
          </div>
      </div>
 
@@ -242,17 +250,5 @@
          </div>
      </div>
 
-     <hr>
-     <div class="row">
-         <div class="col-6 p-1">
 
-
-         </div>
-
-     </div>
-
-
-     {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-         <button class="btn btn-primary" type="submit" id="simpanbtn">simpan</button>
-     </div> --}}
  </fieldset>

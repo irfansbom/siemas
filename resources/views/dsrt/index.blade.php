@@ -22,10 +22,10 @@
                                 <div class="ms-auto pageheader-btn">
                                     @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT'])
                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                            data-bs-target="#modal_swap_dsart">Tukar ART Saja</button>
+                                            data-bs-target="#modal_swap_dsart">Tukar ART </button>
 
                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                            data-bs-target="#modal_swap_dsrt">Tukar DSRT</button>
+                                            data-bs-target="#modal_swap_dsrt">Tukar Nomor Ruta</button>
 
                                         <div class="btn-group mt-2 mb-2">
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -64,7 +64,7 @@
                                 <div class="row col">
                                     <div class="alert alert-info" role="alert">
                                         Generate DSRT untuk membuat list daftar DSRT kosongan(NU RT 1-10), sedangkan IMPORT
-                                        DSRT akan sesuai NU_RT yg sesuai dengan aplikasi pemutakhiran<br>
+                                        DSRT membuar DSRT sesuai NU_RT yg sesuai dengan aplikasi pemutakhiran<br>
                                         <strong>Apabila dilakukan keduanya</strong> maka akan membuat dsrt yang tak ada isi
                                         akibat masih tersisanya hasil generate, apabila ada maka cukup <b> dihapus </b> saja
                                         yang tidak terpakai
@@ -77,77 +77,82 @@
                                     <div class="col-12">
                                         <form action="" id="form_filter">
                                             <fieldset>
-                                                <div class="mb-1 row">
-                                                    {{-- <label for="kab_filter" class="col-sm-2 col-form-label">Kab/Kot</label> --}}
+                                                <div class="mb-2 row">
                                                     <div class="col-sm-2">
-                                                        <select name="kab_filter" id="kab_filter"
-                                                            class="form-control select2-show-search form-select">
-                                                            <option value="">Pilih Kab/Kot</option>
-                                                            <option value=""> [00] PROVINSI SUMSEL</option>
-                                                            @foreach ($kabs as $kab)
-                                                                <option value="{{ $kab->id_kab }}"
-                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
-                                                                    [{{ $kab->id_kab }}]
-                                                                    {{ $kab->alias }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-1">
                                                         <select name="tahun_filter" id="tahun_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih tahun</option>
                                                             <option value="2022"
-                                                                @if ($request->tahun_filter == '2022') selected @endif>2022
+                                                                @if ($tahun == '2022') selected @endif>2022
                                                             </option>
                                                             <option value="2023"
-                                                                @if ($request->tahun_filter == '2023') selected @endif>2023
+                                                                @if ($tahun == '2023') selected @endif>2023
                                                             </option>
-
+                                                            <option value="2024"
+                                                                @if ($tahun == '2024') selected @endif>2024
+                                                            </option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-1">
+                                                    <div class="col-sm-3">
                                                         <select name="semester_filter" id="semester_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih Semester</option>
                                                             <option value="1"
-                                                                @if ($request->semester_filter == '1') selected @endif>1</option>
+                                                                @if ($semester == '1') selected @endif>1</option>
                                                             <option value="2"
-                                                                @if ($request->semester_filter == '2') selected @endif>2</option>
+                                                                @if ($semester == '2') selected @endif>2</option>
                                                         </select>
                                                     </div>
-
-                                                    <div class="col-sm-2">
-                                                        <input type="text" name="bs_filter" id="bs_filter"
-                                                            placeholder="cari ID BS" class="form-control"
-                                                            @if ($request->bs_filter) value="{{ $request->bs_filter }}" @endif>
+                                                    <div class="col-sm-3">
+                                                        <select name="flag_active" id="flag_active"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="0"
+                                                                @if ($flag_active == '0') selected @endif>
+                                                                Inaktif/Dummy
+                                                            </option>
+                                                            <option value="1"
+                                                                @if ($flag_active == '1') selected @endif>
+                                                                Aktif/Lapangan
+                                                            </option>
+                                                        </select>
                                                     </div>
-
+                                                    <div class="col-sm-3"></div>
+                                                    {{-- <div class="col-sm-1">
+                                                        <button class="btn btn-success" id="export-btn"
+                                                            style="width: 100%">export</button>
+                                                    </div> --}}
+                                                </div>
+                                                <div class="mb-2 row">
                                                     <div class="col-sm-2">
+                                                        <select name="kab_filter" id="kab_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Semua Kab/Kot</option>
+                                                            @foreach ($kabs as $kab)
+                                                                <option value="{{ $kab->id_kab }}"
+                                                                    @if ($kab->id_kab == $request->kab_filter) selected @endif>
+                                                                    [{{ $kab->id_kab }}] {{ $kab->alias }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="kec_filter" id="kec_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Semua Kecamatan</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <select name="desa_filter" id="desa_filter"
+                                                            class="form-control select2-show-search form-select">
+                                                            <option value="">Semua Desa</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
                                                         <input type="text" name="nks_filter" id="nks_filter"
                                                             placeholder="cari NKS" class="form-control"
                                                             @if ($request->nks_filter) value="{{ $request->nks_filter }}" @endif>
                                                     </div>
 
-                                                    <div class="col-sm-2">
-                                                        <input type="text" name="pcl_filter" id="pcl_filter"
-                                                            placeholder="cari pcl" class="form-control"
-                                                            @if ($request->pcl_filter) value="{{ $request->pcl_filter }}" @endif>
-                                                    </div>
-
-                                                    <div class="col-sm-1">
-                                                        <select name="dummy_filter" id="dummy_filter"
-                                                            class="form-control select2 form-select">
-                                                            <option value="">Semua Sampel</option>
-                                                            <option value="1"
-                                                                @if ($request->dummy_filter == '1') selected @endif>Sample
-                                                                Latihan
-                                                            </option>
-                                                            <option value="0"
-                                                                @if ($request->dummy_filter == '0') selected @endif>Sampel
-                                                                Lapangan
-                                                            </option>
-                                                        </select>
-                                                    </div>
                                                     <div class="col-sm-1">
                                                         <button type="submit" class="btn btn-primary">Cari</button>
                                                     </div>
@@ -156,8 +161,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="row">
-                                </div>
                                 <div class="table-responsive">
                                     <table class="table border table-bordered text-nowrap text-md-nowrap mg-b-0 table-sm">
                                         <thead>
@@ -165,12 +168,10 @@
                                                 <th>No</th>
                                                 <th>ID BS</th>
                                                 <th>NKS</th>
-                                                <th>TAHUN</th>
-                                                <th>SMT</th>
                                                 <th>NU RT</th>
-                                                <th>Nama KRT IMPORT</th>
-                                                <th>Nama KRT Pencacahan</th>
-                                                <th>Jumlah art</th>
+                                                <th>KRT Prelist</th>
+                                                <th>KRT Cacah</th>
+                                                <th>JML Art</th>
                                                 <th>DSART</th>
                                                 <th>Pencacah</th>
                                                 <th>Pengawas</th>
@@ -179,24 +180,22 @@
                                         </thead>
                                         <tbody class="align-middle">
                                             @foreach ($data as $key => $dt)
-                                                <tr class="align-middle">
-                                                    <td class="text-center align-middle">{{ ++$key }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->id_bs }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->nks }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->tahun }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->semester }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->nu_rt }}</td>
-                                                    <td class="align-middle ">{{ $dt->nama_krt }}</td>
-                                                    <td class="align-middle ">{{ $dt->nama_krt2 }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->jml_art2 }}</td>
-                                                    <td class="align-middle text-center">
-
-                                                        @foreach ($dt->art as $art)
-                                                            <ul>
+                                                <tr class="align-middle text-center">
+                                                    <td class="align-middle">{{ ++$key }}</td>
+                                                    <td class="align-middle ">
+                                                        {{ '16' . $dt->kd_kab . $dt->kd_kec . $dt->kd_desa . $dt->kd_bs }}
+                                                    </td>
+                                                    <td class="align-middle ">{{ $dt->nks }}</td>
+                                                    <td class="align-middle ">{{ $dt->nu_rt }}</td>
+                                                    <td class="align-middle text-start">{{ $dt->nama_krt_prelist }}</td>
+                                                    <td class="align-middle text-start">{{ $dt->nama_krt_cacah }}</td>
+                                                    <td class="align-middle ">{{ $dt->jml_art_cacah }}</td>
+                                                    <td class="align-middle">
+                                                        <ul>
+                                                            @foreach ($dt->art as $art)
                                                                 <li> {{ $art->nama_art }}</li>
-
-                                                            </ul>
-                                                        @endforeach
+                                                            @endforeach
+                                                        </ul>
                                                     </td>
                                                     <td class="align-middle text-center"
                                                         style="word-break: break-word; overflow-wrap: break-word;">
@@ -206,7 +205,7 @@
                                                     </td>
                                                     <td class="align-middle text-center">
                                                         @isset($dt->pengawas)
-                                                            {{ $dt->pms->name }}
+                                                            {{ $dt->pml->name }}
                                                         @endisset
                                                     </td>
                                                     <td class="text-center">
@@ -216,7 +215,11 @@
                                                         </a>
                                                         <button class="btn btn-outline-danger btn_hapus"
                                                             data-id="{{ $dt->id }}"
-                                                            data-id_bs="{{ $dt->id_bs }}" data-bs-toggle="modal"
+                                                            data-kd_kab="{{ $dt->kd_kab }}"
+                                                            data-kd_kec="{{ $dt->kd_kec }}"
+                                                            data-kd_desa="{{ $dt->kd_desa }}"
+                                                            data-kd_bs="{{ $dt->kd_bs }}"
+                                                            data-nu_rt="{{ $dt->nu_rt }}" data-bs-toggle="modal"
                                                             data-bs-target="#modal_hapus">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
@@ -235,108 +238,6 @@
         </div>
     </div>
 
-    {{-- <div class="modal fade" id="modal_tambah">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <h6 class="modal-title">Tambah Data</h6>
-                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url('dsbs') }}" method="post" id="form_tambah">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="modal_tambah_kab" class="form-label">Kab</label>
-                                <input type="text" class="form-control" id="modal_tambah_kab" name="kd_kab"
-                                    @hasanyrole('ADMIN KABKOT') value="{{ $auth->kd_wilayah }}" readonly @endrole>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_kec" class="form-label">Kec</label>
-                                <input type="text" class="form-control" id="modal_tambah_kec" name="kd_kec">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_desa" class="form-label">Desa</label>
-                                <input type="text" class="form-control" id="modal_tambah_desa" name="kd_desa">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_nbs" class="form-label">NBS</label>
-                                <input type="text" class="form-control" id="modal_tambah_nbs" name="nbs">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="modal_tambah_nks" class="form-label">NKS</label>
-                                <input type="text" class="form-control" id="modal_tambah_nks" name="nks">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="id_bs" class="form-label">Pencacah</label>
-                                <select name="pencacah" id="modal_tambah_pencacah"
-                                    class="form-control select2-show-search form-select"
-                                    data-placeholder="Pilih Pencacah">
-                                    <option label="Pilih Pencacah"></option>
-                                    @foreach ($data_pencacah as $pcl)
-                                        <option value="{{ $pcl->username }}">{{ $pcl->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="form_tambah">Submit</button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal_edit_pencacah">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Pencacah<span></span></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url('dsbs/pencacah') }}" method="post" id="edit_form_pencacah">
-                        @csrf
-                        <div class="row">
-                            <input type="text" name="id" id="id" hidden>
-                            <div class="mb-3 ">
-                                <label for="id_bs" class="form-label">ID BS</label>
-                                <input type="text" class="form-control" id="id_bs" name="id_bs" readonly>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="id_bs" class="form-label">Pencacah</label>
-                                    <select name="pencacah" id="pencacah"
-                                        class="form-control select2-show-search form-select col-12"
-                                        data-placeholder="Pilih Pencacah" style="width: 100%">
-                                        <option label="Pilih Pencacah"></option>
-                                        @foreach ($data_pencacah as $pcl)
-                                            <option value="{{ $pcl->username }}">{{ $pcl->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="edit_form_pencacah">Submit</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
-
-            </div>
-        </div>
-    </div> --}}
-
     <div class="modal fade" id="modal_generate">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content ">
@@ -349,37 +250,16 @@
                 <div class="modal-body">
                     <form action="{{ url('dsrt_generate') }}" method="post" id="form_generate">
                         @csrf
-                        {{-- <div class="row">
-                            <div class="form-group">
-                                <label for="id_bs" class="form-label"> Piih BS untuk digenrate DSRT</label>
-                                <select name="id_bs[]" id="modal_generate_id_bs" multiple="multiple"
-                                    class="multi-select">
-                                    @foreach ($dsbs as $bs)
-                                        <option value="{{ $bs->id_bs }}">{{ $bs->id_bs }} /
-                                            {{ $bs->nks }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
                         <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label for="modal_generate_kabkot" class="form-label">Pilih Kab/kot</label>
-                                <select name="kab" id="modal_generate_kabkot"
-                                    class="form-control select2 form-select" required>
-                                    <option value="">Pilih Kab/kot</option>
-                                    @foreach ($kabs as $kab)
-                                        <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}] {{ $kab->alias }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <div class="col-md-4">
                                 <label for="modal_generate_tahun" class="form-label">Tahun</label>
                                 <select name="tahun" id="modal_generate_tahun" class="form-control select2 form-select"
                                     required>
                                     <option value="">Pilih tahun</option>
                                     <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
+                                    <option value="2023" @if ($tahun == '2023') selected @endif>2023</option>
+                                    <option value="2024" @if ($tahun == '2024') selected @endif>2024
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -387,8 +267,19 @@
                                 <select name="semester" id="modal_generate_semester"
                                     class="form-control select2 form-select" required>
                                     <option value="">Pilih semester</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="1" @if ($semester == '1') selected @endif>1</option>
+                                    <option value="2" @if ($semester == '2') selected @endif>2</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="modal_generate_kabkot" class="form-label">Pilih Kab/kot</label>
+                                <select name="kab" id="modal_generate_kabkot"
+                                    class="form-control select2-show-search form-select" required>
+                                    <option value="">Pilih Kab/kot</option>
+                                    @foreach ($kabs as $kab)
+                                        <option value="{{ $kab->id_kab }}"> [{{ $kab->id_kab }}] {{ $kab->alias }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -406,18 +297,22 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Hapus DS BS<span></span></h4>
+                    <h4 class="modal-title">Hapus DSRT<span></span></h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('dsrt') }}" method="post" id="form_hapus">
+                    <form method="post" id="form_hapus">
                         @csrf
                         @method('delete')
                         <div class="row ">
-                            <input type="text" name="id" id="modal_hapus_id" hidden>
                             <div class="mb-3 ">
                                 <label for="modal_hapus_id_bs" class="form-label">ID BS</label>
                                 <input type="text" class="form-control" id="modal_hapus_id_bs" name="id_bs"
+                                    readonly>
+                            </div>
+                            <div class="mb-3 ">
+                                <label for="modal_hapus_nu_rt" class="form-label">NURT</label>
+                                <input type="text" class="form-control" id="modal_hapus_nu_rt" name="nu_rt"
                                     readonly>
                             </div>
                         </div>
@@ -450,7 +345,7 @@
                             <div class="mb-3 ">
                                 <div class="form-group">
                                     <label class="form-label mt-0">File Excel (sesuai template)</label>
-                                    <input class="form-control" type="file" name="import_file">
+                                    <input class="form-control" type="file" name="import_file" required>
                                 </div>
                             </div>
                         </div>
@@ -458,17 +353,20 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="modal_generate_tahun">Tahun</label>
-                                    <select name="tahun" id="modal_generate_tahun" class="select2">
+                                    <select name="tahun" id="modal_generate_tahun" class="select2" required>
                                         <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
+                                        <option value="2023" @if ($tahun == '2023') selected @endif>2023
+                                        </option>
+                                        <option value="2024" @if ($tahun == '2024') selected @endif>2024
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <label for="modal_generate_semester">Semester</label>
-                                <select name="semester" id="modal_import_semester" class="select2">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                <select name="semester" id="modal_import_semester" class="select2" required>
+                                    <option value="1" @if ($semester == '1') selected @endif>1</option>
+                                    <option value="2" @if ($semester == '2') selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -621,6 +519,10 @@
             z-index: 9000;
         }
 
+        .select2-container {
+            width: 100%;
+        }
+
         .select2-dropdown {
             z-index: 9001;
         }
@@ -630,25 +532,149 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            const kab_value = {!! json_encode($request->kab_filter) !!}
+            const kec_value = {!! json_encode($request->kec_filter) !!}
+            const desa_value = {!! json_encode($request->desa_filter) !!}
+            if (kab_value) {
+                set_kab(kab_value)
+                    .then(function() {
+                        select_kabs()
+                    }).then(function() {
+                        if (kec_value) {
+                            set_kec(kec_value)
+                        }
+                    }).then(function() {
+                        select_kecs()
+                    }).then(function() {
+                        if (desa_value) {
+                            set_desa(desa_value)
+                        }
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
+            }
+
+            $('#kab_filter').change(function() {
+                select_kabs();
+            })
+            $('#kec_filter').change(function() {
+                select_kecs();
+            })
+
+            $('#export-btn').on('click', function() {
+                var form = $('#form_filter');
+                window.open("{{ url('alokasi_export') }}" + "?" + form.serialize(), "_blank")
+            });
+
             $('#modal_swap_dsrt').find("#modal_swap_idbs").select2({
-                dropdownParent: $("#modal_swap_dsrt")
+                dropdownParent: $("#modal_swap_dsrt"),
+                width: '100%',
             });
             $('#modal_swap_dsart').find("#modal_swap_idbs").select2({
-                dropdownParent: $("#modal_swap_dsart")
+                dropdownParent: $("#modal_swap_dsart"),
+                width: '100%',
+            });
+            $('#modal_generate').find("#modal_generate_kabkot").select2({
+                dropdownParent: $("#modal_generate"),
+                width: '100%',
             });
         });
-        $('.btn_pencacah').click(function() {
-            // console.log($(this).data("id"))
-            $('#modal_edit_pencacah').find('#id').val($(this).data("id"));
-            $('#modal_edit_pencacah').find('#id_bs').val($(this).data("id_bs"));
-            $("#modal_edit_pencacah").find("#pencacah").val($(this).data("pencacah"));
-
-        })
 
         $('.btn_hapus').click(function() {
-            $('#modal_hapus').find('#modal_hapus_id').val($(this).data("id"));
-            $('#modal_hapus').find('#modal_hapus_id_bs').val($(this).data("id_bs"));
             $('#modal_hapus').find('#form_hapus').attr('action', "{{ url('dsrt') }}" + "/" + $(this).data('id'));
+            $('#modal_hapus').find('#modal_hapus_id_bs').val('16' + $(this).data("kd_kab") +
+                $(this).data("kd_kec") + $(this).data("kd_desa") + $(this).data("kd_bs"));
+            $('#modal_hapus').find('#modal_hapus_nu_rt').val($(this).data("nu_rt"));
         })
+
+        function select_kabs() {
+            return new Promise((resolve, reject) => {
+                const kab_filter = document.getElementById('kab_filter').value;
+                var request = new XMLHttpRequest();
+                request.open('GET', "{{ url('list_kec?kab_filter=') }}" +
+                    kab_filter,
+                    false
+                ); // Set argumen ketiga menjadi false untuk menjalankan permintaan secara sinkron
+                request.send();
+                if (request.status === 200) {
+                    var data = JSON.parse(request.responseText);
+                    const kec_select = document.getElementById('kec_filter');
+                    kec_select.innerHTML = "";
+                    var option = document.createElement('option');
+                    option.value = "";
+                    option.textContent = "Semua";
+                    kec_select.appendChild(option);
+                    data.data.forEach(element => {
+                        var option = document.createElement('option');
+                        option.value = element.id_kec;
+                        option.textContent = '[' + element.id_kec + '] ' + element.nama_kec;
+                        kec_select.appendChild(option);
+                    });
+                } else {
+                    console.error('Error:', request.status);
+                }
+                resolve();
+            })
+        }
+
+        function select_kecs() {
+            return new Promise((resolve, reject) => {
+                const kec_filter = document.getElementById('kec_filter').value;
+                const kab_filter = document.getElementById('kab_filter').value;
+                var request = new XMLHttpRequest();
+                request.open('GET', "{{ url('list_desa?kab_filter=') }}" +
+                    kab_filter +
+                    '&kec_filter=' + kec_filter,
+                    false
+                ); // Set argumen ketiga menjadi false untuk menjalankan permintaan secara sinkron
+                request.send();
+                if (request.status === 200) {
+                    var data = JSON.parse(request.responseText);
+                    const desa_select = document.getElementById('desa_filter');
+                    desa_select.innerHTML = "";
+                    var option = document.createElement('option');
+                    option.value = "";
+                    option.textContent = "Semua";
+                    desa_select.appendChild(option);
+                    data.data.forEach(element => {
+                        var option = document.createElement('option');
+                        option.value = element.id_desa;
+                        option.textContent = '[' + element.id_desa + '] ' + element
+                            .nama_desa;
+                        desa_select.appendChild(option);
+                    });
+                } else {
+                    console.error('Error:', request.status);
+                }
+                resolve();
+            })
+        }
+
+        function set_kab(kab_value) {
+            return new Promise((resolve, reject) => {
+                const kab_select = document.getElementById('kab_filter');
+                kab_select.value = kab_value
+                resolve();
+            });
+        }
+
+        function set_kec(kec_value) {
+            return new Promise((resolve, reject) => {
+                const kec_select = document.getElementById('kec_filter');
+                kec_select.value = kec_value
+                // $('#kec_filter').val(kec_value);
+                kec_select.dispatchEvent(new Event('change'));
+                resolve();
+            });
+        }
+
+        function set_desa(desa_value) {
+            return new Promise((resolve, reject) => {
+                const desa_select = document.getElementById('desa_filter');
+                desa_select.value = desa_value
+                desa_select.dispatchEvent(new Event('change'));
+                resolve();
+            });
+        }
     </script>
 @endsection

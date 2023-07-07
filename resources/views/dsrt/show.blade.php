@@ -17,8 +17,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-12">
                         <div class="card ">
-                            {{-- <form action="{{ url('dsrt/' . $id) }}" method="post"> --}}
-                            <form action="#" method="post">
+                            <form method="post">
                                 @csrf
                                 @method('PUT')
                                 @include('dsrt.form')
@@ -32,40 +31,5 @@
 @endsection
 
 @section('script')
-    <script>
-        $(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#id_tujuan').change(function() {
-                get_list_target();
-            });
-            get_list_target();
-            $('#id_target').val(indikator.id_target)
-        })
-
-        function get_list_target() {
-            $('#id_target option').remove()
-            $('#id_target').append("<option value=''>Pilih Target</option>");
-            $.ajax({
-                type: "get",
-                url: "{{ url('get_target') }}",
-                async: false,
-                data: {
-                    id_tujuan: $('#id_tujuan').val()
-                },
-                success: function(res) {
-                    res.data.forEach(element => {
-                        $('#id_target').append("<option value=" + element.id_target + ">[" + element
-                            .id_target + "] " + element.nama_target + "</option>");
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-    </script>
+    <script></script>
 @endsection

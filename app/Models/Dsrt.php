@@ -22,7 +22,7 @@ class Dsrt extends Model
         return $this->belongsTo(User::class, 'pencacah', 'email');
     }
 
-    public function pms()
+    public function pml()
     {
         return $this->belongsTo(User::class, 'pengawas', 'email');
     }
@@ -33,5 +33,11 @@ class Dsrt extends Model
             ->where('nu_rt', $this->nu_rt)
             ->where('tahun', $this->tahun)
             ->where('semester', $this->semester);
+    }
+
+
+    public function kabs()
+    {
+        return $this->belongsTo(Kabs::class, 'kd_kab', 'id_kab');
     }
 }

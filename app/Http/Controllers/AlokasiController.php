@@ -92,7 +92,6 @@ class AlokasiController extends Controller
         }
     }
 
-
     public function export(Request $request)
     {
         $periode = Periode::first();

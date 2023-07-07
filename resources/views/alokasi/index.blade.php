@@ -232,7 +232,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('import_alokasi_dsbs_user') }}" method="post" id="form_import"
+                    <form action="{{ url('alokasi_import') }}" method="post" id="form_import"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row ">
@@ -272,7 +272,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-
             const kab_value = {!! json_encode($request->kab_filter) !!}
             const kec_value = {!! json_encode($request->kec_filter) !!}
             const desa_value = {!! json_encode($request->desa_filter) !!}
@@ -304,7 +303,7 @@
 
             $('#export-btn').on('click', function() {
                 var form = $('#form_filter');
-                window.open("{{ url('export_alokasi_dsbs_user') }}" + "?" + form.serialize(), "_blank")
+                window.open("{{ url('alokasi_export') }}" + "?" + form.serialize(), "_blank")
             });
         });
 

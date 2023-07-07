@@ -14,11 +14,13 @@ class DsartApiController extends Controller
     public function get_dsart_pcl(Request $request)
     {
         $periode = Periode::get()->first();
-        $dsbs = Dsbs::select('id_bs')->where('pencacah', $request->pencacah)
+        $dsbs = Dsbs::select('id')
+            ->where('pencacah', $request->pencacah)
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
-            ->get()->toArray();
-        $dsart = Dsart::wherein('id_bs', $dsbs)->get()->toArray();
+            ->get()
+            ->toArray();
+        $dsart = Dsart::wherein('id', $dsbs)->get()->toArray();
         if (!$dsart) {
             $json = [
                 'message' => 'DSART Belum ada',
@@ -38,11 +40,11 @@ class DsartApiController extends Controller
     public function get_dsart_pml(Request $request)
     {
         $periode = Periode::get()->first();
-        $dsbs = Dsbs::select('id_bs')->where('pengawas', $request->pengawas)
+        $dsbs = Dsbs::select('id')->where('pengawas', $request->pengawas)
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->get()->toArray();
-        $dsart = Dsart::wherein('id_bs', $dsbs)->get()->toArray();
+        $dsart = Dsart::wherein('id', $dsbs)->get()->toArray();
         if (!$dsart) {
             $json = [
                 'message' => 'DSART Belum ada',

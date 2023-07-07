@@ -18,12 +18,13 @@ class DsrtApiController extends Controller
     {
 
         $periode = Periode::get()->first();
-        $dsbs = Dsbs::select('id_bs')->where('pencacah', $request->pencacah)
+        $dsbs = Dsbs::select('id')->where('pencacah', $request->pencacah)
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
-            ->get()->toArray();
+            ->get()
+            ->toArray();
 
-        $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
+        $data_dsrt = Dsrt::wherein('dsrt.id', $dsbs)
             ->join('dsbs', function ($join) {
                 $join->on('dsrt.id_bs', 'dsbs.id_bs');
             })
@@ -38,24 +39,22 @@ class DsrtApiController extends Controller
             })
             ->select(
                 "dsrt.id",
-                "dsrt.kd_kab",
-                "kabs.nama_kab",
-                "kecs.id_kec",
-                "kecs.nama_kec",
-                "desas.id_desa",
-                "desas.nama_desa",
-                "dsrt.id_bs",
-                "dsrt.nks",
                 "dsrt.tahun",
                 "dsrt.semester",
+                "dsrt.kd_kab",
+                "kabs.nama_kab",
+                "dsrt.kd_kec",
+                "kecs.nama_kec",
+                "dsrt.kd_desa",
+                "desas.nama_desa",
+                'dsrt.kd_bs',
                 "dsrt.nu_rt",
-                "dsrt.status_res",
-                "dsrt.alamat",
-                "dsrt.nuc1",
-                "dsrt.nama_krt",
-                "dsrt.jml_art",
-                "dsrt.nama_krt2",
-                "dsrt.jml_art2",
+                "dsrt.nks",
+                "dsrt.status_pencacahan",
+                "dsrt.nama_krt_prelist",
+                "dsrt.jml_art_prelist",
+                "dsrt.nama_krt_cacah",
+                "dsrt.jml_art_cacah",
                 "dsrt.status_rumah",
                 "dsrt.jml_komoditas_makanan",
                 "dsrt.jml_komoditas_nonmakanan",
@@ -71,20 +70,18 @@ class DsrtApiController extends Controller
                 "dsrt.kegiatan_seminggu",
                 "dsrt.deskripsi_kegiatan",
                 "dsrt.luas_lantai",
-                "dsrt.status_pencacahan",
                 "dsrt.gsmp",
                 "dsrt.gsmp_desk",
                 "dsrt.foto",
                 "dsrt.latitude",
                 "dsrt.longitude",
-                "dsrt.durasi_pencacahan",
-                "dsrt.pencacah",
-                "dsrt.pengawas",
-                "dsrt.sumber",
                 "dsrt.latitude_selesai",
                 "dsrt.longitude_selesai",
                 "dsrt.jam_mulai",
-                "dsrt.jam_selesai"
+                "dsrt.jam_selesai",
+                "dsrt.durasi_pencacahan",
+                "dsrt.pencacah",
+                "dsrt.pengawas",
             )
             ->get()->toArray();
 
@@ -127,24 +124,22 @@ class DsrtApiController extends Controller
             })
             ->select(
                 "dsrt.id",
-                "dsrt.kd_kab",
-                "kabs.nama_kab",
-                "kecs.id_kec",
-                "kecs.nama_kec",
-                "desas.id_desa",
-                "desas.nama_desa",
-                "dsrt.id_bs",
-                "dsrt.nks",
                 "dsrt.tahun",
                 "dsrt.semester",
+                "dsrt.kd_kab",
+                "kabs.nama_kab",
+                "dsrt.kd_kec",
+                "kecs.nama_kec",
+                "dsrt.kd_desa",
+                "desas.nama_desa",
+                'dsrt.kd_bs',
                 "dsrt.nu_rt",
-                "dsrt.status_res",
-                "dsrt.alamat",
-                "dsrt.nuc1",
-                "dsrt.nama_krt",
-                "dsrt.jml_art",
-                "dsrt.nama_krt2",
-                "dsrt.jml_art2",
+                "dsrt.nks",
+                "dsrt.status_pencacahan",
+                "dsrt.nama_krt_prelist",
+                "dsrt.jml_art_prelist",
+                "dsrt.nama_krt_cacah",
+                "dsrt.jml_art_cacah",
                 "dsrt.status_rumah",
                 "dsrt.jml_komoditas_makanan",
                 "dsrt.jml_komoditas_nonmakanan",
@@ -160,20 +155,18 @@ class DsrtApiController extends Controller
                 "dsrt.kegiatan_seminggu",
                 "dsrt.deskripsi_kegiatan",
                 "dsrt.luas_lantai",
-                "dsrt.status_pencacahan",
                 "dsrt.gsmp",
                 "dsrt.gsmp_desk",
                 "dsrt.foto",
                 "dsrt.latitude",
                 "dsrt.longitude",
-                "dsrt.durasi_pencacahan",
-                "dsrt.pencacah",
-                "dsrt.pengawas",
-                "dsrt.sumber",
                 "dsrt.latitude_selesai",
                 "dsrt.longitude_selesai",
                 "dsrt.jam_mulai",
-                "dsrt.jam_selesai"
+                "dsrt.jam_selesai",
+                "dsrt.durasi_pencacahan",
+                "dsrt.pencacah",
+                "dsrt.pengawas",
             )
             ->get()->toArray();
 
