@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\DsbsImport;
 use App\Models\Dsbs;
+use App\Models\Dsrt;
 use App\Models\Kabs;
 use App\Models\Periode;
 use App\Models\User;
@@ -72,8 +73,8 @@ class DsbsController extends Controller
     {
         $auth = Auth::user();
         $periode = Periode::first();
-        $pcl = '';
-        $pml = '';
+        $pcl = null;
+        $pml = null;
 
         $pencacah = User::where('email', $request->pencacah)->first();
         if ($pencacah) {
@@ -91,6 +92,7 @@ class DsbsController extends Controller
                 'kd_kec' => $request->kd_kec,
                 'kd_desa' => $request->kd_desa,
                 'kd_bs' => $request->kd_bs,
+                'id_bs' => '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs,
                 'nks' => $request->nks,
                 'sls' => $request->sls,
                 'jml_rt' => 1,
@@ -98,6 +100,11 @@ class DsbsController extends Controller
                 'pengawas' => $pml,
                 'created_by' => $auth->id,
             ]);
+            Dsrt::where('id_bs', '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs)
+                ->update([
+                    'pencacah' => $pcl,
+                    'pengawas' => $pml,
+                ]);
             return redirect('dsbs')->with('success', 'Berhasil Disimpan');
         } catch (QueryException $ex) {
             return redirect()->back()->withInput()->with('error', $ex->getMessage());
@@ -126,8 +133,8 @@ class DsbsController extends Controller
         $auth = Auth::user();
         try {
             $real_id = Crypt::decryptString($id);
-            $pcl = '';
-            $pml = '';
+            $pcl = null;
+            $pml = null;
             $pencacah = User::where('email', $request->pencacah)->first();
             if ($pencacah) {
                 $pcl = $pencacah->email;
@@ -142,6 +149,7 @@ class DsbsController extends Controller
                     'kd_kec' => $request->kd_kec,
                     'kd_desa' => $request->kd_desa,
                     'kd_bs' => $request->kd_bs,
+                    'id_bs' => '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs,
                     'nks' => $request->nks,
                     'sls' => $request->sls,
                     'jml_rt' => 1,
@@ -149,6 +157,14 @@ class DsbsController extends Controller
                     'pengawas' => $pml,
                     'updated_by' => $auth->id,
                 ]);
+
+            Dsrt::where('id_bs', '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs)
+                ->update([
+                    'pencacah' => $pcl,
+                    'pengawas' => $pml,
+                ]);
+
+
             return redirect('dsbs')->with('success', 'Berhasil Disimpan');
         } catch (QueryException $ex) {
             return redirect()->back()->withInput()->with('error', $ex->getMessage());

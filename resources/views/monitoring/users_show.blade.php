@@ -95,7 +95,7 @@
                                             @foreach ($data as $key => $dt)
                                                 <tr class="align-middle">
                                                     <td class="text-center align-middle">{{ ++$key }}</td>
-                                                    <td class="align-middle text-center">{{ $dt->id_bs }}</td>
+                                                    <td class="align-middle text-center">{{ '16' . $dt->id_bs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nks }} </td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }} </td>
                                                     <td class="align-middle ">{{ $dt->nama_krt }} </td>

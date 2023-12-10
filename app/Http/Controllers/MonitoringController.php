@@ -31,13 +31,13 @@ class MonitoringController extends Controller
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('kd_kab', "LIKE", "%" . $kab . "%")
-            ->where('dummy', 0)->groupby('pencacah')
+            ->where('flag_active', 1)->groupby('pencacah')
             ->get()->toArray();
 
         $data = User::wherein('email', $dsbs)
-            ->where('dummy_user', 0)
+            ->where('flag_active', 1)
             ->where('name', "LIKE", "%" . $request->nama_filter . "%")
-            ->orderby('kd_wilayah')
+            ->orderby('kd_kab')
             ->orderby('name')
             ->paginate(10);
         $data->appends($request->all());
@@ -50,11 +50,15 @@ class MonitoringController extends Controller
         $auth = Auth::user();
         $user = user::find($id);
         $data = Dsrt::where('pencacah', $user->email)
-            ->where('id_bs', 'LIKE', '%' . $request->bs_filter . '%')
+            ->where('kd_kab', "LIKE", "%" . $request->kab . "%")
+            ->where('kd_kec', "LIKE", "%" . $request->kec_filter . "%")
+            ->where('kd_desa', "LIKE", "%" . $request->desa_filter . "%")
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('status_pencacahan', 'LIKE', '%' . $request->status_filter . '%')
-            ->orderby('id_bs')
+            ->orderby('kd_kab',)
+            ->orderby('kd_kec')
+            ->orderby('kd_desa')
             ->orderby('nu_rt')
             ->get();
         return view('monitoring.users_show', compact('auth', 'request', 'data', 'periode'));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\AlokasiDsbsExport;
 use App\Imports\AlokasiDsbsImport;
 use App\Models\Dsbs;
+use App\Models\Dsrt;
 use App\Models\Kabs;
 use App\Models\Periode;
 use App\Models\User;
@@ -70,8 +71,8 @@ class AlokasiController extends Controller
         $auth = Auth::user();
         try {
             $real_id = Crypt::decryptString($id);
-            $pcl = '';
-            $pml = '';
+            $pcl = null;
+            $pml = null;
             $pencacah = User::where('email', $request->pencacah)->first();
             if ($pencacah) {
                 $pcl = $pencacah->email;
@@ -85,6 +86,12 @@ class AlokasiController extends Controller
                     'pencacah' => $pcl,
                     'pengawas' => $pml,
                     'updated_by' => $auth->id,
+                ]);
+
+            Dsrt::where('id_bs', '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs)
+                ->update([
+                    'pencacah' => $pcl,
+                    'pengawas' => $pml,
                 ]);
             return redirect('alokasi')->with('success', 'Berhasil Disimpan');
         } catch (QueryException $ex) {

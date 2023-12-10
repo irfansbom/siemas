@@ -18,13 +18,13 @@ class DsrtApiController extends Controller
     {
 
         $periode = Periode::get()->first();
-        $dsbs = Dsbs::select('id')->where('pencacah', $request->pencacah)
+        $dsbs = Dsbs::select('id_bs')->where('pencacah', $request->pencacah)
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->get()
             ->toArray();
 
-        $data_dsrt = Dsrt::wherein('dsrt.id', $dsbs)
+        $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
             ->join('dsbs', function ($join) {
                 $join->on('dsrt.id_bs', 'dsbs.id_bs');
             })
@@ -236,8 +236,8 @@ class DsrtApiController extends Controller
                 'id' => $data_dsrt->id
             ],
             [
-                'nama_krt2' => $data_dsrt->nama_krt2,
-                'jml_art2' => $data_dsrt->jml_art2,
+                'nama_krt_cacah' => $data_dsrt->nama_krt_cacah,
+                'jml_art_cacah' => $data_dsrt->jml_art_cacah,
                 'status_rumah' => $data_dsrt->status_rumah,
                 'jml_komoditas_makanan' => $data_dsrt->jml_komoditas_makanan,
                 'jml_komoditas_nonmakanan' => $data_dsrt->jml_komoditas_nonmakanan,

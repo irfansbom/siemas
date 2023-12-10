@@ -82,7 +82,7 @@
                                                 @foreach ($data as $key => $dt)
                                                     <tr class="align-middle">
                                                         <td class="text-center align-middle">{{ ++$key }}</td>
-                                                        <td class="align-middle text-center">{{ $dt->kd_wilayah }}</td>
+                                                        <td class="align-middle text-center">{{ $dt->kd_kab }}</td>
                                                         <td class="align-middle "><a
                                                                 href="{{ url('mon_users/') . '/' . $dt->id }}">{{ $dt->name }}</a>
                                                         </td>

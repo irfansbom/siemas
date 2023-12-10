@@ -124,6 +124,7 @@ class DsrtController extends Controller
                             'kd_kec' => $bss->kd_kec,
                             'kd_desa' => $bss->kd_desa,
                             'kd_bs' => $bss->kd_bs,
+                            'id_bs' => '16', $bss->kd_kab . $bss->kd_kec . $bss->kd_desa . $bss->kd_bs,
                             'nu_rt' => $i,
                         ],
                         [

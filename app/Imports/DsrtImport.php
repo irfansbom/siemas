@@ -77,6 +77,7 @@ class DsrtImport implements
                 'kd_kec' => $row[4],
                 'kd_desa' => $row[5],
                 'kd_bs' => $row[6],
+                'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[6],
                 'nks' => $row[13],
                 'nu_rt' => $row[54], //kolom nus_ssn
                 'nama_krt_prelist' => $nama_krt,
@@ -94,6 +95,7 @@ class DsrtImport implements
                 'kd_kec' => $row[4],
                 'kd_desa' => $row[5],
                 'kd_bs' => $row[6],
+                'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[6],
                 'nks' => $row[13],
                 'nu_rt' => $row[54], //kolom nus_ssn
                 'nama_krt_prelist' => $nama_krt,

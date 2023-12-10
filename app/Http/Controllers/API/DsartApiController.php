@@ -63,20 +63,22 @@ class DsartApiController extends Controller
 
     public function upload_dsart(Request $request)
     {
+
         $dsart = json_decode($request->dsart);
-
-
 
         $affectedDsrt = Dsart::updateOrCreate(
             [
-                'id_bs' => $dsart->id_bs,
                 'tahun' => $dsart->tahun,
                 'semester' => $dsart->semester,
+                'kd_kab' => $dsart->kd_kab,
+                'kd_kec' => $dsart->kd_kec,
+                'kd_desa' => $dsart->kd_desa,
+                'kd_bs' => $dsart->kd_bs,
                 'nu_rt' => $dsart->nu_rt,
                 'nu_art' => $dsart->nu_art
             ],
             [
-                'kd_kab' => $dsart->kd_kab,
+                'id_bs' => '16' . $dsart->kd_kab . $dsart->kd_kec . $dsart->kd_desa . $dsart->kd_bs,
                 'nks' => $dsart->nks,
                 'nama_art' => $dsart->nama_art,
                 'pendidikan' => $dsart->pendidikan,
