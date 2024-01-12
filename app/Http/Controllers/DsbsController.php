@@ -100,11 +100,13 @@ class DsbsController extends Controller
                 'pengawas' => $pml,
                 'created_by' => $auth->id,
             ]);
-            Dsrt::where('id_bs', '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs)
-                ->update([
+            $dsrt = Dsrt::where('id_bs', '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs);
+            if ($dsrt) {
+                $dsrt->update([
                     'pencacah' => $pcl,
                     'pengawas' => $pml,
                 ]);
+            }
             return redirect('dsbs')->with('success', 'Berhasil Disimpan');
         } catch (QueryException $ex) {
             return redirect()->back()->withInput()->with('error', $ex->getMessage());

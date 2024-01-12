@@ -98,9 +98,9 @@
                                                     <td class="align-middle text-center">{{ '16' . $dt->id_bs }}</td>
                                                     <td class="align-middle text-center">{{ $dt->nks }} </td>
                                                     <td class="align-middle text-center">{{ $dt->nu_rt }} </td>
-                                                    <td class="align-middle ">{{ $dt->nama_krt }} </td>
+                                                    <td class="align-middle ">{{ $dt->nama_krt_prelist }} </td>
                                                     <td class="align-middle "><a
-                                                            href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt2 }}
+                                                            href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt_cacah }}
                                                         </a>
                                                     </td>
                                                     <td class="align-middle ">

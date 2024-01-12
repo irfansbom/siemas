@@ -344,8 +344,8 @@ class DsrtApiController extends Controller
                 'id' => $data_dsrt->id
             ],
             [
-                'nama_krt2' => $data_dsrt->nama_krt2,
-                'jml_art2' => $data_dsrt->jml_art2,
+                'nama_krt_cacah' => $data_dsrt->nama_krt_cacah,
+                'jml_art_cacah' => $data_dsrt->jml_art_cacah,
                 'status_rumah' => $data_dsrt->status_rumah,
                 'jml_komoditas_makanan' => $data_dsrt->jml_komoditas_makanan,
                 'jml_komoditas_nonmakanan' => $data_dsrt->jml_komoditas_nonmakanan,
@@ -430,8 +430,8 @@ class DsrtApiController extends Controller
                 'nu_rt' => $data_dsrt->nu_rt
             ],
             [
-                'nama_krt2' => $data_dsrt->nama_krt2,
-                'jml_art2' => $data_dsrt->jml_art2,
+                'nama_krt_cacah' => $data_dsrt->nama_krt_cacah,
+                'jml_art_cacah' => $data_dsrt->jml_art_cacah,
                 'status_rumah' => $data_dsrt->status_rumah,
                 'makanan_sebulan' => $data_dsrt->makanan_sebulan,
                 'nonmakanan_sebulan' => $data_dsrt->nonmakanan_sebulan,
@@ -525,7 +525,10 @@ class DsrtApiController extends Controller
         // }
         $affectedRow = Laporan212::updateOrCreate(
             [
-                'id_bs' => $data_laporan->id_bs,
+                'kd_kab' => $data_laporan->kd_kab,
+                'kd_kec' => $data_laporan->kd_kec,
+                'kd_desa' => $data_laporan->kd_desa,
+                'kd_bs' => $data_laporan->kd_bs,
                 'tahun' => $data_laporan->tahun,
                 'semester' => $data_laporan->semester,
                 'nu_rt' => $data_laporan->nu_rt

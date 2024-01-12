@@ -124,7 +124,7 @@ class DsrtController extends Controller
                             'kd_kec' => $bss->kd_kec,
                             'kd_desa' => $bss->kd_desa,
                             'kd_bs' => $bss->kd_bs,
-                            'id_bs' => '16', $bss->kd_kab . $bss->kd_kec . $bss->kd_desa . $bss->kd_bs,
+                            'id_bs' => '16' . $bss->kd_kab . $bss->kd_kec . $bss->kd_desa . $bss->kd_bs,
                             'nu_rt' => $i,
                         ],
                         [
@@ -178,7 +178,7 @@ class DsrtController extends Controller
             ->where('kd_bs', $kd_bs)
             ->where('nu_rt', $no_1)
             ->first();
-        $nama_krt_prelist1 = $dsrt_1->nama_krt;
+        $nama_krt_prelist1 = $dsrt_1->nama_krt_prelist;
         $dsart_1 = Dsart::where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('kd_kab', $kd_kab)
@@ -196,7 +196,7 @@ class DsrtController extends Controller
             ->where('kd_bs', $kd_bs)
             ->where('nu_rt', $no_2)
             ->first();
-        $nama_krt_prelist2 = $dsrt_2->nama_krt;
+        $nama_krt_prelist2 = $dsrt_2->nama_krt_prelist;
 
         $dsart_2 =  Dsart::where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)

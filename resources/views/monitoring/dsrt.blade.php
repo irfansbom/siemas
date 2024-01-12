@@ -207,9 +207,9 @@
                                                             {{ $dt->nks }}
                                                         </td>
                                                         <td class="text-center">{{ $dt->nu_rt }}</td>
-                                                        <td class="">{{ $dt->nama_krt }}</td>
+                                                        <td class="">{{ $dt->nama_krt_prelist }}</td>
                                                         <td class=""><a
-                                                                href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt2 }}</a>
+                                                                href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt_cacah }}</a>
                                                         </td>
                                                         <td class="align-middle ">
                                                             @switch($dt->status_pencacahan)
@@ -234,7 +234,7 @@
                                                                 @break
                                                             @endswitch
                                                         </td>
-                                                        <td class="text-center">{{ $dt->jml_art2 }}</td>
+                                                        <td class="text-center">{{ $dt->jml_art_cacah }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
                                                         <td class="text-center">

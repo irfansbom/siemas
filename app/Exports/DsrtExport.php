@@ -36,7 +36,7 @@ class DsrtExport implements
         //
         $periode = Periode::first();
         return Dsrt::where('kd_kab', "LIKE", "%" . $this->kab . "%")
-            ->where('dummy_dsrt', '0')
+            // ->where('dummy_dsrt', '0')
             ->where('tahun', $this->request->tahun_filter)
             ->where('semester', $this->request->semester_filter)
             ->where('id_bs', "LIKE", "%" . $this->request->bs_filter . "%")
@@ -111,8 +111,8 @@ class DsrtExport implements
         }
 
         $pengeluaran_perkapita = 0;
-        if ($data->jml_art2 != 0) {
-            $pengeluaran_perkapita = round(((int) str_replace($format_rp, "", $data->makanan_sebulan) + (int) str_replace($format_rp, "", $data->nonmakanan_sebulan)) / $data->jml_art2, 2);
+        if ($data->jml_art_cacah != 0) {
+            $pengeluaran_perkapita = round(((int) str_replace($format_rp, "", $data->makanan_sebulan) + (int) str_replace($format_rp, "", $data->nonmakanan_sebulan)) / $data->jml_art_cacah, 2);
         }
 
         $dms = $this->decimalToDMS(abs($data->latitude), abs($data->longitude));
@@ -125,8 +125,8 @@ class DsrtExport implements
             $data->nks,
             $data->nu_rt,
             $data->alamat,
-            $data->nama_krt2,
-            $data->jml_art2,
+            $data->nama_krt_cacah,
+            $data->jml_art_cacah,
             $status_pencchan,
             str_replace($format_rp, "", $data->makanan_sebulan),
             str_replace($format_rp, "", $data->nonmakanan_sebulan),

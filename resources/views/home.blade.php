@@ -67,7 +67,7 @@
                                                                 {{ $tab1->kabs ? $tab1->kabs['alias'] : '' }}
                                                             </td>
                                                             <td class="text-center">{{ $tab1->jml_dsrt }}</td>
-                                                            <td class="text-center">{{ $tab1->jml_art2 }}</td>
+                                                            <td class="text-center">{{ $tab1->jml_art_cacah }}</td>
                                                             <td class="text-center">{{ $tab1->selesai_cacah }}</td>
                                                             <td class="text-center">
                                                                 @if ($tab1->jml_dsrt != 0)

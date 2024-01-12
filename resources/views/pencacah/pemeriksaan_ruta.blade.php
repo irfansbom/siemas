@@ -106,8 +106,8 @@
                                         <label for="" class="label mb-0">Nama KRT</label>
                                     </div>
                                     <div class="col-7 col-md-9">
-                                        <input type="text" class="form-control" placeholder="nama_krt2" name="nama_krt2"
-                                            id="nama_krt2" value="{{ old('nama_krt2', $dsrt->nama_krt2) }}" disabled>
+                                        <input type="text" class="form-control" placeholder="nama_krt_cacah" name="nama_krt_cacah"
+                                            id="nama_krt_cacah" value="{{ old('nama_krt_cacah', $dsrt->nama_krt_cacah) }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -117,8 +117,8 @@
                                         <label for="" class="label mb-0">Jumlah ART</label>
                                     </div>
                                     <div class="col-7 col-md-9">
-                                        <input type="text" class="form-control" placeholder="jml_art2" name="jml_art2"
-                                            id="jml_art2" value="{{ old('jml_art2', $dsrt->jml_art2) }}" disabled>
+                                        <input type="text" class="form-control" placeholder="jml_art_cacah" name="jml_art_cacah"
+                                            id="jml_art_cacah" value="{{ old('jml_art_cacah', $dsrt->jml_art_cacah) }}" disabled>
                                     </div>
                                 </div>
                             </div>

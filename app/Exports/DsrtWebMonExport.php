@@ -32,7 +32,7 @@ class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyl
     {
         //
         return Dsrt::query()->where('kd_kab', "LIKE", "%" . $this->kab . "%")
-            ->where('dummy_dsrt', '0')
+            // ->where('dummy_dsrt', '0')
             ->where('tahun', $this->request->tahun_filter)
             ->where('semester', $this->request->semester_filter)
             ->where('id_bs', "LIKE", "%" . $this->request->bs_filter . "%");

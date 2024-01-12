@@ -70,7 +70,7 @@
                                                         <tr>
                                                             <td>Nama KRT </td>
                                                             <td>:</td>
-                                                            <td>{{ $rt->nama_krt2 }}</td>
+                                                            <td>{{ $rt->nama_krt_cacah }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Status Pencacahan </td>

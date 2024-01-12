@@ -21,6 +21,7 @@ class CreateDsbsTable extends Migration
             $table->string('kd_kec', 3);
             $table->string('kd_desa', 3);
             $table->string('kd_bs', 4);
+            $table->string('id_bs', 14);
             $table->string('nks', 6);
             $table->string('sls')->nullable();
             $table->integer('jml_rt')->nullable();
@@ -42,6 +43,7 @@ class CreateDsbsTable extends Migration
             $table->string('kd_kec', 3);
             $table->string('kd_desa', 3);
             $table->string('kd_bs', 4);
+            $table->string('id_bs', 14);
             $table->integer('nu_rt');
             $table->string('nks', 6);
             $table->string('status_pencacahan')->default(0);

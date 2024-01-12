@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDsArtTable extends Migration
+class CreateLaporan212Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDsArtTable extends Migration
      */
     public function up()
     {
-        Schema::create('dsart', function (Blueprint $table) {
+        Schema::create('laporan_212', function (Blueprint $table) {
             $table->id();
             $table->string('tahun', 4);
             $table->integer('semester');
@@ -21,18 +21,13 @@ class CreateDsArtTable extends Migration
             $table->string('kd_kec', 3);
             $table->string('kd_desa', 3);
             $table->string('kd_bs', 4);
-            $table->string('id_bs', 14);
-            $table->string('nks', 6);
             $table->integer('nu_rt');
-            $table->integer('nu_art');
-            $table->string('nama_art', 255);
-            $table->string('pekerjaan', 255);
-            $table->string('pendapatan', 20);
-            $table->string('pendidikan', 255);
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->string('nks', 6);
+            $table->string('nama_krt', 255);
+            $table->string('pengawas', 255);
+            $table->date('tanggal');
+            $table->integer('status');
             $table->timestamps();
-            $table->unique(['tahun', 'semester', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', "nu_rt", "nu_art"], 'dsart');
         });
     }
 
@@ -43,6 +38,6 @@ class CreateDsArtTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dsart');
+        Schema::dropIfExists('laporan_212');
     }
 }

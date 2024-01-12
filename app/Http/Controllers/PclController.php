@@ -50,8 +50,8 @@ class PclController extends Controller
         $auth = Auth::user();
         $periode = Periode::first();
         $dsrt = Dsrt::find($id);
-        $dsrt->nama_krt2 = $request->nama_krt2;
-        $dsrt->jml_art2 = $request->jml_art2;
+        $dsrt->nama_krt_cacah = $request->nama_krt_cacah;
+        $dsrt->jml_art_cacah = $request->jml_art_cacah;
         $dsrt->status_rumah = $request->status_rumah;
         $dsrt->makanan_sebulan = $request->makanan_sebulan;
         $dsrt->nonmakanan_sebulan = $request->nonmakanan_sebulan;
@@ -75,7 +75,7 @@ class PclController extends Controller
             ->where('nu_rt', $dsrt->nu_rt)
             ->count('*');
         // dd($art);
-        if ($dsrt->jml_art2 < $art) {
+        if ($dsrt->jml_art_cacah < $art) {
             Dsart::where('id_bs', $dsrt->id_bs)
                 ->where('tahun', $dsrt->tahun)
                 ->where('semester', $dsrt->semester)
@@ -83,7 +83,7 @@ class PclController extends Controller
                 ->delete();
         }
 
-        for ($i = 1; $i <= $request->jml_art2; $i++) {
+        for ($i = 1; $i <= $request->jml_art_cacah; $i++) {
             Dsart::updateOrCreate(
                 [
                     'kd_kab' => substr($dsrt->id_bs, 2, 2),

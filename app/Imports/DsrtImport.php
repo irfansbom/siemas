@@ -64,9 +64,9 @@ class DsrtImport implements
             ->get()
             ->first();
 
-        $nama_krt = $row[30]; //kolom r503
+        $nama_krt_prelist = $row[30]; //kolom r503
         if ($row[38]) {
-            $nama_krt = $row[38];
+            $nama_krt_prelist = $row[38];
         }
         if ($dsrt) {
             // jika sudah ada di dsbs
@@ -80,7 +80,7 @@ class DsrtImport implements
                 'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[6],
                 'nks' => $row[13],
                 'nu_rt' => $row[54], //kolom nus_ssn
-                'nama_krt_prelist' => $nama_krt,
+                'nama_krt_prelist' => $nama_krt_prelist,
                 'jml_art_prelist' => '1',
                 'pencacah' => $dsbs->pencacah,
                 'pengawas' => $dsbs->pengawas,
@@ -98,7 +98,7 @@ class DsrtImport implements
                 'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[6],
                 'nks' => $row[13],
                 'nu_rt' => $row[54], //kolom nus_ssn
-                'nama_krt_prelist' => $nama_krt,
+                'nama_krt_prelist' => $nama_krt_prelist,
                 'jml_art_prelist' => '1',
                 'pencacah' => $dsbs->pencacah,
                 'pengawas' => $dsbs->pengawas,

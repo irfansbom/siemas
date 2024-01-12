@@ -87,8 +87,8 @@ class MonitoringController extends Controller
         }
         $n = Dsrt::whereNotNull('makanan_sebulan')
             ->whereNotNull('nonmakanan_sebulan')
-            ->whereNotNull('jml_art2')
-            ->where('dummy_dsrt', '0')
+            ->whereNotNull('jml_art_cacah')
+            // ->where('dummy_dsrt', '0')
             ->where('tahun', $tahun)
             ->where('semester', $semester)
             ->where('dsrt.kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
@@ -99,27 +99,27 @@ class MonitoringController extends Controller
             $x = 3 / 10 * $n;
             $d3 = Dsrt::whereNotNull('makanan_sebulan')
                 ->whereNotNull('nonmakanan_sebulan')
-                ->whereNotNull('jml_art2')
-                ->where('dummy_dsrt', '0')
+                ->whereNotNull('jml_art_cacah')
+                // ->where('dummy_dsrt', '0')
                 ->where('tahun', $tahun)
                 ->where('semester', $semester)
                 ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-                ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt', 'nama_krt2', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art2', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art2 AS avg_perkapita")])
+                ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_cacah AS avg_perkapita")])
                 ->orderBy('avg_perkapita')->get()[$x];
             if ($d3->avg_perkapita == null) {
                 $d3->avg_perkapita = 0;
             }
         }
         $data = DB::table('dsrt')
-            ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt', 'nama_krt2', 'status_pencacahan', 'jml_art2', 'status_rumah', 'foto', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art2 ,0) AS avg_perkapita ")])
+            ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'jml_art_cacah', 'status_rumah', 'foto', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art_cacah ,0) AS avg_perkapita ")])
             ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
             ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
             ->where('nks', "LIKE", "%" . $request->nks_filter . "%")
             ->where('status_pencacahan', "LIKE", $request->status_filter)
-            ->where('dummy_dsrt', '0')
+            // ->where('dummy_dsrt', '0')
             ->where('tahun', $tahun)
             ->where('semester', $semester)
-            ->whereBetween(DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) /jml_art2,2)"), [$minimum, $maksimum])
+            ->whereBetween(DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) /jml_art_cacah,2)"), [$minimum, $maksimum])
             ->paginate(20);
         $data->appends($request->all());
         return view('monitoring.dsrt', compact('auth', 'data', 'kabs', 'request', 'd3', 'periode'));
@@ -193,7 +193,8 @@ class MonitoringController extends Controller
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('kd_kab', "LIKE", "%" . $kab . "%")
-            ->where('dummy', 0)->groupby('pengawas')
+            // ->where('dummy', 0)
+            ->groupby('pengawas')
             ->get()->toArray();
         $data = User::wherein('email', $dsbs)
             ->where('name', "LIKE", "%" . $request->nama_filter . "%")

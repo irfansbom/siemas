@@ -35,7 +35,7 @@
                                                 <div class="form-group">
                                                     <label for="" class="form-label">Nama KRT</label>
                                                     <input type="text" class="form-control"
-                                                        value="{{ $data->nama_krt }}">
+                                                        value="{{ $data->nama_krt_prelist }}">
                                                 </div>
                                             </div>
                                         </div>

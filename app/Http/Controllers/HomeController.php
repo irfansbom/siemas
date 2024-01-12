@@ -106,7 +106,7 @@ class HomeController extends Controller
                 ->where('tahun', $periode->tahun)
                 ->where('semester', $periode->semester)
                 ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'jml_art_prelist', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_prelist AS avg_perkapita")])
-                ->where(DB::raw("FLOOR((REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ))/jml_art2)"), '<=', $d3->avg_perkapita)
+                ->where(DB::raw("FLOOR((REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ))/jml_art_cacah)"), '<=', $d3->avg_perkapita)
                 ->orderBy('avg_perkapita')
                 ->paginate(20);
 

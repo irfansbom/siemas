@@ -102,8 +102,8 @@
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
                                         <label for="" class="label">Nama KRT</label>
-                                        <input type="text" class="form-control bg-transparent" placeholder="nama_krt2"
-                                            name="nama_krt2" id="nama_krt2" value="{{ old('nama_krt2', $dsrt->nama_krt2) }}"
+                                        <input type="text" class="form-control bg-transparent" placeholder="nama_krt_cacah"
+                                            name="nama_krt_cacah" id="nama_krt_cacah" value="{{ old('nama_krt_cacah', $dsrt->nama_krt_cacah) }}"
                                             required>
                                     </div>
                                 </div>
@@ -115,8 +115,8 @@
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
                                         <label for="" class="label">Jumlah Art (R.301)</label>
-                                        <input type="number" class="form-control bg-transparent" placeholder="jml_art2"
-                                            name="jml_art2" id="jml_art2" value="{{ old('jml_art2', $dsrt->jml_art2) }}"
+                                        <input type="number" class="form-control bg-transparent" placeholder="jml_art_cacah"
+                                            name="jml_art_cacah" id="jml_art_cacah" value="{{ old('jml_art_cacah', $dsrt->jml_art_cacah) }}"
                                             required>
                                     </div>
                                 </div>
