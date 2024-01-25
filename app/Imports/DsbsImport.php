@@ -30,7 +30,7 @@ class DsbsImport implements
 
     public function startRow(): int
     {
-        return 10;
+        return 11;
     }
     public function uniqueBy()
     {
@@ -39,21 +39,21 @@ class DsbsImport implements
     public function model(array $row)
     {
         $auth = Auth::user();
-        if (strlen($row[1]) != 3) {
+        if (strlen($row[5]) != 3) {
             return null;
         }
-        if (strlen($row[3]) != 3) {
+        if (strlen($row[7]) != 3) {
             return null;
         }
-        if (strlen($row[6]) != 4) {
+        if (strlen($row[10]) != 4) {
             return null;
         }
         $bs = Dsbs::where('tahun', $this->tahun)
             ->where('semester', $this->semester)
             ->where('kd_kab', $this->kab)
-            ->where('kd_kec',  $row[1])
-            ->where('kd_desa', $row[3])
-            ->where('kd_bs', $row[6])
+            ->where('kd_kec',  $row[5])
+            ->where('kd_desa', $row[7])
+            ->where('kd_bs', $row[10])
             ->first();
 
         if ($bs) {
@@ -61,13 +61,13 @@ class DsbsImport implements
                 'tahun' => $this->tahun,
                 'semester' => $this->semester,
                 'kd_kab' => $this->kab,
-                'kd_kec' => $row[1],
-                'kd_desa' => $row[3],
-                'kd_bs' => $row[6],
-                'id_bs' => '16' . $this->kab . $row[1] . $row[3] . $row[6],
-                'nks' => $row[7],
-                'sls' => trim($row[9], '  '),
-                'jml_rt' => $row[8],
+                'kd_kec' => $row[5],
+                'kd_desa' => $row[7],
+                'kd_bs' => $row[10],
+                'id_bs' => '16' . $this->kab . $row[5] . $row[7] . $row[10],
+                'nks' => $row[11],
+                'sls' => trim($row[14], '  '),
+                'jml_rt' => $row[12],
                 'updated_by' => $auth->id,
             ]);
         } else {
@@ -75,13 +75,13 @@ class DsbsImport implements
                 'tahun' => $this->tahun,
                 'semester' => $this->semester,
                 'kd_kab' => $this->kab,
-                'kd_kec' => $row[1],
-                'kd_desa' => $row[3],
-                'kd_bs' => $row[6],
-                'id_bs' => '16' . $this->kab . $row[1] . $row[3] . $row[6],
-                'nks' => $row[7],
-                'sls' => trim($row[9], '  '),
-                'jml_rt' => $row[8],
+                'kd_kec' => $row[5],
+                'kd_desa' => $row[7],
+                'kd_bs' => $row[10],
+                'id_bs' => '16' . $this->kab . $row[5] . $row[7] . $row[10],
+                'nks' => $row[11],
+                'sls' => trim($row[14], '  '),
+                'jml_rt' => $row[12],
                 'created_by' => $auth->id,
             ]);
         }
