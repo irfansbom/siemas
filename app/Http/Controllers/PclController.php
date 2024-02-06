@@ -57,6 +57,8 @@ class PclController extends Controller
         $dsrt->nonmakanan_sebulan = $request->nonmakanan_sebulan;
         $dsrt->gsmp = $request->gsmp;
         $dsrt->gsmp_desk = $request->gsmp_desk;
+        $dsrt->bantuan = $request->bantuan;
+        $dsrt->bantuan_desk = $request->bantuan_desk;
         $file = $request->file('foto');
 
         if ($request->hasFile('foto')) {

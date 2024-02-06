@@ -72,6 +72,8 @@ class CreateDsbsTable extends Migration
 
             $table->integer('gsmp')->nullable();
             $table->text('gsmp_desk')->nullable();
+            $table->integer('bantuan')->nullable();
+            $table->text('bantuan_desk')->nullable();
             $table->text('foto')->nullable();
 
             $table->string('latitude', 20)->nullable();

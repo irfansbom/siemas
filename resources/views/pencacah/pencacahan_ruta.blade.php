@@ -218,6 +218,39 @@
                         <div class="card bg-wheat my-2">
                             <div class="row">
                                 <div class="col">
+                                    <div class="form-group mb-0 px-2 pt-2">
+                                        <label for="" class="label">Apakah Menerima Program Bantuan Sosial</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="bantuan" id="bantuan1"
+                                                required value="0" @if ($dsrt->bantuan == 0) checked @endif>
+                                            <label class="form-check-label" for="bantuan1">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="bantuan" id="bantuan2"
+                                                value="1" @if ($dsrt->bantuan == 1) checked @endif>
+                                            <label class="form-check-label" for="bantuan2">
+                                                Ya
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group  mb-0 px-3 pb-2">
+                                        <div class="row p-2 d-flex align-items-center">
+                                            <label for="" class="label col-4">Yang diterima</label>
+                                            <input type="text" class="form-control bg-transparent col-8"
+                                                placeholder="misal:BPNT,PIP,PKH,BLT"
+                                                name="bantuan_desk" id="bantuan_desk"
+                                                value="{{ old('bantuan_desk', $dsrt->bantuan_desk) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
                                     <div class="form-group mb-0 p-2">
                                         <label for="" class="label">Lokasi</label>
                                         <input type="text" class="form-control bg-transparent mb-2"

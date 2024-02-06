@@ -169,6 +169,20 @@
                          name="gsmp_desk">
                  </div>
              </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Keikutsertaan Bantuan Sosial</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('bantuan', $data->bantuan) }}"
+                         name="bantuan">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Yang Diterima dari Bantuan Sosial</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('bantuan_desk', $data->bantuan_desk) }}"
+                         name="bantuan_desk">
+                 </div>
+             </div>
          </div>
 
          <div class="col-6">
