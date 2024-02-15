@@ -26,11 +26,12 @@ class MonUsersExport implements FromCollection, WithMapping, WithHeadings
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('kd_kab', "LIKE", "%" . $kab . "%")
-            ->where('dummy', 0)->groupby('pencacah')
+            // ->where('dummy', 0)
+            ->groupby('pencacah')
             ->get()->toArray();
 
         return  User::wherein('email', $dsbs)
-            ->where('dummy_user', 0)
+            // ->where('dummy_user', 0)
             // ->where('name', "LIKE", "%" . $request->nama_filter . "%")
             ->get();
     }
