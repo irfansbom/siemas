@@ -37,7 +37,7 @@ class DsrtImport implements
     public function model(array $row)
     {
         $auth = Auth::user();
-        if ($row['53'] == 1) {
+        if ($row[54] != 1) {
             return null;
         }
 
@@ -60,7 +60,7 @@ class DsrtImport implements
             ->where('kd_kec', $row[4])
             ->where('kd_desa', $row[5])
             ->where('kd_bs', $row[6])
-            ->where('nu_rt', $row[54])
+            ->where('nu_rt', $row[55])
             ->get()
             ->first();
 
@@ -79,7 +79,7 @@ class DsrtImport implements
                 'kd_bs' => $row[6],
                 'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[6],
                 'nks' => $row[13],
-                'nu_rt' => $row[54], //kolom nus_ssn
+                'nu_rt' => $row[55], //kolom nus_ssn
                 'nama_krt_prelist' => $nama_krt_prelist,
                 'jml_art_prelist' => '1',
                 'pencacah' => $dsbs->pencacah,
@@ -97,7 +97,7 @@ class DsrtImport implements
                 'kd_bs' => $row[6],
                 'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[6],
                 'nks' => $row[13],
-                'nu_rt' => $row[54], //kolom nus_ssn
+                'nu_rt' => $row[55], //kolom nus_ssn
                 'nama_krt_prelist' => $nama_krt_prelist,
                 'jml_art_prelist' => '1',
                 'pencacah' => $dsbs->pencacah,
