@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Dsbs;
 use App\Models\Dsrt;
+use App\Models\Desas;
 use App\Models\Jadwal212;
 use App\Models\Laporan212;
 use App\Models\Periode;
@@ -24,6 +25,12 @@ class DsrtApiController extends Controller
             ->get()
             ->toArray();
 
+        $kd_kab = Dsbs::select('kd_kab')->where('pencacah', $request->pencacah)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->get()->first();
+        $desas_in_kab = Desas::select()->where('id_kab', $kd_kab->kd_kab);
+
         $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
             ->join('dsbs', function ($join) {
                 $join->on('dsrt.id_bs', 'dsbs.id_bs');
@@ -34,7 +41,7 @@ class DsrtApiController extends Controller
             ->join('kecs', function ($join) {
                 $join->on('dsbs.kd_kab', 'kecs.id_kab')->on('dsbs.kd_kec', 'kecs.id_kec');
             })
-            ->join('desas', function ($join) {
+            ->joinSub($desas_in_kab, 'desas', function ($join) {
                 $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
             })
             ->select(
@@ -111,6 +118,12 @@ class DsrtApiController extends Controller
             ->where('semester', $periode->semester)
             ->get()->toArray();
 
+        $kd_kab = Dsbs::select('kd_kab')->where('pengawas', $request->pengawas)
+            ->where('tahun', $periode->tahun)
+            ->where('semester', $periode->semester)
+            ->get()->first();
+        $desas_in_kab = Desas::select()->where('id_kab', $kd_kab->kd_kab);
+
         $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
             ->join('dsbs', function ($join) {
                 $join->on('dsrt.id_bs', 'dsbs.id_bs');
@@ -121,7 +134,7 @@ class DsrtApiController extends Controller
             ->join('kecs', function ($join) {
                 $join->on('dsbs.kd_kab', 'kecs.id_kab')->on('dsbs.kd_kec', 'kecs.id_kec');
             })
-            ->join('desas', function ($join) {
+            ->joinSub($desas_in_kab, 'desas', function ($join) {
                 $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
             })
             ->select(

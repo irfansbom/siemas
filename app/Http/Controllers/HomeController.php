@@ -81,37 +81,37 @@ class HomeController extends Controller
         $d3 = new Dsrt();
         $d3->avg_perkapita = 0;
         $dsrt = [];
-        if ($n >= 10) {
-            $x = 3 / 10 * $n;
-            $x = (int)$x;
-            $d3 = Dsrt::where('tahun', $periode->tahun)
-                ->where('semester', $periode->semester)
-                ->where('flag_active', '1')
-                ->whereNotNull('makanan_sebulan')
-                ->whereNotNull('nonmakanan_sebulan')
-                ->whereNotNull('jml_art_prelist')
-                ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-                ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_prelist', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_prelist AS avg_perkapita")])
-                ->orderBy('avg_perkapita')
-                ->get()[$x];
-            if ($d3->avg_perkapita == null) {
-                $d3->avg_perkapita = 0;
-            }
-            $dsrt = DB::table('dsrt')
-                ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-                ->whereNotNull('makanan_sebulan')
-                ->whereNotNull('nonmakanan_sebulan')
-                ->whereNotNull('jml_art_prelist')
-                ->where('flag_active', '0')
-                ->where('tahun', $periode->tahun)
-                ->where('semester', $periode->semester)
-                ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'jml_art_prelist', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_prelist AS avg_perkapita")])
-                ->where(DB::raw("FLOOR((REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ))/jml_art_cacah)"), '<=', $d3->avg_perkapita)
-                ->orderBy('avg_perkapita')
-                ->paginate(20);
+        // if ($n >= 10) {
+        //     $x = 3 / 10 * $n;
+        //     $x = (int)$x;
+        //     $d3 = Dsrt::where('tahun', $periode->tahun)
+        //         ->where('semester', $periode->semester)
+        //         ->where('flag_active', '1')
+        //         ->whereNotNull('makanan_sebulan')
+        //         ->whereNotNull('nonmakanan_sebulan')
+        //         ->whereNotNull('jml_art_prelist')
+        //         ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+        //         ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_prelist', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_prelist AS avg_perkapita")])
+        //         ->orderBy('avg_perkapita')
+        //         ->get()[$x];
+        //     if ($d3->avg_perkapita == null) {
+        //         $d3->avg_perkapita = 0;
+        //     }
+        //     $dsrt = DB::table('dsrt')
+        //         ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+        //         ->whereNotNull('makanan_sebulan')
+        //         ->whereNotNull('nonmakanan_sebulan')
+        //         ->whereNotNull('jml_art_prelist')
+        //         ->where('flag_active', '0')
+        //         ->where('tahun', $periode->tahun)
+        //         ->where('semester', $periode->semester)
+        //         ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'jml_art_prelist', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_prelist AS avg_perkapita")])
+        //         ->where(DB::raw("FLOOR((REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ))/jml_art_cacah)"), '<=', $d3->avg_perkapita)
+        //         ->orderBy('avg_perkapita')
+        //         ->paginate(20);
 
-            $dsrt->appends($request->all());
-        }
+        //     $dsrt->appends($request->all());
+        // }
         return view('home', compact('request', 'auth', 'kabs', 'request', 'tab_tab1', 'data_chart_foto', 'data_chart_selesai', 'label_tab1', 'dsrt', 'd3', 'periode'));
     }
 }

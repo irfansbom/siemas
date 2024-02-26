@@ -104,14 +104,14 @@ class MonitoringController extends Controller
                 ->where('tahun', $tahun)
                 ->where('semester', $semester)
                 ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-                ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_cacah AS avg_perkapita")])
+                ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_cacah AS avg_perkapita")])
                 ->orderBy('avg_perkapita')->get()[$x];
             if ($d3->avg_perkapita == null) {
                 $d3->avg_perkapita = 0;
             }
         }
         $data = DB::table('dsrt')
-            ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'jml_art_cacah', 'status_rumah', 'foto', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art_cacah ,0) AS avg_perkapita ")])
+            ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art_cacah ,0) AS avg_perkapita ")])
             ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
             ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
             ->where('nks', "LIKE", "%" . $request->nks_filter . "%")
@@ -137,13 +137,13 @@ class MonitoringController extends Controller
     public function dsrt_export(Request $request)
     {
         $auth = Auth::user();
-        if ($auth->kd_wilayah == '00') {
+        if ($auth->kd_kab == '00') {
             $kab = "";
             if ($request->kab_filter) {
                 $kab = $request->kab_filter;
             }
         } else {
-            $kab = $auth->kd_wilayah;
+            $kab = $auth->kd_kab;
         }
         $data = new DsrtExport($request, $kab);
         return Excel::download($data, 'dsrt.xlsx');
@@ -152,13 +152,13 @@ class MonitoringController extends Controller
     public function dsart_export(Request $request)
     {
         $auth = Auth::user();
-        if ($auth->kd_wilayah == '00') {
+        if ($auth->kd_kab == '00') {
             $kab = "";
             if ($request->kab_filter) {
                 $kab = $request->kab_filter;
             }
         } else {
-            $kab = $auth->kd_wilayah;
+            $kab = $auth->kd_kab;
         }
         $data = new DsartExport($request, $kab);
         return Excel::download($data, 'dsart.xlsx');
@@ -168,13 +168,13 @@ class MonitoringController extends Controller
     {
         // dd($request->semester);
         $auth = Auth::user();
-        if ($auth->kd_wilayah == '00') {
+        if ($auth->kd_kab == '00') {
             $kab = "";
             if ($request->kab_filter) {
                 $kab = $request->kab_filter;
             }
         } else {
-            $kab = $auth->kd_wilayah;
+            $kab = $auth->kd_kab;
         }
         $data = new DsrtWebMonExport($request, $kab);
         return Excel::download($data, 'dsrt_webmon.xlsx');

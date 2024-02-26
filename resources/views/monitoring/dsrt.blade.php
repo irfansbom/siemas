@@ -87,6 +87,10 @@
                                                                         @if ($request->tahun_filter == '2023') selected @endif>
                                                                         2023
                                                                     </option>
+                                                                    <option value="2024"
+                                                                        @if ($request->tahun_filter == '2024') selected @endif>
+                                                                        2024
+                                                                    </option>
 
                                                                 </select>
                                                             </div>
@@ -121,21 +125,21 @@
                                                                         Belum
                                                                         Cacah
                                                                     </option>
-                                                                    <option value="1"
+                                                                    <!-- <option value="1"
                                                                         @if ($request->status_filter == '1') selected @endif>
                                                                         Sudah
                                                                         Cacah
-                                                                    </option>
+                                                                    </option> -->
                                                                     <option value="4"
                                                                         @if ($request->status_filter == '4') selected @endif>
                                                                         Sudah
-                                                                        Upload Pemeriksaan Pencacah
+                                                                        Upload
                                                                     </option>
-                                                                    <option value="5"
+                                                                    <!-- <option value="5"
                                                                         @if ($request->status_filter == '5') selected @endif>
                                                                         Sudah
                                                                         Pemeriksaan Pengawas
-                                                                    </option>
+                                                                    </option> -->
                                                                     <option value="6"
                                                                         @if ($request->status_filter == '6') selected @endif>
                                                                         Sudah
@@ -190,6 +194,9 @@
                                                     <th class="text-center align-middle">Jumlah <br> ART</th>
                                                     <th class="text-center align-middle">Status <br> Rumah</th>
                                                     <th class="text-center align-middle">Rata2 <br>Perkapita</th>
+                                                    <th class="text-center align-middle">GSMP</th>
+                                                    <th class="text-center align-middle">Bantuan</th>
+                                                    <th class="text-center align-middle">Durasi Pencacahan</th>
                                                     <th class="text-center align-middle">FOTO</th>
                                                     <th class="text-center align-middle">Desil</th>
                                                 </tr>
@@ -208,9 +215,10 @@
                                                         </td>
                                                         <td class="text-center">{{ $dt->nu_rt }}</td>
                                                         <td class="">{{ $dt->nama_krt_prelist }}</td>
-                                                        <td class=""><a
+                                                        <!-- <td class=""><a
                                                                 href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt_cacah }}</a>
-                                                        </td>
+                                                        </td> -->
+                                                        <td class="">{{ $dt->nama_krt_cacah }}</td>
                                                         <td class="align-middle ">
                                                             @switch($dt->status_pencacahan)
                                                                 @case(0)
@@ -237,6 +245,9 @@
                                                         <td class="text-center">{{ $dt->jml_art_cacah }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
+                                                        <td class="text-center">{{ $dt->gsmp_desk }}</td>
+                                                        <td class="text-center">{{ $dt->bantuan_desk }}</td>
+                                                        <td class="text-center">{{ $dt->durasi_pencacahan }}</td>
                                                         <td class="text-center">
                                                             <a href="javascript:void(0);">
                                                                 <img class="br-5 img_btn" data-foto="{{ $dt->foto }}"
