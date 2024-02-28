@@ -20,7 +20,8 @@ class PclController extends Controller
     {
         $auth = Auth::user();
         $periode = Periode::first();
-        $dsbs = Dsbs::where('pencacah', $auth->email)->where('tahun', $periode->tahun)->where('semester', $periode->semester)->get();
+        $dsbs = Dsbs::where('kd_kab', $auth->kd_kab)->where('tahun', $periode->tahun)->where('semester', $periode->semester)->get();
+        // $dsbs = Dsbs::where('pencacah', $auth->email)->where('tahun', $periode->tahun)->where('semester', $periode->semester)->get();
         return view("pencacah.pencacahan_dsbs", compact('auth', 'dsbs'));
     }
     public function pcl_pencacahan_dsrt($id)
@@ -54,7 +55,7 @@ class PclController extends Controller
         $dsrt->jml_art_cacah = $request->jml_art_cacah;
         $dsrt->status_rumah = $request->status_rumah;
         $dsrt->makanan_sebulan = $request->makanan_sebulan;
-        $dsrt->nonmakanan_sebulan = $request->nonmakanan_sebulan;
+        // $dsrt->nonmakanan_sebulan = $request->nonmakanan_sebulan;
         $dsrt->gsmp = $request->gsmp;
         $dsrt->gsmp_desk = $request->gsmp_desk;
         $dsrt->bantuan = $request->bantuan;
@@ -67,42 +68,43 @@ class PclController extends Controller
             $dsrt->foto = $nama_foto;
         }
 
-        $dsrt->status_pencacahan = 1;
+        // $dsrt->status_pencacahan = 1;
+        $dsrt->status_pencacahan = 4;
         $dsrt->save();
 
         // dd($dsrt->id_bs);
-        $art = Dsart::where('id_bs', $dsrt->id_bs)
-            ->where('tahun', $dsrt->tahun)
-            ->where('semester', $dsrt->semester)
-            ->where('nu_rt', $dsrt->nu_rt)
-            ->count('*');
+        // $art = Dsart::where('id_bs', $dsrt->id_bs)
+        //     ->where('tahun', $dsrt->tahun)
+        //     ->where('semester', $dsrt->semester)
+        //     ->where('nu_rt', $dsrt->nu_rt)
+        //     ->count('*');
         // dd($art);
-        if ($dsrt->jml_art_cacah < $art) {
-            Dsart::where('id_bs', $dsrt->id_bs)
-                ->where('tahun', $dsrt->tahun)
-                ->where('semester', $dsrt->semester)
-                ->where('nu_rt', $dsrt->nu_rt)
-                ->delete();
-        }
+        // if ($dsrt->jml_art_cacah < $art) {
+        //     Dsart::where('id_bs', $dsrt->id_bs)
+        //         ->where('tahun', $dsrt->tahun)
+        //         ->where('semester', $dsrt->semester)
+        //         ->where('nu_rt', $dsrt->nu_rt)
+        //         ->delete();
+        // }
 
-        for ($i = 1; $i <= $request->jml_art_cacah; $i++) {
-            Dsart::updateOrCreate(
-                [
-                    'kd_kab' => substr($dsrt->id_bs, 2, 2),
-                    'id_bs' => $dsrt->id_bs,
-                    'tahun' => $dsrt->tahun,
-                    'semester' => $dsrt->semester,
-                    'nu_rt' => $dsrt->nu_rt,
-                    'nu_art' => $i,
-                ],
-                [
-                    'nama_art' => $request->nama_art,
-                    'pendidikan' => $request->pendidikan,
-                    'pekerjaan' => $request->pekerjaan,
-                    'pendapatan' => $request->pendapatan,
-                ]
-            );
-        }
+        // for ($i = 1; $i <= $request->jml_art_cacah; $i++) {
+        //     Dsart::updateOrCreate(
+        //         [
+        //             'kd_kab' => substr($dsrt->id_bs, 2, 2),
+        //             'id_bs' => $dsrt->id_bs,
+        //             'tahun' => $dsrt->tahun,
+        //             'semester' => $dsrt->semester,
+        //             'nu_rt' => $dsrt->nu_rt,
+        //             'nu_art' => $i,
+        //         ],
+        //         [
+        //             'nama_art' => $request->nama_art,
+        //             'pendidikan' => $request->pendidikan,
+        //             'pekerjaan' => $request->pekerjaan,
+        //             'pendapatan' => $request->pendapatan,
+        //         ]
+        //     );
+        // }
 
         return redirect('pcl_pencacahan_ruta' . '/' . $id)->with('success', "Berhasil Disimpan");
     }

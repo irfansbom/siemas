@@ -159,7 +159,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
-                                        <label for="" class="label">Rata-rata Pengeluaran Makanan Sebulan</label>
+                                        <label for="" class="label">Perkiraan Rata-rata Pengeluaran Sebulan</label>
                                         <input type="text" class="form-control bg-transparent rupiah"
                                             placeholder="makanan_sebulan" name="makanan_sebulan" id="makanan_sebulan"
                                             value="{{ old('makanan_sebulan', $dsrt->makanan_sebulan) }}" required>
@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card bg-wheat my-2">
+                        <!-- <div class="card bg-wheat my-2">
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
@@ -180,7 +180,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="card bg-wheat my-2">
                             <div class="row">
@@ -248,7 +248,7 @@
                             </div>
                         </div>
 
-                        <div class="card bg-wheat my-2">
+                        <!-- <div class="card bg-wheat my-2">
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
@@ -260,7 +260,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="card bg-wheat my-2">
                             <div class="row">

@@ -85,7 +85,7 @@
                                                                     @break
 
                                                                     @case(4)
-                                                                        <span>Sudah Upload Pemeriksaan Pencacah</span>
+                                                                        <span>Sudah Upload</span>
                                                                     @break
 
                                                                     @case(5)

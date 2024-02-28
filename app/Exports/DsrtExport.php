@@ -100,7 +100,7 @@ class DsrtExport implements
                 break;
 
             case 4:
-                $status_pencchan = "Sudah Upload Pemeriksaan Pencacah";
+                $status_pencchan = "Sudah Upload";
                 break;
 
             case 5:

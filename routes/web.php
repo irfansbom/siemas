@@ -70,20 +70,21 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::group(['middleware' => ['role:SUPER ADMIN|PENCACAH']], function () {
+    // Route::group(['middleware' => ['role:SUPER ADMIN|PENCACAH']], function () {
+    Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {
         Route::get('pcl_dashboard', [PclController::class, 'dashboard']);
         Route::get('pcl_pencacahan_dsbs', [PclController::class, 'pcl_pencacahan_dsbs']);
         Route::get('pcl_pencacahan_dsrt/{id}', [PclController::class, 'pcl_pencacahan_dsrt']);
         Route::get('pcl_pencacahan_ruta/{id}', [PclController::class, 'pcl_pencacahan_ruta']);
         Route::post('pcl_pencacahan_ruta/{id}', [PclController::class, 'pcl_pencacahan_ruta_update']);
 
-        Route::get('pcl_pemeriksaan_dsbs', [PclController::class, 'pcl_pemeriksaan_dsbs']);
-        Route::get('pcl_pemeriksaan_dsrt/{id}', [PclController::class, 'pcl_pemeriksaan_dsrt']);
-        Route::get('pcl_pemeriksaan_ruta/{id}', [PclController::class, 'pcl_pemeriksaan_ruta']);
-        Route::post('pcl_pemeriksaan_ruta/{id}', [PclController::class, 'pcl_pemeriksaan_ruta_update']);
-        Route::post('pcl_pemeriksaan_dsart', [PclController::class, 'pcl_pemeriksaan_dsart_update']);
+        // Route::get('pcl_pemeriksaan_dsbs', [PclController::class, 'pcl_pemeriksaan_dsbs']);
+        // Route::get('pcl_pemeriksaan_dsrt/{id}', [PclController::class, 'pcl_pemeriksaan_dsrt']);
+        // Route::get('pcl_pemeriksaan_ruta/{id}', [PclController::class, 'pcl_pemeriksaan_ruta']);
+        // Route::post('pcl_pemeriksaan_ruta/{id}', [PclController::class, 'pcl_pemeriksaan_ruta_update']);
+        // Route::post('pcl_pemeriksaan_dsart', [PclController::class, 'pcl_pemeriksaan_dsart_update']);
     });
-    Route::group(['middleware' => ['role:SUPER ADMIN|PENGAWAS']], function () {
-        Route::get('pml_dashboard', [PclController::class, 'dashboard']);
-    });
+    // Route::group(['middleware' => ['role:SUPER ADMIN|PENGAWAS']], function () {
+    //     Route::get('pml_dashboard', [PclController::class, 'dashboard']);
+    // });
 });

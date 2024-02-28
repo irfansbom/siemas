@@ -26,10 +26,10 @@
         <div class="side-app">
             <div class="main-container container-fluid" style="min-height: 87vh;">
                 @include('alert')
-                <div class="container" style="margin-top:20%">
+                <div class="container" style="margin-top:5%">
                     <div class="center m-auto text-center">
                         @foreach ($dsbs as $bs)
-                            <div class="row" style="widht:100%">
+                            <div class="row my-1" style="widht:100%">
                                 <div class="col">
                                     <a href="{{ url('pcl_pencacahan_dsrt') . '/' . $bs->id_bs }}"
                                         class="btn btn-info">{{ $bs->id_bs }} / {{ $bs->nks }}</a>

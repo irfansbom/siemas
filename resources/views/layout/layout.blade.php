@@ -287,6 +287,12 @@
                             </li>
                             @hasanyrole('SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT')
                                 <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="{{ url('pcl_dashboard') }}">
+                                        <i class="side-menu__icon fe fe-edit"></i>
+                                        <span class="side-menu__label">Input Pencacahan</span>
+                                    </a>
+                                </li>
+                                <li class="slide">
                                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
                                         <i class="side-menu__icon fe fe-database"></i>
                                         <span class="side-menu__label">Alokasi & DSRT</span><i
