@@ -293,6 +293,12 @@
                                     </a>
                                 </li>
                                 <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="{{ url('rekap_pengolahan_per_kab') }}">
+                                        <i class="side-menu__icon fe fe-file"></i>
+                                        <span class="side-menu__label">Rekap Pengolahan Per Kab</span>
+                                    </a>
+                                </li>
+                                <li class="slide">
                                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
                                         <i class="side-menu__icon fe fe-database"></i>
                                         <span class="side-menu__label">Alokasi & DSRT</span><i

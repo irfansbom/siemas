@@ -57,6 +57,7 @@ class DsrtExport implements
             'Nama KRT',
             'Jumlah ART',
             'Status Pencacahan',
+            'Foto',
             'Makanan Sebulan',
             'Nonmakanan Sebulan',
             'Makanan Sebulan PML',
@@ -89,26 +90,26 @@ class DsrtExport implements
     {
         $format_rp = array("Rp", ".");
 
-        $status_pencchan = "Belum Cacah";
+        $status_pencacahan = "Belum Cacah";
         switch ($data->status_pencacahan) {
             case 0:
-                $status_pencchan = "Belum Cacah";
+                $status_pencacahan = "Belum Cacah";
                 break;
 
             case 1:
-                $status_pencchan = "Sudah Cacah";
+                $status_pencacahan = "Sudah Cacah";
                 break;
 
             case 4:
-                $status_pencchan = "Sudah Upload";
+                $status_pencacahan = "Sudah Upload";
                 break;
 
             case 5:
-                $status_pencchan = "Sudah Pemeriksaan Pengawas";
+                $status_pencacahan = "Sudah Pemeriksaan Pengawas";
                 break;
 
             case 6:
-                $status_pencchan = "Sudah Upload Pemeriksaan Pengawas";
+                $status_pencacahan = "Sudah Upload Pemeriksaan Pengawas";
                 break;
         }
 
@@ -117,7 +118,12 @@ class DsrtExport implements
             $pengeluaran_perkapita = round(((int) str_replace($format_rp, "", $data->makanan_sebulan) + (int) str_replace($format_rp, "", $data->nonmakanan_sebulan)) / $data->jml_art_cacah, 2);
         }
 
-        $dms = $this->decimalToDMS(abs($data->latitude), abs($data->longitude));
+        if (is_numeric($data->latitude) and is_numeric($data->longitude)) {
+            $dms = $this->decimalToDMS(abs($data->latitude), abs($data->longitude));
+        }
+        else {
+            $dms = $this->decimalToDMS(abs(0.0), abs(0.0));
+        }
 
         return [
             $data->kd_kab,
@@ -129,7 +135,8 @@ class DsrtExport implements
             $data->alamat,
             $data->nama_krt_cacah,
             $data->jml_art_cacah,
-            $status_pencchan,
+            $status_pencacahan,
+            $data->foto,
             str_replace($format_rp, "", $data->makanan_sebulan),
             str_replace($format_rp, "", $data->nonmakanan_sebulan),
             str_replace($format_rp, "", $data->makanan_sebulan_bypml),

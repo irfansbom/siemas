@@ -9,6 +9,7 @@ use App\Http\Controllers\MasterWilayahController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\PclController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RekapController;
 use App\Models\Periode;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('mon_users_export', [MonitoringController::class, 'users_export']);
     Route::get('mon_dsrt_export', [MonitoringController::class, 'dsrt_export']);
     Route::get('mon_dsart_export', [MonitoringController::class, 'dsart_export']);
+    Route::get('rekap_pengolahan_per_kab', [RekapController::class, 'index']);
 
     Route::group(['middleware' => ['role:SUPER ADMIN']], function () {
         Route::get('periode', [Periode::class, 'index']);

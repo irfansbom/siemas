@@ -51,9 +51,9 @@
                                                         <th class="text-center align-middle">Jml <br> DSRT</th>
                                                         <th class="text-center align-middle">Jml <br> ART</th>
                                                         <th class="text-center align-middle">Selesai<br>Cacah</th>
+                                                        <th class="text-center align-middle">Persentase<br>Selesai Cacah</th>
                                                         <th class="text-center align-middle">Foto <br> Masuk </th>
-                                                        <th class="text-center align-middle">Persentase <br> Foto Masuk
-                                                        </th>
+                                                        <th class="text-center align-middle">Persentase <br> Foto Masuk</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
