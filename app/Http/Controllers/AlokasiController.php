@@ -112,7 +112,9 @@ class AlokasiController extends Controller
             $kab = $auth->kd_kab;
         }
         $data = new AlokasiDsbsExport($request, $kab);
-        return Excel::download($data, 'alokasi_dsbs.xlsx');
+        $response = Excel::download($data, 'alokasi_dsbs.xlsx');
+        ob_end_clean();
+        return $response;
     }
 
     public function import(Request $request)

@@ -66,7 +66,9 @@ class MonitoringController extends Controller
 
     public function users_export(Request $request)
     {
-        return Excel::download(new MonUsersExport($request), 'Mon_users_' . $request->kab_filter . '.xlsx');
+        $response = Excel::download(new MonUsersExport($request), 'Mon_users_' . $request->kab_filter . '.xlsx');
+        ob_end_clean();
+        return $response;
     }
 
     public function dsrt(Request $request)
@@ -146,7 +148,9 @@ class MonitoringController extends Controller
             $kab = $auth->kd_kab;
         }
         $data = new DsrtExport($request, $kab);
-        return Excel::download($data, 'dsrt.xlsx');
+        $response = Excel::download($data, 'dsrt.xlsx');
+        ob_end_clean();
+        return $response;
     }
 
     public function dsart_export(Request $request)
@@ -161,7 +165,9 @@ class MonitoringController extends Controller
             $kab = $auth->kd_kab;
         }
         $data = new DsartExport($request, $kab);
-        return Excel::download($data, 'dsart.xlsx');
+        $response = Excel::download($data, 'dsart.xlsx');
+        ob_end_clean();
+        return $response;
     }
 
     public function dsrt_export_webmon(Request $request)
@@ -177,7 +183,9 @@ class MonitoringController extends Controller
             $kab = $auth->kd_kab;
         }
         $data = new DsrtWebMonExport($request, $kab);
-        return Excel::download($data, 'dsrt_webmon.xlsx');
+        $response = Excel::download($data, 'dsrt_webmon.xlsx');
+        ob_end_clean();
+        return $response;
     }
 
     public function mon_212(Request $request)
