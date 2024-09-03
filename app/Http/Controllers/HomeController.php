@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\WebmonImport;
 use App\Models\Dsrt;
 use App\Models\Kabs;
 use App\Models\Periode;
+use App\Models\Webmons;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -30,6 +33,7 @@ class HomeController extends Controller
                 DB::raw("COUNT(foto) AS jml_foto"),
             )
             ->groupBy('dsrt.kd_kab')
+            ->join('webmon', \DB::raw('SUBSTRING(dsrt.kd_kab, 1, 2)'), '=', 'webmon.kd_kab')
             ->get();
 
         $label_tab1 = [];
@@ -48,10 +52,10 @@ class HomeController extends Controller
                 ->where('semester', $periode->semester)
                 ->count("*"),
 
-            'jml_art_prelist' => Dsrt::where('flag_active', '1')
+            'jml_art_cacah' => Dsrt::where('flag_active', '1')
                 ->where('tahun', $periode->tahun)
                 ->where('semester', $periode->semester)
-                ->sum('jml_art_prelist'),
+                ->sum('jml_art_cacah'),
 
             'selesai_cacah' => Dsrt::where('flag_active', '1')
                 ->where('tahun', $periode->tahun)
@@ -70,6 +74,19 @@ class HomeController extends Controller
                 ->first()
                 ->jml_foto
         ]));
+        foreach ($tab_tab1 as $i => $tab1) {
+            $webmon = Webmons::where('kd_kab', $tab1->kd_kab)
+                ->select('*')
+                ->get()
+                ->first();
+            if ($webmon) {
+                $tab_tab1[$i]->target_ruta = $webmon->target_ruta;
+                $tab_tab1[$i]->jml_sudah = $webmon->jml_sudah;
+                $tab_tab1[$i]->persen_sudah = $webmon->persen_sudah;
+                $tab_tab1[$i]->jml_belum = $webmon->jml_belum;
+                $tab_tab1[$i]->persen_belum = $webmon->persen_belum;
+            }
+        }
 
         //// table dsrt
         $n = Dsrt::where('tahun', $periode->tahun)
@@ -113,5 +130,15 @@ class HomeController extends Controller
         //     $dsrt->appends($request->all());
         // }
         return view('home', compact('request', 'auth', 'kabs', 'request', 'tab_tab1', 'data_chart_foto', 'data_chart_selesai', 'label_tab1', 'dsrt', 'd3', 'periode'));
+    }
+
+    public function webmon_import(Request $request)
+    {
+        if ($request->file('import_file')) {
+            Excel::import(new WebmonImport($request), request()->file('import_file'));
+            return redirect()->back()->with('success', 'Berhasil Memasukkan data');
+        } else {
+            return redirect()->back()->with('error', 'Kesalahan File');
+        }
     }
 }

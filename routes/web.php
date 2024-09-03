@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('dsbs/import', [DsbsController::class, 'dsbs_import']);
         Route::get('kecamatan', [MasterWilayahController::class, 'kecamatan']);
         Route::get('desa', [MasterWilayahController::class, 'desa']);
+        Route::post('webmon_import', [HomeController::class, 'webmon_import']);
     });
 
     Route::group(['middleware' => ['role:SUPER ADMIN|ADMIN PROVINSI|ADMIN KABKOT']], function () {

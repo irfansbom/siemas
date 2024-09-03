@@ -36,11 +36,28 @@
                                             <i class="fe fe-log-in"></i>
                                         </span> Export
                                     </a> --}}
+                                    @hasanyrole(['SUPER ADMIN|ADMIN PROVINSI'])
+                                        <div class="btn-group mt-2 mb-2">
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#modal_import_webmon">Import WebMon</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle "
+                                                data-bs-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li class="dropdown-plus-title">
+                                                    Import
+                                                    <b class="fa fa-angle-up"></b>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    @endhasanyrole
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-12">
                                         <div class="table-responsive">
                                             <table
                                                 class="table border text-nowrap text-md-nowrap table-bordered mg-b-0 table-sm">
@@ -54,6 +71,11 @@
                                                         <th class="text-center align-middle">Persentase<br>Selesai Cacah</th>
                                                         <th class="text-center align-middle">Foto <br> Masuk </th>
                                                         <th class="text-center align-middle">Persentase <br> Foto Masuk</th>
+                                                        <th class="text-center align-middle">Target <br> Ruta (WebMon)</th>
+                                                        <th class="text-center align-middle">Jumlah Selesai <br> (WebMon)</th>
+                                                        <th class="text-center align-middle">Persentase Selesai <br> (WebMon)</th>
+                                                        <th class="text-center align-middle">Jumlah Belum <br> Selesai (WebMon)</th>
+                                                        <th class="text-center align-middle">Persentase Belum <br> Selesai (WebMon)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -86,13 +108,18 @@
                                                                     0
                                                                 @endif
                                                             </td>
+                                                            <td class="text-center">{{ $tab1->target_ruta }}</td>
+                                                            <td class="text-center">{{ $tab1->jml_sudah }}</td>
+                                                            <td class="text-center">{{ $tab1->persen_sudah }}</td>
+                                                            <td class="text-center">{{ $tab1->jml_belum }}</td>
+                                                            <td class="text-center">{{ $tab1->persen_belum }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-12">
                                         <div class="chart-container">
                                             <canvas id="chart_cacah_foto" class="h-600"></canvas>
                                         </div>
@@ -267,6 +294,38 @@
                 </div>
             </div>
         </div>
+
+    <div class="modal fade" id="modal_import_webmon">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Import Web Monitoring<span></span></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('webmon_import') }}" method="post" id="form_import"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="row ">
+                            <div class="mb-3 ">
+                                <div class="form-group">
+                                    <label class="form-label mt-0">File Excel</label>
+                                    <input class="form-control" type="file" name="import_file" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="form_import">Submit</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     @endsection
 
     @section('script')
