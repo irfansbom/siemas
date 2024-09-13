@@ -55,6 +55,7 @@ class DsrtApiController extends Controller
                 "dsrt.kd_desa",
                 "desas.nama_desa",
                 'dsrt.kd_bs',
+                'dsrt.id_bs',
                 "dsrt.nu_rt",
                 "dsrt.nks",
                 "dsrt.status_pencacahan",
@@ -148,6 +149,7 @@ class DsrtApiController extends Controller
                 "dsrt.kd_desa",
                 "desas.nama_desa",
                 'dsrt.kd_bs',
+                'dsrt.id_bs',
                 "dsrt.nu_rt",
                 "dsrt.nks",
                 "dsrt.status_pencacahan",
@@ -248,6 +250,9 @@ class DsrtApiController extends Controller
         // if ($data_dsrt->jam_selesai) {
         //     $jam_selesai = $data_dsrt->jam_selesai;
         // }
+
+
+
         $affectedDsrt = Dsrt::updateOrCreate(
             [
                 'id' => $data_dsrt->id
@@ -281,9 +286,23 @@ class DsrtApiController extends Controller
                 'jam_mulai' => $jam_mulai,
                 'jam_selesai' => $jam_selesai,
                 'durasi_pencacahan' => $data_dsrt->durasi_pencacahan,
+                // 'foto_base64' => $data_dsrt->foto_base64,
                 'status_pencacahan' => $status_pencacahan,
             ]
         );
+
+        $file = $request->file('file_foto');
+        $id_dsrt = $data_dsrt->id;
+        // $dsrt = Dsrt::find($id_dsrt);
+
+        if ($file) {
+            $nama_foto = "foto_rumah_" . $data_dsrt->id_bs . "_" . $data_dsrt->nu_rt . "_" . $data_dsrt->nama_krt_cacah . ".png";
+            $file->move('foto', $nama_foto);
+            Dsrt::where("id", $id_dsrt)->update(['foto' => $nama_foto]);
+        }
+        // else {
+        //     $nama_foto = $request->foto;
+        // };
 
         if (($affectedDsrt)) {
             $json = [

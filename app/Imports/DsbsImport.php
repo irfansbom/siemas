@@ -50,7 +50,7 @@ class DsbsImport implements
         }
         $bs = Dsbs::where('tahun', $this->tahun)
             ->where('semester', $this->semester)
-            ->where('kd_kab', $this->kab)
+            ->where('kd_kab', $row[3])
             ->where('kd_kec',  $row[5])
             ->where('kd_desa', $row[7])
             ->where('kd_bs', $row[10])
@@ -60,7 +60,7 @@ class DsbsImport implements
             $data =  new Dsbs([
                 'tahun' => $this->tahun,
                 'semester' => $this->semester,
-                'kd_kab' => $this->kab,
+                'kd_kab' => $row[3],
                 'kd_kec' => $row[5],
                 'kd_desa' => $row[7],
                 'kd_bs' => $row[10],
@@ -74,7 +74,7 @@ class DsbsImport implements
             $data = Dsbs::create([
                 'tahun' => $this->tahun,
                 'semester' => $this->semester,
-                'kd_kab' => $this->kab,
+                'kd_kab' => $row[3],
                 'kd_kec' => $row[5],
                 'kd_desa' => $row[7],
                 'kd_bs' => $row[10],
