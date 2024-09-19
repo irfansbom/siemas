@@ -18,6 +18,7 @@ Route::post('authenticate', [LoginController::class, 'authenticate'])->name('aut
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/privacy', [HomeController::class, 'privacy']);
 
 // Route::get('/', function () {
 //     return "Maintenance";

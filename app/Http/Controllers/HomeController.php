@@ -141,4 +141,9 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Kesalahan File');
         }
     }
+
+    public function privacy()
+    {
+        return view('privacy');
+    }
 }

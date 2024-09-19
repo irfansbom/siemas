@@ -29,20 +29,24 @@ class DsrtApiController extends Controller
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->get()->first();
+
         $desas_in_kab = Desas::select()->where('id_kab', $kd_kab->kd_kab);
 
-        $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
-            ->join('dsbs', function ($join) {
-                $join->on('dsrt.id_bs', 'dsbs.id_bs');
+        $data_dsrt = Dsrt::where('dsrt.tahun', $periode->tahun)
+            ->where('dsrt.semester', $periode->semester)
+            ->wherein('dsrt.id_bs', $dsbs)
+            ->leftjoin('dsbs', function ($join) use ($periode) {
+                $join->on('dsrt.id_bs', 'dsbs.id_bs')->where('dsbs.tahun', $periode->tahun)
+                    ->where('dsbs.semester', $periode->semester);
             })
-            ->join('kabs', function ($join) {
-                $join->on('dsbs.kd_kab', 'kabs.id_kab');
+            ->leftjoin('kabs', function ($join) {
+                $join->on('dsrt.kd_kab', 'kabs.id_kab');
             })
-            ->join('kecs', function ($join) {
-                $join->on('dsbs.kd_kab', 'kecs.id_kab')->on('dsbs.kd_kec', 'kecs.id_kec');
+            ->leftjoin('kecs', function ($join) {
+                $join->on('dsrt.kd_kab', 'kecs.id_kab')->on('dsrt.kd_kec', 'kecs.id_kec');
             })
-            ->joinSub($desas_in_kab, 'desas', function ($join) {
-                $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
+            ->leftjoin('desas', function ($join) {
+                $join->on('dsrt.kd_kab', 'desas.id_kab')->on('dsrt.kd_kec', 'desas.id_kec')->on('dsrt.kd_desa', 'desas.id_desa');
             })
             ->select(
                 "dsrt.id",
@@ -90,6 +94,8 @@ class DsrtApiController extends Controller
                 "dsrt.jam_mulai",
                 "dsrt.jam_selesai",
                 "dsrt.durasi_pencacahan",
+                "dsrt.penyerahan_dokumen_pcl",
+                "dsrt.penyerahan_dokumen_pml",
                 "dsrt.pencacah",
                 "dsrt.pengawas",
             )
@@ -184,6 +190,8 @@ class DsrtApiController extends Controller
                 "dsrt.jam_mulai",
                 "dsrt.jam_selesai",
                 "dsrt.durasi_pencacahan",
+                "dsrt.penyerahan_dokumen_pcl",
+                "dsrt.penyerahan_dokumen_pml",
                 "dsrt.pencacah",
                 "dsrt.pengawas",
             )
@@ -234,7 +242,6 @@ class DsrtApiController extends Controller
             //throw $th;
         }
 
-
         // if ($data_dsrt->latitude_selesai) {
         //     $latitude_selesai = $data_dsrt->latitude_selesai;
         // }
@@ -250,7 +257,6 @@ class DsrtApiController extends Controller
         // if ($data_dsrt->jam_selesai) {
         //     $jam_selesai = $data_dsrt->jam_selesai;
         // }
-
 
 
         $affectedDsrt = Dsrt::updateOrCreate(
@@ -288,21 +294,19 @@ class DsrtApiController extends Controller
                 'durasi_pencacahan' => $data_dsrt->durasi_pencacahan,
                 // 'foto_base64' => $data_dsrt->foto_base64,
                 'status_pencacahan' => $status_pencacahan,
+                'penyerahan_dokumen_pcl' => $data_dsrt->penyerahan_dokumen_pcl,
+                'penyerahan_dokumen_pml' => $data_dsrt->penyerahan_dokumen_pml,
             ]
         );
 
         $file = $request->file('file_foto');
         $id_dsrt = $data_dsrt->id;
-        // $dsrt = Dsrt::find($id_dsrt);
 
         if ($file) {
             $nama_foto = "foto_rumah_" . $data_dsrt->id_bs . "_" . $data_dsrt->nu_rt . "_" . $data_dsrt->nama_krt_cacah . ".png";
             $file->move('foto', $nama_foto);
             Dsrt::where("id", $id_dsrt)->update(['foto' => $nama_foto]);
         }
-        // else {
-        //     $nama_foto = $request->foto;
-        // };
 
         if (($affectedDsrt)) {
             $json = [

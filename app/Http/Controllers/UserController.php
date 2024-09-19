@@ -109,8 +109,10 @@ class UserController extends Controller
                     'updated_by' =>  $auth->id,
                 ]);
             $user = User::find($request->real_id);
+            // dd($request->roles);
+
             if (!empty($request->roles)) {
-                $user = User::find($request->real_id);
+                $user = User::find($real_id);
                 $user->syncRoles($request->roles);
             }
             return redirect()->back()->with('success', 'Berhasil Disimpan');
