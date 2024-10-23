@@ -24,7 +24,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -60,6 +61,6 @@ class User extends Authenticatable
     public function mon_212()
     {
         $periode = Periode::first();
-        return $this->hasMany(Laporan212::class, 'pengawas', 'email')->where('tahun', $periode->tahun)->where('semester', $periode->semester);
+        return $this->hasMany(Dsrt::class, 'pengawas', 'email')->where('tahun', $periode->tahun)->where('semester', $periode->semester);
     }
 }

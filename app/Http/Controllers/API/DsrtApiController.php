@@ -131,18 +131,21 @@ class DsrtApiController extends Controller
             ->get()->first();
         $desas_in_kab = Desas::select()->where('id_kab', $kd_kab->kd_kab);
 
-        $data_dsrt = Dsrt::wherein('dsrt.id_bs', $dsbs)
-            ->join('dsbs', function ($join) {
-                $join->on('dsrt.id_bs', 'dsbs.id_bs');
+        $data_dsrt = Dsrt::where('dsrt.tahun', $periode->tahun)
+            ->where('dsrt.semester', $periode->semester)
+            ->wherein('dsrt.id_bs', $dsbs)
+            ->leftjoin('dsbs', function ($join) use ($periode) {
+                $join->on('dsrt.id_bs', 'dsbs.id_bs')->where('dsbs.tahun', $periode->tahun)
+                    ->where('dsbs.semester', $periode->semester);
             })
-            ->join('kabs', function ($join) {
-                $join->on('dsbs.kd_kab', 'kabs.id_kab');
+            ->leftjoin('kabs', function ($join) {
+                $join->on('dsrt.kd_kab', 'kabs.id_kab');
             })
-            ->join('kecs', function ($join) {
-                $join->on('dsbs.kd_kab', 'kecs.id_kab')->on('dsbs.kd_kec', 'kecs.id_kec');
+            ->leftjoin('kecs', function ($join) {
+                $join->on('dsrt.kd_kab', 'kecs.id_kab')->on('dsrt.kd_kec', 'kecs.id_kec');
             })
-            ->joinSub($desas_in_kab, 'desas', function ($join) {
-                $join->on('dsbs.kd_kab', 'desas.id_kab')->on('dsbs.kd_kec', 'desas.id_kec')->on('dsbs.kd_desa', 'desas.id_desa');
+            ->leftjoin('desas', function ($join) {
+                $join->on('dsrt.kd_kab', 'desas.id_kab')->on('dsrt.kd_kec', 'desas.id_kec')->on('dsrt.kd_desa', 'desas.id_desa');
             })
             ->select(
                 "dsrt.id",
@@ -219,7 +222,7 @@ class DsrtApiController extends Controller
 
         $status_pencacahan = $data_dsrt->status_pencacahan;
 
-        if ($status_pencacahan == 4) {
+        if ($status_pencacahan == 2) {
             $status_pencacahan = $status_pencacahan;
         } elseif ($status_pencacahan == 6) {
             $status_pencacahan = $status_pencacahan;

@@ -67,15 +67,20 @@
                                                         <th class="text-center align-middle">KAB</th>
                                                         <th class="text-center align-middle">Jml <br> DSRT</th>
                                                         <th class="text-center align-middle">Jml <br> ART</th>
-                                                        <th class="text-center align-middle">Selesai<br>Cacah</th>
-                                                        <th class="text-center align-middle">Persentase<br>Selesai Cacah</th>
+                                                        <th class="text-center align-middle">Selesai <br> Cacah </th>
+                                                        <th class="text-center align-middle">Persentase<br>Selesai Cacah
+                                                        </th>
                                                         <th class="text-center align-middle">Foto <br> Masuk </th>
                                                         <th class="text-center align-middle">Persentase <br> Foto Masuk</th>
                                                         <th class="text-center align-middle">Target <br> Ruta (WebMon)</th>
-                                                        <th class="text-center align-middle">Jumlah Selesai <br> (WebMon)</th>
-                                                        <th class="text-center align-middle">Persentase Selesai <br> (WebMon)</th>
-                                                        <th class="text-center align-middle">Jumlah Belum <br> Selesai (WebMon)</th>
-                                                        <th class="text-center align-middle">Persentase Belum <br> Selesai (WebMon)</th>
+                                                        <th class="text-center align-middle">Jumlah Selesai <br> (WebMon)
+                                                        </th>
+                                                        <th class="text-center align-middle">Persentase Selesai <br>
+                                                            (WebMon)</th>
+                                                        <th class="text-center align-middle">Jumlah Belum <br> Selesai
+                                                            (WebMon)</th>
+                                                        <th class="text-center align-middle">Persentase Belum <br> Selesai
+                                                            (WebMon)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -148,7 +153,8 @@
                                     <div class="alert alert-info" role="alert">
                                         <ul>
                                             <li>Data berikut merupakan highlight dari 3 desil terbawah dari rata-rata
-                                                perkapita(makanan+nonmakanan/jumlah_art) yang sudah diisi dan upload petugas
+                                                pengeluaran perkapita(pengeluaran/jumlah_art) yang sudah diisi dan upload
+                                                PPL
                                             </li>
                                             <li>
                                                 Desil ke-3 dari data rata-rata perkapita adalah sebesar Rp
@@ -226,15 +232,16 @@
                                             class="table border text-nowrap text-md-nowrap table-bordered mg-b-0 table-sm">
                                             <thead>
                                                 <tr class="text-center align-middle">
-                                                    <th class="text-center align-middle">No</th>
-                                                    <th class="text-center align-middle">ID BS</th>
-                                                    <th class="text-center align-middle">NKS</th>
-                                                    <th class="text-center align-middle">NU RT</th>
-                                                    <th class="text-center align-middle">KRT</th>
-                                                    <th class="text-center align-middle">Jumlah <br> ART</th>
-                                                    <th class="text-center align-middle">Status <br> Rumah</th>
-                                                    <th class="text-center align-middle">Rata2 <br>Perkapita</th>
-                                                    <th class="text-center align-middle">FOTO</th>
+                                                    <th class="align-middle">No</th>
+                                                    <th class="align-middle">ID BS/NKS</th>
+                                                    <th class="align-middle">NURT - KRT</th>
+                                                    {{-- <th class="align-middle">Jumlah <br> ART</th> --}}
+                                                    <th class="align-middle">Status <br> Rumah</th>
+                                                    <th class="align-middle">Pengeluaran</th>
+                                                    <th class="align-middle">Jumlah <br> ART</th>
+                                                    <th class="align-middle">Rata2 <br>Perkapita</th>
+                                                    <th class="align-middle">Rata2 <br>Perkapita By PML</th>
+                                                    <th class="align-middle">FOTO</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -244,20 +251,20 @@
                                                             {{ ++$key }}
                                                         </td>
                                                         <td>
-                                                            {{ '16' . $dt->kd_kab . $kd_kec . $kd_desa . $kd_bs }}
+                                                            {{ '16' . $dt->kd_kab . $dt->kd_kec . $dt->kd_desa . $dt->kd_bs }}
+                                                            / {{ $dt->nks }}
                                                         </td>
-                                                        <td>
-                                                            {{ $dt->nks }}
-                                                        </td>
-                                                        <td>{{ $dt->nu_rt }}</td>
                                                         <td class="text-start">
                                                             <a href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">
-                                                                {{ $dt->nama_krt_cacah }}
+                                                                {{ $dt->nu_rt }} -{{ $dt->nama_krt_cacah }}
                                                             </a>
                                                         </td>
-                                                        <td>{{ $dt->jml_art_cacah }}</td>
+                                                        {{-- <td>{{ $dt->jml_art_cacah }}</td> --}}
                                                         <td>{{ $dt->status_rumah }}</td>
+                                                        <td>{{ $dt->makanan_sebulan }}</td>
+                                                        <td>{{ $dt->jml_art_cacah }}</td>
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
+                                                        <td class="text-end">{{ round($dt->avg_perkapita_bypml) }}</td>
                                                         <td>
                                                             <a href="javascript:void(0);">
                                                                 <img class="br-5 img_btn" data-foto="{{ $dt->foto }}"
@@ -295,37 +302,37 @@
             </div>
         </div>
 
-    <div class="modal fade" id="modal_import_webmon">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Import Web Monitoring<span></span></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url('webmon_import') }}" method="post" id="form_import"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="row ">
-                            <div class="mb-3 ">
-                                <div class="form-group">
-                                    <label class="form-label mt-0">File Excel</label>
-                                    <input class="form-control" type="file" name="import_file" required>
+        <div class="modal fade" id="modal_import_webmon">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Import Web Monitoring<span></span></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url('webmon_import') }}" method="post" id="form_import"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="row ">
+                                <div class="mb-3 ">
+                                    <div class="form-group">
+                                        <label class="form-label mt-0">File Excel</label>
+                                        <input class="form-control" type="file" name="import_file" required>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
 
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="form_import">Submit</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" form="form_import">Submit</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
     @endsection
 
     @section('script')

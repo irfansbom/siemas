@@ -74,11 +74,14 @@ class MonitoringController extends Controller
     public function dsrt(Request $request)
     {
         $periode = Periode::first();
+
         $tahun = $request->tahun_filter;
         $semester = $request->semester_filter;
+
         $auth = Auth::user();
         $kab = $request->kab_filter;
         $kabs = Kabs::all();
+
         $minimum = 0;
         if ($request->minimum_filter) {
             $minimum = $request->minimum_filter;
@@ -87,44 +90,73 @@ class MonitoringController extends Controller
         if ($request->maksimum_filter) {
             $maksimum = $request->maksimum_filter;
         }
-        $n = Dsrt::whereNotNull('makanan_sebulan')
-            ->whereNotNull('nonmakanan_sebulan')
+
+        $data_temp = Dsrt::whereNotNull('makanan_sebulan')
             ->whereNotNull('jml_art_cacah')
-            // ->where('dummy_dsrt', '0')
+            ->where('flag_active', '1')
             ->where('tahun', $tahun)
             ->where('semester', $semester)
-            ->where('dsrt.kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-            ->count('*');
-        $d3 = new Dsrt();
-        $d3->avg_perkapita = 0;
-        if ($n >= 10) {
-            $x = 3 / 10 * $n;
-            $d3 = Dsrt::whereNotNull('makanan_sebulan')
-                ->whereNotNull('nonmakanan_sebulan')
-                ->whereNotNull('jml_art_cacah')
-                // ->where('dummy_dsrt', '0')
-                ->where('tahun', $tahun)
-                ->where('semester', $semester)
-                ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-                ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_cacah AS avg_perkapita")])
-                ->orderBy('avg_perkapita')->get()[$x];
-            if ($d3->avg_perkapita == null) {
-                $d3->avg_perkapita = 0;
-            }
-        }
-        $data = DB::table('dsrt')
-            ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) / jml_art_cacah ,0) AS avg_perkapita ")])
             ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-            ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
-            ->where('nks', "LIKE", "%" . $request->nks_filter . "%")
-            ->where('status_pencacahan', "LIKE", $request->status_filter)
-            // ->where('dummy_dsrt', '0')
+            ->select([
+                '*',
+                DB::raw("CAST(REPLACE(REPLACE(makanan_sebulan, 'Rp.', ''), '.', '') AS SIGNED) / jml_art_cacah AS avg_perkapita")
+            ])
+            ->orderBy(DB::raw("CAST(avg_perkapita AS SIGNED)"), 'asc')
+            ->get();
+
+
+        $total = $data_temp->count();
+        $desil = [];
+
+        for ($i = 1; $i <= 10; $i++) {
+            $index = round(($i * $total) / 10) - 1;
+            $desil[$i] = $data_temp[$index]->avg_perkapita;
+        }
+        // dd($data_temp[1]['avg_perkapita']);
+        $data = Dsrt::where('flag_active', '1')
             ->where('tahun', $tahun)
             ->where('semester', $semester)
-            ->whereBetween(DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) )) /jml_art_cacah,2)"), [$minimum, $maksimum])
+            ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+            ->select(['*', DB::raw("CAST(REPLACE(REPLACE(makanan_sebulan, 'Rp.', ''), '.', '') AS SIGNED) / jml_art_cacah AS avg_perkapita")])
+            ->where('status_pencacahan', 'LIKE', $request->status_filter)
+            ->whereBetween(DB::raw("CAST(REPLACE(REPLACE(makanan_sebulan, 'Rp.', ''), '.', '') AS SIGNED) / jml_art_cacah"), [$minimum, $maksimum])
             ->paginate(20);
         $data->appends($request->all());
-        return view('monitoring.dsrt', compact('auth', 'data', 'kabs', 'request', 'd3', 'periode'));
+
+        // dd($desil);
+        // $d3 = new Dsrt();
+        // $d3->avg_perkapita = 0;
+        // if ($n >= 10) {
+        //     $x = 3 / 10 * $n;
+        //     $d3 = Dsrt::whereNotNull('makanan_sebulan')
+        //         ->whereNotNull('jml_art_cacah')
+        //         ->where('flag_active', '1')
+        //         ->where('tahun', $tahun)
+        //         ->where('semester', $semester)
+        //         ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+        //         ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') ) / jml_art_cacah AS avg_perkapita")])
+        //         ->orderBy('avg_perkapita')->get()[$x];
+        //     if ($d3->avg_perkapita == null) {
+        //         $d3->avg_perkapita = 0;
+        //     }
+        // }
+        // $status_pencacahan = 0;
+        // if (!empty($request->status_filter)) {
+        //     $status_pencacahan = $request->status_filter;
+        // }
+        // $data = DB::table('dsrt')
+        //     ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','')) / jml_art_cacah ,0) AS avg_perkapita ")])
+        //     ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+        //     ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
+        //     ->where('nks', "LIKE", "%" . $request->nks_filter . "%")
+        //     ->where('status_pencacahan', 'LIKE', $request->status_filter)
+        //     ->where('flag_active', '1')
+        //     ->where('tahun', $tahun)
+        //     ->where('semester', $semester)
+        //     ->whereBetween(DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','')) / jml_art_cacah ,0) AS avg_perkapita "), [$minimum, $maksimum])
+        //     ->paginate(20);
+        // $data->appends($request->all());
+        return view('monitoring.dsrt', compact('auth', 'data', 'kabs', 'desil', 'request', 'periode'));
     }
 
     public function dsrt_show(Request $request, $id)
@@ -201,9 +233,10 @@ class MonitoringController extends Controller
             ->where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('kd_kab', "LIKE", "%" . $kab . "%")
-            // ->where('dummy', 0)
+            ->where('flag_active', 1)
             ->groupby('pengawas')
             ->get()->toArray();
+
         $data = User::wherein('email', $dsbs)
             ->where('name', "LIKE", "%" . $request->nama_filter . "%")
             ->paginate(15);

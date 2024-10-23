@@ -29,13 +29,12 @@ class HomeController extends Controller
                 'dsrt.kd_kab',
                 DB::raw('COUNT(id) as jml_dsrt'),
                 DB::raw('SUM(jml_art_cacah) as jml_art_cacah'),
-                DB::raw('SUM(CASE WHEN status_pencacahan >=3 THEN 1 ELSE 0 END) as selesai_cacah'),
+                DB::raw('SUM(CASE WHEN status_pencacahan >=2 THEN 1 ELSE 0 END) as selesai_cacah'),
                 DB::raw("COUNT(foto) AS jml_foto"),
             )
             ->groupBy('dsrt.kd_kab')
-            ->join('webmon', \DB::raw('SUBSTRING(dsrt.kd_kab, 1, 2)'), '=', 'webmon.kd_kab')
+            ->leftjoin('webmon', \DB::raw('SUBSTRING(dsrt.kd_kab, 1, 2)'), '=', 'webmon.kd_kab')
             ->get();
-
         $label_tab1 = [];
         $data_chart_foto = [];
         $data_chart_selesai = [];
@@ -60,7 +59,7 @@ class HomeController extends Controller
             'selesai_cacah' => Dsrt::where('flag_active', '1')
                 ->where('tahun', $periode->tahun)
                 ->where('semester', $periode->semester)
-                ->select(DB::raw("SUM(CASE WHEN status_pencacahan >=3 THEN 1 ELSE 0 END) as selesai_cacah"))
+                ->select(DB::raw("SUM(CASE WHEN status_pencacahan >=2 THEN 1 ELSE 0 END) as selesai_cacah"))
                 ->get()
                 ->first()
                 ->selesai_cacah,
@@ -74,6 +73,7 @@ class HomeController extends Controller
                 ->first()
                 ->jml_foto
         ]));
+
         foreach ($tab_tab1 as $i => $tab1) {
             $webmon = Webmons::where('kd_kab', $tab1->kd_kab)
                 ->select('*')
@@ -88,7 +88,6 @@ class HomeController extends Controller
             }
         }
 
-        //// table dsrt
         $n = Dsrt::where('tahun', $periode->tahun)
             ->where('semester', $periode->semester)
             ->where('flag_active', '1')
@@ -98,37 +97,36 @@ class HomeController extends Controller
         $d3 = new Dsrt();
         $d3->avg_perkapita = 0;
         $dsrt = [];
-        // if ($n >= 10) {
-        //     $x = 3 / 10 * $n;
-        //     $x = (int)$x;
-        //     $d3 = Dsrt::where('tahun', $periode->tahun)
-        //         ->where('semester', $periode->semester)
-        //         ->where('flag_active', '1')
-        //         ->whereNotNull('makanan_sebulan')
-        //         ->whereNotNull('nonmakanan_sebulan')
-        //         ->whereNotNull('jml_art_prelist')
-        //         ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-        //         ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_prelist', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_prelist AS avg_perkapita")])
-        //         ->orderBy('avg_perkapita')
-        //         ->get()[$x];
-        //     if ($d3->avg_perkapita == null) {
-        //         $d3->avg_perkapita = 0;
-        //     }
-        //     $dsrt = DB::table('dsrt')
-        //         ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-        //         ->whereNotNull('makanan_sebulan')
-        //         ->whereNotNull('nonmakanan_sebulan')
-        //         ->whereNotNull('jml_art_prelist')
-        //         ->where('flag_active', '0')
-        //         ->where('tahun', $periode->tahun)
-        //         ->where('semester', $periode->semester)
-        //         ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'jml_art_prelist', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ) ) / jml_art_prelist AS avg_perkapita")])
-        //         ->where(DB::raw("FLOOR((REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan, 'Rp.',''),'.','' ))/jml_art_cacah)"), '<=', $d3->avg_perkapita)
-        //         ->orderBy('avg_perkapita')
-        //         ->paginate(20);
 
-        //     $dsrt->appends($request->all());
-        // }
+        if ($n >= 10) {
+            $x = 3 / 10 * $n;
+            $x = (int)$x;
+            $d3 = Dsrt::where('tahun', $periode->tahun)
+                ->where('semester', $periode->semester)
+                ->where('flag_active', '1')
+                ->whereNotNull('makanan_sebulan')
+                ->whereNotNull('jml_art_cacah')
+                ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+                ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_prelist', 'jml_art_cacah', 'status_rumah', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','')) / jml_art_cacah AS avg_perkapita")])
+                ->orderBy('avg_perkapita')
+                ->get()[$x];
+            if ($d3->avg_perkapita == null) {
+                $d3->avg_perkapita = 0;
+            }
+            $dsrt = DB::table('dsrt')
+                ->where('tahun', $periode->tahun)
+                ->where('semester', $periode->semester)
+                ->where('flag_active', '1')
+                ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
+                ->whereNotNull('makanan_sebulan')
+                ->whereNotNull('jml_art_cacah')
+                ->select(['id', 'kd_kab', 'kd_kec', 'kd_desa', 'kd_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'jml_art_prelist', 'jml_art_cacah', 'status_rumah', 'makanan_sebulan', 'makanan_sebulan_bypml', 'nonmakanan_sebulan_bypml', 'foto', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') ) / jml_art_cacah AS avg_perkapita"), DB::raw("( REPLACE(REPLACE(makanan_sebulan_bypml,'Rp.',''),'.','') + REPLACE(REPLACE(nonmakanan_sebulan_bypml,'Rp.',''),'.','') ) / jml_art_cacah AS avg_perkapita_bypml")])
+                ->where(DB::raw("FLOOR((REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.',''))/jml_art_cacah)"), '<=', $d3->avg_perkapita)
+                ->orderBy('avg_perkapita')
+                ->paginate(20);
+
+            $dsrt->appends($request->all());
+        }
         return view('home', compact('request', 'auth', 'kabs', 'request', 'tab_tab1', 'data_chart_foto', 'data_chart_selesai', 'label_tab1', 'dsrt', 'd3', 'periode'));
     }
 

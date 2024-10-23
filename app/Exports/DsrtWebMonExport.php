@@ -43,12 +43,20 @@ class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyl
         return [
             ["Data Progress Pencacahan Susenas"],
             [
-                'kode prop', 'kode kab',  'kode NKS', 'No Urut Ruta', 'Sudah Selesai?',
-                'Hasil Pencacahan Ruta (R203) KOR',
-                'Hasil Pencacahan Ruta (R203) KP '
+                'kode prop',
+                'kode kab',
+                'kode NKS',
+                'No Urut Ruta',
+                'Sudah Selesai? [sudah/belum]',
+                'Hasil Pencacahan Ruta (R203) MSBP',
+                'Hasil Pencacahan Ruta (R203) KP'
             ],
             [
-                "", "", "", "", "",
+                "",
+                "",
+                "",
+                "",
+                "",
                 "1= Terisi Lengkap, 2=Terisi tdk lengkap, 3=Tidak ada ART/responden yang memberikan informasi sampai akhir masa pencacahan, 4= menolak, 5=Ruta pindah",
                 "1= Terisi Lengkap, 2=Terisi tdk lengkap, 3= Tidak ada ART/responden yang memberikan informasi sampai akhir masa pencacahan, 4= menolak, 5=Ruta pindah"
             ]
@@ -59,7 +67,7 @@ class DsrtWebMonExport implements FromQuery, WithHeadings, WithMapping, WithStyl
     {
 
         $status = "";
-        if ($dsrt->status_pencacahan >= 4) {
+        if ($dsrt->status_pencacahan >= 2) {
             $status = "sudah";
         } else {
             $status = "belum";

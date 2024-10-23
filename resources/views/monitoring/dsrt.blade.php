@@ -42,11 +42,12 @@
                                     <div class="alert alert-info" role="alert">
                                         <ul>
                                             <li>
-                                                KRT ISIAN adalah nama KRT yang diisi oleh petugas ketika di lapangan
+                                                Angka Desil bisa berubah jika melakukan filter kabupaten kota, jika tidak
+                                                filter maka angka provinsi
                                             </li>
                                             <li>
                                                 Desil ke-3 dari data rata-rata perkapita adalah sebesar Rp
-                                                {{ $d3->avg_perkapita }}
+                                                <b> {{ round($desil[3]) }}</b>
                                             </li>
                                         </ul>
 
@@ -125,23 +126,13 @@
                                                                         Belum
                                                                         Cacah
                                                                     </option>
-                                                                    <!-- <option value="1"
-                                                                        @if ($request->status_filter == '1') selected @endif>
-                                                                        Sudah
-                                                                        Cacah
-                                                                    </option> -->
-                                                                    <option value="4"
-                                                                        @if ($request->status_filter == '4') selected @endif>
+                                                                    <option value="2"
+                                                                        @if ($request->status_filter == '2') selected @endif>
                                                                         Sudah
                                                                         Upload
                                                                     </option>
-                                                                    <!-- <option value="5"
+                                                                    <option value="5"
                                                                         @if ($request->status_filter == '5') selected @endif>
-                                                                        Sudah
-                                                                        Pemeriksaan Pengawas
-                                                                    </option> -->
-                                                                    <option value="6"
-                                                                        @if ($request->status_filter == '6') selected @endif>
                                                                         Sudah
                                                                         Upload Pemeriksaan Pengawas
                                                                     </option>
@@ -185,18 +176,15 @@
                                             <thead>
                                                 <tr class="text-center align-middle">
                                                     <th class="text-center align-middle">No</th>
-                                                    <th class="text-center align-middle">ID BS</th>
-                                                    <th class="text-center align-middle">NKS</th>
-                                                    <th class="text-center align-middle">NU RT</th>
-                                                    <th class="text-center align-middle">KRT Import</th>
-                                                    <th class="text-center align-middle">KRT Isian</th>
-                                                    <th class="text-center align-middle">Status Pencacahan</th>
-                                                    <th class="text-center align-middle">Jumlah <br> ART</th>
-                                                    <th class="text-center align-middle">Status <br> Rumah</th>
+                                                    <th class="text-center align-middle">ID BS / NKS</th>
+                                                    <th class="text-center align-middle">NU RT - KRT Import</th>
+                                                    <th class="text-center align-middle">Status<br>Pencacahan</th>
+                                                    <th class="text-center align-middle">Pengeluaran</th>
+                                                    <th class="text-center align-middle">Jumlah<br>ART</th>
                                                     <th class="text-center align-middle">Rata2 <br>Perkapita</th>
                                                     <th class="text-center align-middle">GSMP</th>
                                                     <th class="text-center align-middle">Bantuan</th>
-                                                    <th class="text-center align-middle">Durasi Pencacahan</th>
+                                                    <th class="text-center align-middle">Status<br>Rumah</th>
                                                     <th class="text-center align-middle">FOTO</th>
                                                     <th class="text-center align-middle">Desil</th>
                                                 </tr>
@@ -208,46 +196,35 @@
                                                             {{ ++$key }}
                                                         </td>
                                                         <td class="text-center">
-                                                            {{ $dt->id_bs }}
+                                                            {{ $dt->id_bs }} / {{ $dt->nks }}
                                                         </td>
-                                                        <td class="text-center">
-                                                            {{ $dt->nks }}
+                                                        <td>
+                                                            <a href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nu_rt }}
+                                                                - {{ $dt->nama_krt_prelist }} </a>
                                                         </td>
-                                                        <td class="text-center">{{ $dt->nu_rt }}</td>
-                                                        <td class="">{{ $dt->nama_krt_prelist }}</td>
-                                                        <!-- <td class=""><a
-                                                                href="{{ url('dsrt/' . \Crypt::encryptString($dt->id)) }}">{{ $dt->nama_krt_cacah }}</a>
-                                                        </td> -->
-                                                        <td class="">{{ $dt->nama_krt_cacah }}</td>
-                                                        <td class="align-middle ">
+                                                        <td class="text-center ">
                                                             @switch($dt->status_pencacahan)
                                                                 @case(0)
                                                                     <span>Belum Cacah</span>
                                                                 @break
 
-                                                                @case(1)
-                                                                    <span>Sudah Cacah</span>
-                                                                @break
-
-                                                                @case(4)
-                                                                    <span>Sudah Upload <br> Pemeriksaan Pencacah</span>
+                                                                @case(2)
+                                                                    <span class="badge bg-primary">Sudah Cacah</span>
                                                                 @break
 
                                                                 @case(5)
-                                                                    <span>Sudah Pemeriksaan <br> Pengawas</span>
-                                                                @break
-
-                                                                @case(6)
-                                                                    <span>Sudah Upload <br> Pemeriksaan Pengawas</span>
+                                                                    <span class="badge bg-success">
+                                                                        Sudah <br> Pemeriksaan Pengawas
+                                                                    </span>
                                                                 @break
                                                             @endswitch
                                                         </td>
+                                                        <td class="text-center">{{ $dt->makanan_sebulan }}</td>
                                                         <td class="text-center">{{ $dt->jml_art_cacah }}</td>
-                                                        <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
                                                         <td class="text-center">{{ $dt->gsmp_desk }}</td>
                                                         <td class="text-center">{{ $dt->bantuan_desk }}</td>
-                                                        <td class="text-center">{{ $dt->durasi_pencacahan }}</td>
+                                                        <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-center">
                                                             <a href="javascript:void(0);">
                                                                 <img class="br-5 img_btn" data-foto="{{ $dt->foto }}"
@@ -259,7 +236,11 @@
                                                         </td>
                                                         <td class="text-center">
                                                             @if ($dt->avg_perkapita == 0)
-                                                            @elseif($dt->avg_perkapita <= $d3->avg_perkapita)
+                                                            @elseif (round($dt->avg_perkapita) > 0 && round($dt->avg_perkapita) <= round($desil[1]))
+                                                                <span class="badge bg-danger me-1 mb-1 mt-1">Desil 1</span>
+                                                            @elseif (round($dt->avg_perkapita) > round($desil[1]) && round($dt->avg_perkapita) <= round($desil[2]))
+                                                                <span class="badge bg-danger me-1 mb-1 mt-1">Desil 2</span>
+                                                            @elseif (round($dt->avg_perkapita) > round($desil[2]) && round($dt->avg_perkapita) <= round($desil[3]))
                                                                 <span class="badge bg-danger me-1 mb-1 mt-1">Desil 3</span>
                                                             @endif
                                                         </td>
