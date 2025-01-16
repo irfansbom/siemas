@@ -183,6 +183,27 @@
                          name="bantuan_desk">
                  </div>
              </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Harga Pembelian Token Listrik/Pembayaran Listrik Pascabayar</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('listrik_harga', $data->listrik_harga) }}"
+                         name="listrik_harga">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Besar kWh Listrik yang Diperoleh</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('listrik_kwh', $data->listrik_kwh) }}"
+                         name="listrik_kwh">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Menu Makan Bergizi Gratis yang Paling Disukai</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('menu_mbg', $data->menu_mbg) }}"
+                         name="menu_mbg">
+                 </div>
+             </div>
          </div>
 
          <div class="col-6">

@@ -60,6 +60,9 @@ class PclController extends Controller
         $dsrt->gsmp_desk = $request->gsmp_desk;
         $dsrt->bantuan = $request->bantuan;
         $dsrt->bantuan_desk = $request->bantuan_desk;
+        $dsrt->listrik_harga = $request->listrik_harga;
+        $dsrt->listrik_kwh = $request->listrik_kwh;
+        $dsrt->menu_mbg = $request->menu_mbg;
         $file = $request->file('foto');
 
         if ($request->hasFile('foto')) {

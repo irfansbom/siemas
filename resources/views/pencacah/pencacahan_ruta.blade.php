@@ -248,6 +248,45 @@
                             </div>
                         </div>
 
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Harga Pembelian Token Listrik/Pembayaran Listrik Pascabayar</label>
+                                        <input type="text" class="form-control bg-transparent rupiah"
+                                            placeholder="listrik_harga" name="listrik_harga" id="listrik_harga"
+                                            value="{{ old('listrik_harga', $dsrt->listrik_harga) }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Besar kWh Listrik yang Diperoleh</label>
+                                        <input type="text" class="form-control bg-transparent"
+                                            placeholder="listrik_kwh" name="listrik_kwh" id="listrik_kwh"
+                                            value="{{ old('listrik_kwh', $dsrt->listrik_kwh) }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Menu Makan Bergizi Gratis yang Paling Disukai</label>
+                                        <input type="text" class="form-control bg-transparent"
+                                            placeholder="menu_mbg" name="menu_mbg" id="menu_mbg"
+                                            value="{{ old('menu_mbg', $dsrt->menu_mbg) }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- <div class="card bg-wheat my-2">
                             <div class="row">
                                 <div class="col">
