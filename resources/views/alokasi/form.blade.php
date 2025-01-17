@@ -1,10 +1,15 @@
+@php
+    $year_now = date("Y");
+    $tahun_array = [$year_now - 2, $year_now - 1, $year_now, $year_now + 1, $year_now + 2];
+@endphp
 <fieldset class="">
     <div class="mb-3 row">
         <div class="col-sm-3">
             <label for="tahun" class="form-label">Tahun*</label>
             <select name="tahun" id="tahun" class="form-select" disabled required>
-                <option value="2023" @if ($periode->tahun == '2023') selected @endif>2023</option>
-                <option value="2024" @if ($periode->tahun == '2024') selected @endif>2024</option>
+            @foreach ($tahun_array as $t)
+                <option value="{{ $t }}" @if ($periode->tahun == (string) $t) selected @endif>{{ $t }}</option>
+            @endforeach
             </select>
         </div>
         <div class="col-sm-3">

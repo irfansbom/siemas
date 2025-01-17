@@ -1,6 +1,10 @@
 @extends('layout.layout')
 
 @section('content')
+    @php
+        $year_now = date("Y");
+        $tahun_array = [$year_now - 2, $year_now - 1, $year_now, $year_now + 1, $year_now + 2];
+    @endphp
     <div class="main-content app-content mt-0">
         <div class="side-app">
             <div class="main-container container-fluid">
@@ -65,15 +69,11 @@
                                                         <select name="tahun_filter" id="tahun_filter"
                                                             class="form-control select2 form-select">
                                                             <option value="">Pilih tahun</option>
-                                                            <option value="2022"
-                                                                @if ($tahun == '2022') selected @endif>2022
-                                                            </option>
-                                                            <option value="2023"
-                                                                @if ($tahun == '2023') selected @endif>2023
-                                                            </option>
-                                                            <option value="2024"
-                                                                @if ($tahun == '2024') selected @endif>2024
-                                                            </option>
+                                                            @foreach ($tahun_array as $t)
+                                                                <option value="{{ $t }}"
+                                                                    @if ($tahun == (string) $t) selected @endif>{{ $t }}
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -263,10 +263,11 @@
                                 <select name="tahun" id="tahun_import"
                                     class="form-control select2-show-search form-select" required>
                                     <option value="">Pilih tahun</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023" @if ($periode->tahun == '2023') selected @endif>2023</option>
-                                    <option value="2024" @if ($periode->tahun == '2024') selected @endif>2024
-                                    </option>
+                                    @foreach ($tahun_array as $t)
+                                        <option value="{{ $t }}"
+                                            @if ($tahun == (string) $t) selected @endif>{{ $t }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-6">

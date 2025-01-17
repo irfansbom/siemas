@@ -108,9 +108,11 @@ class MonitoringController extends Controller
         $total = $data_temp->count();
         $desil = [];
 
-        for ($i = 1; $i <= 10; $i++) {
-            $index = round(($i * $total) / 10) - 1;
-            $desil[$i] = $data_temp[$index]->avg_perkapita;
+        if ($total >= 10) {
+            for ($i = 1; $i <= 10; $i++) {
+                $index = round(($i * $total) / 10) - 1;
+                $desil[$i] = $data_temp[$index]->avg_perkapita;
+            }
         }
         // dd($data_temp[1]['avg_perkapita']);
         $data = Dsrt::where('flag_active', '1')

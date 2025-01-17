@@ -1,6 +1,10 @@
 @extends('layout.layout')
 
 @section('content')
+    @php
+        $year_now = date("Y");
+        $tahun_array = [$year_now - 2, $year_now - 1, $year_now, $year_now + 1, $year_now + 2];
+    @endphp
     <div class="main-content app-content mt-0">
         <div class="side-app">
             <div class="main-container container-fluid">
@@ -41,6 +45,7 @@
                                 <div class="row col">
                                     <div class="alert alert-info" role="alert">
                                         <ul>
+                                            @@if ($desil)
                                             <li>
                                                 Angka Desil bisa berubah jika melakukan filter kabupaten kota, jika tidak
                                                 filter maka angka provinsi
@@ -49,6 +54,7 @@
                                                 Desil ke-3 dari data rata-rata perkapita adalah sebesar Rp
                                                 <b> {{ round($desil[3]) }}</b>
                                             </li>
+                                            @endif
                                         </ul>
 
                                     </div>
@@ -80,19 +86,11 @@
                                                                 <select name="tahun_filter" id="tahun_filter"
                                                                     class="form-control select2 form-select">
                                                                     <option value="">Pilih tahun</option>
-                                                                    <option value="2022"
-                                                                        @if ($request->tahun_filter == '2022') selected @endif>
-                                                                        2022
-                                                                    </option>
-                                                                    <option value="2023"
-                                                                        @if ($request->tahun_filter == '2023') selected @endif>
-                                                                        2023
-                                                                    </option>
-                                                                    <option value="2024"
-                                                                        @if ($request->tahun_filter == '2024') selected @endif>
-                                                                        2024
-                                                                    </option>
-
+                                                                    @foreach ($tahun_array as $t)
+                                                                        <option value="{{ $t }}"
+                                                                            @if ($request->tahun_filter == (string) $t) selected @endif>{{ $t }}
+                                                                        </option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                             <div class="col-sm-1">
