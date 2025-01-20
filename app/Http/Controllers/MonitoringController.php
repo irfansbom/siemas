@@ -136,7 +136,7 @@ class MonitoringController extends Controller
         //         ->where('tahun', $tahun)
         //         ->where('semester', $semester)
         //         ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
-        //         ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', 'listrik_harga', 'listrik_kwh', 'menu_mbg', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') ) / jml_art_cacah AS avg_perkapita")])
+        //         ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'nonmakanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', 'listrik_jenis', 'listrik_daya', 'listrik_kwh', 'listrik_harga', 'menu_mbg', DB::raw("( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','') ) / jml_art_cacah AS avg_perkapita")])
         //         ->orderBy('avg_perkapita')->get()[$x];
         //     if ($d3->avg_perkapita == null) {
         //         $d3->avg_perkapita = 0;
@@ -147,7 +147,7 @@ class MonitoringController extends Controller
         //     $status_pencacahan = $request->status_filter;
         // }
         // $data = DB::table('dsrt')
-        //     ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', 'listrik_harga', 'listrik_kwh', 'menu_mbg',DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','')) / jml_art_cacah ,0) AS avg_perkapita ")])
+        //     ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', 'listrik_jenis', 'listrik_daya', 'listrik_kwh', 'listrik_harga', 'menu_mbg',DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','')) / jml_art_cacah ,0) AS avg_perkapita ")])
         //     ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
         //     ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
         //     ->where('nks', "LIKE", "%" . $request->nks_filter . "%")

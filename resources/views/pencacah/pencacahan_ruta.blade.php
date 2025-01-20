@@ -252,10 +252,16 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
-                                        <label for="" class="label">Harga Pembelian Token Listrik/Pembayaran Listrik Pascabayar</label>
-                                        <input type="text" class="form-control bg-transparent rupiah"
-                                            placeholder="listrik_harga" name="listrik_harga" id="listrik_harga"
-                                            value="{{ old('listrik_harga', $dsrt->listrik_harga) }}" required>
+                                        <label for="" class="label">Jenis Pembayaran Listrik</label>
+                                        <select name="listrik_jenis" id="listrik_jenis" class="form-select bg-transparent"
+                                            required>
+                                            <option value="Token" @if ($dsrt->listrik_jenis == 'Token') selected @endif>
+                                                Token
+                                            </option>
+                                            <option value="Pascabayar" @if ($dsrt->listrik_jenis == 'Pascabayar') selected @endif>
+                                                Pascabayar
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -265,10 +271,51 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
-                                        <label for="" class="label">Besar kWh Listrik yang Diperoleh</label>
+                                        <label for="" class="label">Daya Listrik Terpasang</label>
+                                        <select name="listrik_daya" id="listrik_daya" class="form-select bg-transparent"
+                                            required>
+                                            <option value="450 VA" @if ($dsrt->listrik_daya == '450 VA') selected @endif>
+                                                450 VA
+                                            </option>
+                                            <option value="900 VA" @if ($dsrt->listrik_daya == '900 VA') selected @endif>
+                                                900 VA
+                                            </option>
+                                            <option value="1300 VA" @if ($dsrt->listrik_daya == '1300 VA') selected @endif>
+                                                1300 VA
+                                            </option>
+                                            <option value="2200 VA" @if ($dsrt->listrik_daya == '2200 VA') selected @endif>
+                                                2200 VA
+                                            </option>
+                                            <option value="> 2200 VA" @if ($dsrt->listrik_daya == '> 2200 VA') selected @endif>
+                                                &gt; 2200 VA
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Besar Pemakaian kWh Listrik Sebulan Lalu</label>
                                         <input type="text" class="form-control bg-transparent"
                                             placeholder="listrik_kwh" name="listrik_kwh" id="listrik_kwh"
                                             value="{{ old('listrik_kwh', $dsrt->listrik_kwh) }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Pengeluaran Listrik Sebulan Lalu (Rp)</label>
+                                        <input type="text" class="form-control bg-transparent rupiah"
+                                            placeholder="listrik_harga" name="listrik_harga" id="listrik_harga"
+                                            value="{{ old('listrik_harga', $dsrt->listrik_harga) }}" required>
                                     </div>
                                 </div>
                             </div>

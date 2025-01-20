@@ -182,8 +182,10 @@
                                                     <th class="text-center align-middle">Rata2 <br>Perkapita</th>
                                                     <th class="text-center align-middle">GSMP</th>
                                                     <th class="text-center align-middle">Bantuan</th>
-                                                    <th class="text-center align-middle">Harga Listrik</th>
+                                                    <th class="text-center align-middle">Jenis Listrik</th>
+                                                    <th class="text-center align-middle">Daya Listrik</th>
                                                     <th class="text-center align-middle">kWh Listrik</th>
+                                                    <th class="text-center align-middle">Harga Listrik</th>
                                                     <th class="text-center align-middle">Menu MBG</th>
                                                     <th class="text-center align-middle">Status<br>Rumah</th>
                                                     <th class="text-center align-middle">FOTO</th>
@@ -225,8 +227,10 @@
                                                         <td class="text-end">{{ round($dt->avg_perkapita) }}</td>
                                                         <td class="text-center">{{ $dt->gsmp_desk }}</td>
                                                         <td class="text-center">{{ $dt->bantuan_desk }}</td>
-                                                        <td class="text-center">{{ $dt->listrik_harga }}</td>
+                                                        <td class="text-center">{{ $dt->listrik_jenis }}</td>
+                                                        <td class="text-center">{{ $dt->listrik_daya }}</td>
                                                         <td class="text-center">{{ $dt->listrik_kwh }}</td>
+                                                        <td class="text-center">{{ $dt->listrik_harga }}</td>
                                                         <td class="text-center">{{ $dt->menu_mbg }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-center">

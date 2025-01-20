@@ -184,17 +184,31 @@
                  </div>
              </div>
              <div class="row mb-3">
-                 <label class="col-sm-4 form-label">Harga Pembelian Token Listrik/Pembayaran Listrik Pascabayar</label>
+                 <label class="col-sm-4 form-label">Jenis Pembayaran Listrik</label>
                  <div class="col-sm-8">
-                     <input type="text" class="form-control" value="{{ old('listrik_harga', $data->listrik_harga) }}"
-                         name="listrik_harga">
+                     <input type="text" class="form-control" value="{{ old('listrik_jenis', $data->listrik_jenis) }}"
+                         name="listrik_jenis">
                  </div>
              </div>
              <div class="row mb-3">
-                 <label class="col-sm-4 form-label">Besar kWh Listrik yang Diperoleh</label>
+                 <label class="col-sm-4 form-label">Daya Listrik Terpasang</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('listrik_daya', $data->listrik_daya) }}"
+                         name="listrik_daya">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Besar Pemakaian kWh Listrik Sebulan Lalu</label>
                  <div class="col-sm-8">
                      <input type="text" class="form-control" value="{{ old('listrik_kwh', $data->listrik_kwh) }}"
                          name="listrik_kwh">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Pengeluaran Listrik Sebulan Lalu (Rp)</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('listrik_harga', $data->listrik_harga) }}"
+                         name="listrik_harga">
                  </div>
              </div>
              <div class="row mb-3">

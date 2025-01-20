@@ -74,6 +74,8 @@ class CreateDsbsTable extends Migration
             $table->text('gsmp_desk')->nullable();
             $table->integer('bantuan')->nullable();
             $table->text('bantuan_desk')->nullable();
+            $table->string('listrik_jenis', 20)->nullable();
+            $table->string('listrik_daya', 10)->nullable();
             $table->decimal('listrik_harga', 10, 2)->nullable();
             $table->decimal('listrik_kwh', 10, 2)->nullable();
             $table->text('menu_mbg')->nullable();
