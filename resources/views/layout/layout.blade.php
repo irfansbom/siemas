@@ -344,6 +344,16 @@
                                         @endrole
                                     </ul>
                                 </li>
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+                                        <i class="side-menu__icon fa fa-table"></i>
+                                        <span class="side-menu__label">Evaluasi</span><i
+                                            class="angle fa fa-angle-right"></i></a>
+                                    <ul class="slide-menu">
+                                        <li class="side-menu-label1"><a href="javascript:void(0)">Submenus</a></li>
+                                        <li><a href="{{ url('data') }}" class="slide-item">Data</a></li>
+                                    </ul>
+                                </li>
                             @endrole
                         </ul>
                         <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg"
