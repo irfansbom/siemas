@@ -102,8 +102,9 @@ class DsrtApiController extends Controller
                 "dsrt.penyerahan_dokumen_pcl",
                 "dsrt.penyerahan_dokumen_pml",
                 "dsrt.pencacah",
-                "dsrt.pengawas",
+                "dsrt.pengawas"
             )
+            ->orderBy('dsrt.nu_rt', 'asc')
             ->get()->toArray();
 
         if (!$data_dsrt) {
@@ -206,8 +207,9 @@ class DsrtApiController extends Controller
                 "dsrt.penyerahan_dokumen_pcl",
                 "dsrt.penyerahan_dokumen_pml",
                 "dsrt.pencacah",
-                "dsrt.pengawas",
+                "dsrt.pengawas"
             )
+            ->orderBy('dsrt.nu_rt', 'asc')
             ->get()->toArray();
 
         if (!$data_dsrt) {
