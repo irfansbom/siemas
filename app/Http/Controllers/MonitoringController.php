@@ -120,7 +120,8 @@ class MonitoringController extends Controller
             ->where('semester', $semester)
             ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
             ->select(['*', DB::raw("CAST(REPLACE(REPLACE(makanan_sebulan, 'Rp.', ''), '.', '') AS SIGNED) / jml_art_cacah AS avg_perkapita")])
-            ->where('status_pencacahan', 'LIKE', $request->status_filter)
+            ->where('status_pencacahan', "LIKE", "%" . $request->status_filter . "%")
+            ->where('nks', "LIKE", "%" . $request->nks_filter . "%")
             ->whereBetween(DB::raw("CAST(REPLACE(REPLACE(makanan_sebulan, 'Rp.', ''), '.', '') AS SIGNED) / jml_art_cacah"), [$minimum, $maksimum])
             ->paginate(20);
         $data->appends($request->all());
@@ -147,7 +148,7 @@ class MonitoringController extends Controller
         //     $status_pencacahan = $request->status_filter;
         // }
         // $data = DB::table('dsrt')
-        //     ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', 'listrik_jenis', 'listrik_daya', 'listrik_kwh', 'listrik_harga', 'menu_mbg',DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','')) / jml_art_cacah ,0) AS avg_perkapita ")])
+        //     ->select(['id', 'kd_kab', 'id_bs', 'nks', 'nu_rt', 'nama_krt_prelist', 'nama_krt_cacah', 'status_pencacahan', 'makanan_sebulan', 'jml_art_cacah', 'status_rumah', 'foto', 'durasi_pencacahan', 'gsmp_desk', 'bantuan_desk', 'listrik_jenis', 'listrik_daya', 'listrik_kwh', 'listrik_harga', 'menu_mbg', DB::raw("IFNULL( (( REPLACE(REPLACE(makanan_sebulan,'Rp.',''),'.','')) / jml_art_cacah ,0) AS avg_perkapita ")])
         //     ->where('kd_kab', 'LIKE', '%' . $request->kab_filter . '%')
         //     ->where('id_bs', 'LIKE', '%' .  $request->bs_filter . '%')
         //     ->where('nks', "LIKE", "%" . $request->nks_filter . "%")

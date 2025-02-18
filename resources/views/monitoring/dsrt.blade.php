@@ -45,7 +45,7 @@
                                 <div class="row col">
                                     <div class="alert alert-info" role="alert">
                                         <ul>
-                                            @@if ($desil)
+                                            @if ($desil)
                                             <li>
                                                 Angka Desil bisa berubah jika melakukan filter kabupaten kota, jika tidak
                                                 filter maka angka provinsi
@@ -129,8 +129,8 @@
                                                                         Sudah
                                                                         Upload
                                                                     </option>
-                                                                    <option value="5"
-                                                                        @if ($request->status_filter == '5') selected @endif>
+                                                                    <option value="6"
+                                                                        @if ($request->status_filter == '6') selected @endif>
                                                                         Sudah
                                                                         Upload Pemeriksaan Pengawas
                                                                     </option>
@@ -215,9 +215,9 @@
                                                                     <span class="badge bg-primary">Sudah Cacah</span>
                                                                 @break
 
-                                                                @case(5)
+                                                                @case(6)
                                                                     <span class="badge bg-success">
-                                                                        Sudah <br> Pemeriksaan Pengawas
+                                                                        Sudah Pemeriksaan Pengawas
                                                                     </span>
                                                                 @break
                                                             @endswitch
