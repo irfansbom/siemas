@@ -43,7 +43,7 @@
             </select>
         </div>
         <div class="col-sm-3">
-            <label for="kd_bs" class="form-label">NBS (001B, 009B, dll) *</label>
+            <label for="kd_bs" class="form-label">NBS (001B, 009B, dll) / Kode SLS *</label>
             <input name="kd_bs" type="text" id="kd_bs" class="form-control" maxlength="4"
                 pattern="[A-Za-z0-9]{4}" oninput="validateInput(this)" required
                 value="{{ old('kd_bs', $data->kd_bs) }}">

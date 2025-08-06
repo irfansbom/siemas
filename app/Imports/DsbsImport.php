@@ -39,13 +39,16 @@ class DsbsImport implements
     public function model(array $row)
     {
         $auth = Auth::user();
+        if (strlen($row[3]) != 2) {
+            return null;
+        }
         if (strlen($row[5]) != 3) {
             return null;
         }
         if (strlen($row[7]) != 3) {
             return null;
         }
-        if (strlen($row[10]) != 4) {
+        if (strlen($row[10]) != 6) {
             return null;
         }
         $bs = Dsbs::where('tahun', $this->tahun)
@@ -66,8 +69,8 @@ class DsbsImport implements
                 'kd_bs' => $row[10],
                 'id_bs' => '16' . $row[3] . $row[5] . $row[7] . $row[10],
                 'nks' => $row[11],
-                'sls' => trim($row[14], '  '),
-                'jml_rt' => $row[12],
+                'sls' => trim($row[12], '  '),
+                'jml_rt' => $row[13],
                 'updated_by' => $auth->id,
             ]);
         } else {
@@ -80,8 +83,8 @@ class DsbsImport implements
                 'kd_bs' => $row[10],
                 'id_bs' => '16' . $row[3] . $row[5] . $row[7] . $row[10],
                 'nks' => $row[11],
-                'sls' => trim($row[14], '  '),
-                'jml_rt' => $row[12],
+                'sls' => trim($row[12], '  '),
+                'jml_rt' => $row[13],
                 'created_by' => $auth->id,
             ]);
         }
