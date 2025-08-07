@@ -81,7 +81,7 @@ class AlokasiDsbsExport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
             'kd_kab',
             'kd_kec',
             'kd_desa',
-            'kd_bs',
+            'kd_bs/kd_sls',
             'nks',
             'sls',
             'pencacah',

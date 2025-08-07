@@ -152,7 +152,7 @@
                                                 <th>Kab</th>
                                                 <th>Kec</th>
                                                 <th>Desa</th>
-                                                <th>BS</th>
+                                                <th>BS/SLS</th>
                                                 <th>NKS</th>
                                                 <th>SLS</th>
                                                 <th>Pencacah</th>

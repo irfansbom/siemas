@@ -42,7 +42,7 @@ class AlokasiDsbsImport implements
         if (strlen($row[4]) != 3) {
             return null;
         }
-        if (strlen($row[5]) != 4) {
+        if (strlen($row[5]) != 6) {
             return null;
         }
         $pcl = "";
