@@ -325,10 +325,73 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group mb-0 p-2">
-                                        <label for="" class="label">Menu Makan Bergizi Gratis yang Paling Disukai</label>
-                                        <input type="text" class="form-control bg-transparent"
-                                            placeholder="menu_mbg" name="menu_mbg" id="menu_mbg"
-                                            value="{{ old('menu_mbg', $dsrt->menu_mbg) }}" required>
+                                        <label for="" class="label">Adakah ART yang Mengikuti Program Sekolah Rakyat</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="sekolah_rakyat" id="sekolah_rakyat1"
+                                                required value="0" @if ($dsrt->sekolah_rakyat == 0) checked @endif>
+                                            <label class="form-check-label" for="sekolah_rakyat1">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="sekolah_rakyat" id="sekolah_rakyat2"
+                                                value="1" @if ($dsrt->sekolah_rakyat == 1) checked @endif>
+                                            <label class="form-check-label" for="sekolah_rakyat2">
+                                                Ya
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Adakah Perempuan Pernah Kawin Umur 10-54 Tahun yang Sedang Hamil atau Menyusui, Anak Sekolah (SD, SMP, SMA/Sederajat), atau Anak Balita (di Bawah 5 Tahun) yang Menerima MBG</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="mbg" id="mbg1"
+                                                required value="0" @if ($dsrt->mbg == 0) checked @endif>
+                                            <label class="form-check-label" for="mbg1">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="mbg" id="mbg2"
+                                                value="1" @if ($dsrt->mbg == 1) checked @endif>
+                                            <label class="form-check-label" for="mbg2">
+                                                Ya
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Kualitas Makanan pada Menu Program MBG yang Diterima</label>
+                                        <select name="menu_mbg" id="menu_mbg" class="form-select bg-transparent"
+                                            required>
+                                            <option value="Tidak Mendapat MBG" @if ($dsrt->status_rumah == 'Tidak Mendapat MBG') selected @endif>
+                                                Tidak Mendapat MBG
+                                            </option>
+                                            <option value="Tidak Baik" @if ($dsrt->status_rumah == 'Tidak Baik') selected @endif>
+                                                Tidak Baik
+                                            </option>
+                                            <option value="Kurang Baik" @if ($dsrt->status_rumah == 'Kurang Baik') selected @endif>
+                                                Kurang Baik
+                                            </option>
+                                            <option value="Baik" @if ($dsrt->status_rumah == 'Baik') selected @endif>
+                                                Baik
+                                            </option>
+                                            <option value="Sangat Baik" @if ($dsrt->status_rumah == 'Sangat Baik') selected @endif>
+                                                Sangat Baik
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

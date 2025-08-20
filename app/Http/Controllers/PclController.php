@@ -64,6 +64,8 @@ class PclController extends Controller
         $dsrt->listrik_daya = $request->listrik_daya;
         $dsrt->listrik_kwh = $request->listrik_kwh;
         $dsrt->listrik_harga = $request->listrik_harga;
+        $dsrt->sekolah_rakyat = $request->sekolah_rakyat;
+        $dsrt->mbg = $request->mbg;
         $dsrt->menu_mbg = $request->menu_mbg;
         $file = $request->file('foto');
 

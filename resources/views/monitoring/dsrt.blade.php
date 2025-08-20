@@ -186,7 +186,9 @@
                                                     <th class="text-center align-middle">Daya Listrik</th>
                                                     <th class="text-center align-middle">kWh Listrik</th>
                                                     <th class="text-center align-middle">Harga Listrik</th>
-                                                    <th class="text-center align-middle">Menu MBG</th>
+                                                    <th class="text-center align-middle">Sekolah Rakyat</th>
+                                                    <th class="text-center align-middle">MBG</th>
+                                                    <th class="text-center align-middle">Kualitas MBG</th>
                                                     <th class="text-center align-middle">Status<br>Rumah</th>
                                                     <th class="text-center align-middle">FOTO</th>
                                                     <th class="text-center align-middle">Desil</th>
@@ -231,6 +233,8 @@
                                                         <td class="text-center">{{ $dt->listrik_daya }}</td>
                                                         <td class="text-center">{{ $dt->listrik_kwh }}</td>
                                                         <td class="text-center">{{ $dt->listrik_harga }}</td>
+                                                        <td class="text-center">{{ $dt->sekolah_rakyat }}</td>
+                                                        <td class="text-center">{{ $dt->mbg }}</td>
                                                         <td class="text-center">{{ $dt->menu_mbg }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-center">
@@ -243,13 +247,15 @@
 
                                                         </td>
                                                         <td class="text-center">
-                                                            @if ($dt->avg_perkapita == 0)
-                                                            @elseif (round($dt->avg_perkapita) > 0 && round($dt->avg_perkapita) <= round($desil[1]))
-                                                                <span class="badge bg-danger me-1 mb-1 mt-1">Desil 1</span>
-                                                            @elseif (round($dt->avg_perkapita) > round($desil[1]) && round($dt->avg_perkapita) <= round($desil[2]))
-                                                                <span class="badge bg-danger me-1 mb-1 mt-1">Desil 2</span>
-                                                            @elseif (round($dt->avg_perkapita) > round($desil[2]) && round($dt->avg_perkapita) <= round($desil[3]))
-                                                                <span class="badge bg-danger me-1 mb-1 mt-1">Desil 3</span>
+                                                            @if ($total >= 10)
+                                                                @if ($dt->avg_perkapita == 0)
+                                                                @elseif (round($dt->avg_perkapita) > 0 && round($dt->avg_perkapita) <= round($desil[1]))
+                                                                    <span class="badge bg-danger me-1 mb-1 mt-1">Desil 1</span>
+                                                                @elseif (round($dt->avg_perkapita) > round($desil[1]) && round($dt->avg_perkapita) <= round($desil[2]))
+                                                                    <span class="badge bg-danger me-1 mb-1 mt-1">Desil 2</span>
+                                                                @elseif (round($dt->avg_perkapita) > round($desil[2]) && round($dt->avg_perkapita) <= round($desil[3]))
+                                                                    <span class="badge bg-danger me-1 mb-1 mt-1">Desil 3</span>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                     </tr>

@@ -78,6 +78,8 @@ class CreateDsbsTable extends Migration
             $table->string('listrik_daya', 10)->nullable();
             $table->decimal('listrik_harga', 10, 2)->nullable();
             $table->decimal('listrik_kwh', 10, 2)->nullable();
+            $table->integer('sekolah_rakyat')->nullable();
+            $table->integer('mbg')->nullable();
             $table->text('menu_mbg')->nullable();
             $table->text('foto')->nullable();
 

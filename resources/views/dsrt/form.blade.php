@@ -212,7 +212,21 @@
                  </div>
              </div>
              <div class="row mb-3">
-                 <label class="col-sm-4 form-label">Menu Makan Bergizi Gratis yang Paling Disukai</label>
+                 <label class="col-sm-4 form-label">Keikutsertaan Sekolah Rakyat</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('sekolah_rakyat', $data->sekolah_rakyat) }}"
+                         name="sekolah_rakyat">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Keikutsertaan MBG</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('mbg', $data->mbg) }}"
+                         name="mbg">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Kualitas Menu Makan Bergizi Gratis</label>
                  <div class="col-sm-8">
                      <input type="text" class="form-control" value="{{ old('menu_mbg', $data->menu_mbg) }}"
                          name="menu_mbg">
