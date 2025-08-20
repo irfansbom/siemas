@@ -232,6 +232,20 @@
                          name="menu_mbg">
                  </div>
              </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Nasi Campur/Rames (R.196)</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('rincian_int_1', $data->rincian_int_1) }}"
+                         name="rincian_int_1">
+                 </div>
+             </div>
+             <div class="row mb-3">
+                 <label class="col-sm-4 form-label">Susu Cair Pabrik (R.79)</label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control" value="{{ old('rincian_int_2', $data->rincian_int_2) }}"
+                         name="rincian_int_2">
+                 </div>
+             </div>
          </div>
 
          <div class="col-6">

@@ -397,6 +397,32 @@
                             </div>
                         </div>
 
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Berapa Pengeluaran pada Kolom PEMBERIAN (VSEN25.KP Blok IV.1 Kolom 8) untuk Nasi Campur/Rames (R.196)</label>
+                                        <input type="text" class="form-control bg-transparent rupiah"
+                                            placeholder="rincian_int_1" name="rincian_int_1" id="rincian_int_1"
+                                            value="{{ old('rincian_int_1', $dsrt->rincian_int_1) }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-wheat my-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-0 p-2">
+                                        <label for="" class="label">Berapa Pengeluaran pada Kolom PEMBERIAN (VSEN25.KP Blok IV.1 Kolom 8) untuk Susu Cair Pabrik (R.79)</label>
+                                        <input type="text" class="form-control bg-transparent rupiah"
+                                            placeholder="rincian_int_2" name="rincian_int_2" id="rincian_int_2"
+                                            value="{{ old('rincian_int_2', $dsrt->rincian_int_2) }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- <div class="card bg-wheat my-2">
                             <div class="row">
                                 <div class="col">

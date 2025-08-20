@@ -67,6 +67,8 @@ class PclController extends Controller
         $dsrt->sekolah_rakyat = $request->sekolah_rakyat;
         $dsrt->mbg = $request->mbg;
         $dsrt->menu_mbg = $request->menu_mbg;
+        $dsrt->rincian_int_1 = $request->rincian_int_1;
+        $dsrt->rincian_int_2 = $request->rincian_int_2;
         $file = $request->file('foto');
 
         if ($request->hasFile('foto')) {

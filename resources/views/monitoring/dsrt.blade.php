@@ -189,6 +189,8 @@
                                                     <th class="text-center align-middle">Sekolah Rakyat</th>
                                                     <th class="text-center align-middle">MBG</th>
                                                     <th class="text-center align-middle">Kualitas MBG</th>
+                                                    <th class="text-center align-middle">Nasi Campur/Rames (R.196)</th>
+                                                    <th class="text-center align-middle">Susu Cair Pabrik (R.79)</th>
                                                     <th class="text-center align-middle">Status<br>Rumah</th>
                                                     <th class="text-center align-middle">FOTO</th>
                                                     <th class="text-center align-middle">Desil</th>
@@ -236,6 +238,8 @@
                                                         <td class="text-center">{{ $dt->sekolah_rakyat }}</td>
                                                         <td class="text-center">{{ $dt->mbg }}</td>
                                                         <td class="text-center">{{ $dt->menu_mbg }}</td>
+                                                        <td class="text-center">{{ $dt->rincian_int_1 }}</td>
+                                                        <td class="text-center">{{ $dt->rincian_int_2 }}</td>
                                                         <td class="text-center">{{ $dt->status_rumah }}</td>
                                                         <td class="text-center">
                                                             <a href="javascript:void(0);">

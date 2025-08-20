@@ -81,6 +81,8 @@ class CreateDsbsTable extends Migration
             $table->integer('sekolah_rakyat')->nullable();
             $table->integer('mbg')->nullable();
             $table->text('menu_mbg')->nullable();
+            $table->integer('rincian_int_1')->nullable();
+            $table->integer('rincian_int_2')->nullable();
             $table->text('foto')->nullable();
 
             $table->string('latitude', 20)->nullable();
