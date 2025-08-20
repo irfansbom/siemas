@@ -76,13 +76,13 @@ class CreateDsbsTable extends Migration
             $table->text('bantuan_desk')->nullable();
             $table->string('listrik_jenis', 20)->nullable();
             $table->string('listrik_daya', 10)->nullable();
-            $table->decimal('listrik_harga', 10, 2)->nullable();
+            $table->string('listrik_harga', 20)->nullable();
             $table->decimal('listrik_kwh', 10, 2)->nullable();
             $table->integer('sekolah_rakyat')->nullable();
             $table->integer('mbg')->nullable();
             $table->text('menu_mbg')->nullable();
-            $table->integer('rincian_int_1')->nullable();
-            $table->integer('rincian_int_2')->nullable();
+            $table->string('rincian_int_1', 20)->nullable();
+            $table->string('rincian_int_2', 20)->nullable();
             $table->text('foto')->nullable();
 
             $table->string('latitude', 20)->nullable();
