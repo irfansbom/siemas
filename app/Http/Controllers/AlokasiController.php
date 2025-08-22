@@ -88,7 +88,12 @@ class AlokasiController extends Controller
                     'updated_by' => $auth->id,
                 ]);
 
-            Dsrt::where('id_bs', '16' . $request->kd_kab . $request->kd_kec . $request->kd_desa . $request->kd_bs)
+            Dsrt::where('tahun', $request->tahun)
+                ->where('semester', $request->semester)
+                ->where('kd_kab', $request->kd_kab)
+                ->where('kd_kec',  $request->kd_kec)
+                ->where('kd_desa', $request->kd_desa)
+                ->where('kd_bs', $request->kd_bs)
                 ->update([
                     'pencacah' => $pcl,
                     'pengawas' => $pml,

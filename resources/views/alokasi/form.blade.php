@@ -11,6 +11,7 @@
                 <option value="{{ $t }}" @if ($periode->tahun == (string) $t) selected @endif>{{ $t }}</option>
             @endforeach
             </select>
+            <input type="hidden" name="tahun" value="{{ $periode->tahun }}">
         </div>
         <div class="col-sm-3">
             <label for="semester" class="form-label">Semester*</label>
@@ -18,6 +19,7 @@
                 <option value="1" @if ($periode->semester == '1') selected @endif>1</option>
                 <option value="2" @if ($periode->semester == '2') selected @endif>2</option>
             </select>
+            <input type="hidden" name="semester" value="{{ $periode->semester }}">
         </div>
     </div>
     <div class="mb-3 row">
@@ -32,42 +34,45 @@
                     </option>
                 @endforeach
             </select>
+            <input type="hidden" name="kd_kab" value="{{ $data->kd_kab }}">
         </div>
         <div class="col-sm-3">
             <label for="kd_kec" class="form-label">Kecamatan*</label>
             <select name="kd_kec" id="kd_kec" class="form-control select2-show-search form-select" disabled
                 required>
             </select>
+            <input type="hidden" name="kd_kec" value="{{ $data->kd_kec }}">
         </div>
         <div class="col-sm-3">
             <label for="kd_desa" class="form-label">Kelurahan/Desa*</label>
             <select name="kd_desa" id="kd_desa" class="form-control select2-show-search form-select" disabled
                 required>
             </select>
+            <input type="hidden" name="kd_desa" value="{{ $data->kd_desa }}">
         </div>
         <div class="col-sm-3">
             <label for="kd_bs" class="form-label">NBS (001B, 009B, dll) / Kode SLS *</label>
             <input name="kd_bs" type="text" id="kd_bs" class="form-control" maxlength="4"
                 pattern="[A-Za-z0-9]{4}" oninput="validateInput(this)" required value="{{ old('kd_bs', $data->kd_bs) }}"
-                disabled>
+                readonly>
         </div>
     </div>
     <div class="mb-3 row">
         <div class="col-sm-3">
             <label for="nks" class="form-label">nks (6 digit)</label>
             <input name="nks" id="nks" class="form-control" type="number" max="999999" min="0"
-                oninput="checkInputLength(this)" value="{{ old('nks', $data->nks) }}" disabled>
+                oninput="checkInputLength(this)" value="{{ old('nks', $data->nks) }}" readonly>
         </div>
         <div class="col-sm-3">
             <label for="sls" class="form-label">SLS (RT 01 RW 01) *</label>
             <input name="sls" type="text" id="sls" class="form-control"
-                value="{{ old('sls', $data->sls) }}" disabled>
+                value="{{ old('sls', $data->sls) }}" readonly>
         </div>
 
         <div class="col-sm-3">
             <label for="jml_rt" class="form-label">Jumlah Ruta</label>
             <input name="jml_rt" type="number" id="jml_rt" class="form-control" max="999999" min="0"
-                oninput="checkInputLength(this)" value="{{ old('jml_rt', $data->jml_rt) }}" disabled>
+                oninput="checkInputLength(this)" value="{{ old('jml_rt', $data->jml_rt) }}" readonly>
         </div>
     </div>
 

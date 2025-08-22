@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Dsbs;
+use App\Models\Dsrt;
 use App\Models\Periode;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -78,6 +79,18 @@ class AlokasiDsbsImport implements
             //     'pengawas' => $pml,
             //     'updated_by' => $auth->id,
             // ]);
+
+            Dsrt::where('tahun', $periode->tahun)
+                ->where('semester', $periode->semester)
+                ->where('kd_kab', $row[2])
+                ->where('kd_kec',  $row[3])
+                ->where('kd_desa', $row[4])
+                ->where('kd_bs', $row[5])
+                ->update([
+                    'pencacah' => $pcl,
+                    'pengawas' => $pml,
+                ]);
+
             $bs->pencacah = $pcl;
             $bs->pengawas = $pml;
             $bs->updated_by = $auth->id;
