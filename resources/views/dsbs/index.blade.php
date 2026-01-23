@@ -38,7 +38,7 @@
                                                     Import
                                                     <b class="fa fa-angle-up"></b>
                                                 </li>
-                                                <li><a href="{{ url('template/Template DSBS 2024-09.xls') }}">Template Import
+                                                <li><a href="{{ url('template/Template DSSLS 2026.xls') }}">Template Import
                                                         DSBS</a>
                                                 </li>
                                             </ul>

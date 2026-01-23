@@ -48,7 +48,10 @@ class DsbsImport implements
         if (strlen($row[7]) != 3) {
             return null;
         }
-        if (strlen($row[10]) != 6) {
+        if (strlen($row[11]) != 4) {
+            return null;
+        }
+        if (strlen($row[12]) != 2) {
             return null;
         }
         $bs = Dsbs::where('tahun', $this->tahun)
@@ -56,7 +59,7 @@ class DsbsImport implements
             ->where('kd_kab', $row[3])
             ->where('kd_kec',  $row[5])
             ->where('kd_desa', $row[7])
-            ->where('kd_bs', $row[10])
+            ->where('kd_bs', $row[11] . $row[12])
             ->first();
 
         if ($bs) {
@@ -66,11 +69,11 @@ class DsbsImport implements
                 'kd_kab' => $row[3],
                 'kd_kec' => $row[5],
                 'kd_desa' => $row[7],
-                'kd_bs' => $row[10],
-                'id_bs' => '16' . $row[3] . $row[5] . $row[7] . $row[10],
-                'nks' => $row[11],
-                'sls' => trim($row[12], '  '),
-                'jml_rt' => $row[13],
+                'kd_bs' => $row[11] . $row[12],
+                'id_bs' => '16' . $row[3] . $row[5] . $row[7] . $row[11] . $row[12],
+                'nks' => $row[14],
+                'sls' => trim($row[13], '  '),
+                'jml_rt' => $row[15],
                 'updated_by' => $auth->id,
             ]);
         } else {
@@ -80,11 +83,11 @@ class DsbsImport implements
                 'kd_kab' => $row[3],
                 'kd_kec' => $row[5],
                 'kd_desa' => $row[7],
-                'kd_bs' => $row[10],
-                'id_bs' => '16' . $row[3] . $row[5] . $row[7] . $row[10],
-                'nks' => $row[11],
-                'sls' => trim($row[12], '  '),
-                'jml_rt' => $row[13],
+                'kd_bs' => $row[11] . $row[12],
+                'id_bs' => '16' . $row[3] . $row[5] . $row[7] . $row[11] . $row[12],
+                'nks' => $row[14],
+                'sls' => trim($row[13], '  '),
+                'jml_rt' => $row[15],
                 'created_by' => $auth->id,
             ]);
         }
