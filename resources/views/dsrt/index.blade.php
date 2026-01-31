@@ -54,12 +54,12 @@
                                                 <i class="fe fe-plus"></i>
                                             </span> Tambah
                                         </button> --}}
-                                        <button class="btn btn-primary btn-icon text-white" data-bs-toggle="modal"
+                                        {{-- <button class="btn btn-primary btn-icon text-white" data-bs-toggle="modal"
                                             data-bs-target="#modal_generate" data-kd_kab="{{ $auth->kd_wilayah }}">
                                             <span>
                                                 <i class="fe fe-plus"></i>
                                             </span> Generate DSRT
-                                        </button>
+                                        </button> --}}
                                     @endhasanyrole
                                 </div>
                             </div>
