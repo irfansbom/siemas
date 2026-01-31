@@ -47,7 +47,7 @@ class DsrtImport implements
             ->where('kd_kab', $row[3])
             ->where('kd_kec', $row[4])
             ->where('kd_desa', $row[5])
-            ->where('kd_bs', $row[27])
+            ->where('kd_bs', substr($row[68], 10, 6))
             ->get()
             ->first();
 
@@ -60,7 +60,7 @@ class DsrtImport implements
             ->where('kd_kab', $row[3])
             ->where('kd_kec', $row[4])
             ->where('kd_desa', $row[5])
-            ->where('kd_bs', $row[27])
+            ->where('kd_bs', substr($row[68], 10, 6))
             ->where('nu_rt', $row[56])
             ->get()
             ->first();
@@ -78,8 +78,8 @@ class DsrtImport implements
                 'kd_kab' => $row[3],
                 'kd_kec' => $row[4],
                 'kd_desa' => $row[5],
-                'kd_bs' => $row[27],
-                'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[27],
+                'kd_bs' => substr($row[68], 10, 6),
+                'id_bs' => $row[68],
                 'nks' => $row[62],
                 'nu_rt' => $row[56], //kolom nus_ssn
                 'nama_krt_prelist' => $nama_krt_prelist,
@@ -96,8 +96,8 @@ class DsrtImport implements
                 'kd_kab' => $row[3],
                 'kd_kec' => $row[4],
                 'kd_desa' => $row[5],
-                'kd_bs' => $row[27],
-                'id_bs' => '16' . $row[3] . $row[4] . $row[5] . $row[27],
+                'kd_bs' => substr($row[68], 10, 6),
+                'id_bs' => $row[68],
                 'nks' => $row[62],
                 'nu_rt' => $row[56], //kolom nus_ssn
                 'nama_krt_prelist' => $nama_krt_prelist,
