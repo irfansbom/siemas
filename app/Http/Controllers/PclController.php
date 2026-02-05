@@ -69,6 +69,14 @@ class PclController extends Controller
         $dsrt->menu_mbg = $request->menu_mbg;
         $dsrt->rincian_int_1 = $request->rincian_int_1;
         $dsrt->rincian_int_2 = $request->rincian_int_2;
+
+        $request->validate([
+            'foto' => [
+                'image', // hanya image (jpg, jpeg, png, gif, webp, bmp)
+                'mimes:jpg,jpeg,png', // batasi ekstensi
+            ],
+        ]);
+
         $file = $request->file('foto');
 
         if ($request->hasFile('foto')) {

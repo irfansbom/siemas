@@ -331,6 +331,13 @@ class DsrtApiController extends Controller
             ]
         );
 
+        $request->validate([
+            'file_foto' => [
+                'image', // hanya image (jpg, jpeg, png, gif, webp, bmp)
+                'mimes:jpg,jpeg,png', // batasi ekstensi
+            ],
+        ]);
+
         $file = $request->file('file_foto');
         $id_dsrt = $data_dsrt->id;
 
@@ -351,6 +358,13 @@ class DsrtApiController extends Controller
 
     public function upload_foto(Request $request)
     {
+        $request->validate([
+            'file_foto' => [
+                'image', // hanya image (jpg, jpeg, png, gif, webp, bmp)
+                'mimes:jpg,jpeg,png', // batasi ekstensi
+            ],
+        ]);
+
         $file = $request->file('file_foto');
         $id_dsrt = $request->id_dsrt;
         $dsrt = Dsrt::find($id_dsrt);
@@ -373,6 +387,13 @@ class DsrtApiController extends Controller
 
     public function upload_data(Request $request)
     {
+        $request->validate([
+            'file_foto' => [
+                'image', // hanya image (jpg, jpeg, png, gif, webp, bmp)
+                'mimes:jpg,jpeg,png', // batasi ekstensi
+            ],
+        ]);
+
         $file = $request->file('file_foto');
         $data_dsrt = json_decode($request->dsrt);
         if ($file) {
@@ -471,6 +492,13 @@ class DsrtApiController extends Controller
 
     public function upload_data_form(Request $request)
     {
+        $request->validate([
+            'file_foto' => [
+                'image', // hanya image (jpg, jpeg, png, gif, webp, bmp)
+                'mimes:jpg,jpeg,png', // batasi ekstensi
+            ],
+        ]);
+
         $file = $request->file('file_foto');
         $data_dsrt = json_decode($request->dsrt);
 
